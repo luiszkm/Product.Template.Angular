@@ -200,6 +200,7 @@ it('deve chamar POST /invoices com idempotencyKey', () => {
 6. **Specs implementados** — store e service cobertos
 7. **Sem `any`** — tipagem completa
 8. **`inject()` usado** — sem `constructor(private ...)`
+9. **Tailwind CSS** — sem CSS inline, apenas utility classes
 
 ---
 

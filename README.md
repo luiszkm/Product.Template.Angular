@@ -15,6 +15,7 @@ Template enterprise-grade de aplicação Angular standalone seguindo:
 - **Clean Architecture** adaptada para frontend
 - **Feature-first** com lazy loading obrigatório
 - **Signals** para estado reativo (RxJS apenas para I/O)
+- **Tailwind CSS 3** para estilização utility-first
 - **RBAC** (roles e permissions do JWT)
 - **Multi-tenant** (header `X-Tenant` obrigatório)
 - **ProblemDetails RFC 9457** para tratamento de erros
@@ -237,6 +238,50 @@ ng build --configuration production && ng test --watch=false
 | Components reutilizáveis | 70% |
 
 Veja padrões em `.ai/rules/12-tests.md`.
+
+---
+
+## 🎨 Estilização (Tailwind CSS)
+
+Este projeto usa **Tailwind CSS v3** como framework de estilização padrão.
+
+### Convenções obrigatórias
+
+✅ **SEMPRE usar utility classes:**
+```html
+<button class="px-4 py-2 bg-primary-600 text-white rounded-md 
+               hover:bg-primary-700 focus:ring-2 focus:ring-primary-500">
+  Salvar
+</button>
+```
+
+✅ **Usar @apply para componentes reutilizáveis:**
+```css
+/* button.component.css */
+.btn-primary {
+  @apply px-4 py-2 bg-primary-600 text-white rounded-md;
+  @apply hover:bg-primary-700 focus:ring-2 focus:ring-primary-500;
+}
+```
+
+❌ **NUNCA usar CSS inline:**
+```html
+<!-- ❌ Proibido -->
+<div style="display: flex; padding: 24px;">
+
+<!-- ✅ Correto -->
+<div class="flex p-6">
+```
+
+### Documentação completa
+
+- **Guia rápido:** [`TAILWIND.md`](TAILWIND.md)
+- **Regras e padrões:** [`.ai/rules/14-tailwind.md`](.ai/rules/14-tailwind.md)
+
+### Ferramentas recomendadas
+
+- **VSCode Extension:** "Tailwind CSS IntelliSense"
+- **Prettier Plugin:** `prettier-plugin-tailwindcss`
 
 ---
 
