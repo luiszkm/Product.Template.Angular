@@ -1,59 +1,304 @@
-# ProductTemplateAngular
+# Product Template Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.2.
+> Template Angular enterprise AI-first para integração com backend Product.Template (.NET 10)
 
-## Development server
+[![Angular](https://img.shields.io/badge/Angular-21.2-DD0031?logo=angular)](https://angular.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript)](https://www.typescriptlang.org/)
+[![Standalone](https://img.shields.io/badge/Components-Standalone-success)]()
+[![OnPush](https://img.shields.io/badge/Change%20Detection-OnPush-success)]()
 
-To start a local development server, run:
+---
+
+## 🎯 Visão Geral
+
+Template enterprise-grade de aplicação Angular standalone seguindo:
+- **Clean Architecture** adaptada para frontend
+- **Feature-first** com lazy loading obrigatório
+- **Signals** para estado reativo (RxJS apenas para I/O)
+- **RBAC** (roles e permissions do JWT)
+- **Multi-tenant** (header `X-Tenant` obrigatório)
+- **ProblemDetails RFC 9457** para tratamento de erros
+- **AI-ready** com 14 regras + 6 prompts + 3 checklists
+
+---
+
+## 🚀 Quick Start
+
+### Pré-requisitos
+- Node.js 20+
+- Angular CLI 21.2+
+- Backend Product.Template rodando em `http://localhost:8080`
+
+### Instalação
 
 ```bash
+# Clone o repositório
+git clone <repo-url>
+cd ProductTemplateAngular
+
+# Instale dependências
+npm install
+
+# Configure o ambiente (ajuste .env ou src/environments/)
+# Ajuste apiUrl, tenantSlug, oauthRedirectUri
+
+# Inicie o dev server
 ng serve
+
+# Acesse http://localhost:4200
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Build de produção
 
 ```bash
-ng generate component component-name
+ng build --configuration production
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Artifacts em `dist/ProductTemplateAngular/`.
 
-```bash
-ng generate --help
+---
+
+## 📂 Estrutura do Projeto
+
+```
+src/
+  environments/             ← Configuração por ambiente (dev, prod)
+  app/
+    core/                   ← Infraestrutura global
+      api/                  ← ApiClient, tipos, configuração
+      auth/                 ← Autenticação, JWT, OAuth, refresh token
+      guards/               ← authGuard, roleGuard
+      interceptors/         ← refresh-token.interceptor
+      errors/               ← Páginas 403, 404
+    shared/                 ← Componentes reutilizáveis cross-feature
+    features/               ← Features de negócio (lazy loaded)
+      products/
+      users/
+      orders/
+    layouts/                ← Shell de navegação
+.ai/                        ← 🤖 Regras e prompts AI
+  rules/                    ← 14 arquivos de regras
+  prompts/                  ← 6 prompts de geração
+  checklists/               ← 3 checklists de validação
+  examples/                 ← Exemplo de referência (products)
+docs/                       ← Documentação
+  backendSummary/           ← Contratos da API backend
+  gap-analysis.md           ← Auditoria de alinhamento
 ```
 
-## Building
+---
 
-To build the project run:
+## 🤖 Desenvolvimento com IA (GitHub Copilot / Cursor / Windsurf)
 
-```bash
-ng build
+Este template foi projetado para **maximizar a produtividade com IA**. Todas as convenções, padrões e antipadrões estão documentados em `.ai/`.
+
+### Como usar
+
+1. **Abra o workspace** no seu IDE com Copilot/Cursor/Windsurf
+2. **A IA lerá automaticamente** os arquivos em `.ai/rules/` e `.ai/prompts/`
+3. **Use os prompts** para gerar código consistente:
+
+```
+📌 Prompt: "Crie uma feature de invoices com CRUD completo"
+→ A IA gerará seguindo .ai/prompts/create-feature.md
+
+📌 Prompt: "Crie um componente de avatar de usuário"
+→ A IA gerará seguindo .ai/prompts/create-component.md
+
+📌 Prompt: "Adicione validação de CPF no formulário de usuário"
+→ A IA aplicará as regras de .ai/rules/11-forms.md
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### Regras AI cobertas
 
-## Running unit tests
+| Regra | Cobre |
+|-------|-------|
+| `00-global.md` | Princípios gerais, critérios de aceite |
+| `01-architecture.md` | Estrutura de pastas, camadas, dependências |
+| `02-features.md` | Feature-first, responsabilidades |
+| `03-components.md` | Standalone, OnPush, signals |
+| `04-services.md` | Stateless, ApiClient |
+| `05-state.md` | Signals, computed, effect, stores |
+| `06-api.md` | Contratos, erros, headers |
+| `07-style.md` | Código TypeScript, nomenclatura |
+| `08-security.md` | Auth, RBAC, multi-tenant, refresh token |
+| `09-performance.md` | OnPush, lazy loading, preloading |
+| `10-routing.md` | Guards, OAuth callback, provideRouter |
+| `11-forms.md` | Reactive Forms, validação, erros da API |
+| `12-tests.md` | Specs de Store, Service, Guard, Component |
+| `13-observability.md` | Correlation ID, Retry-After, health check |
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+### Validação automatizada
+
+Antes de commitar, execute os checklists:
 
 ```bash
+# Valide um componente
+cat .ai/checklists/component.md
+
+# Valide uma feature completa
+cat .ai/checklists/feature.md
+
+# Valide acessibilidade
+cat .ai/checklists/accessibility.md
+```
+
+---
+
+## 🔐 Autenticação e Autorização
+
+### Fluxos suportados
+
+| Método | Endpoint | Implementação |
+|--------|----------|---------------|
+| Email + Senha | `POST /identity/login` | ✅ `LoginPage` |
+| Microsoft OAuth | `POST /identity/external-login` | ✅ `OAuthCallbackPage` |
+| Refresh Token | `POST /identity/refresh` | ✅ `refresh-token.interceptor` |
+
+### RBAC
+
+Roles e permissions são lidas do **JWT** e gerenciadas pelo `AuthSessionService`:
+
+```ts
+// No componente
+readonly canDelete = computed(() =>
+  this.session.isAdmin() || this.session.hasPermission('users.manage')
+);
+
+// No template
+@if (canDelete()) {
+  <button (click)="onDelete()">Remover</button>
+}
+
+// Na rota (app.routes.ts)
+{
+  path: 'users',
+  canActivate: [authGuard, roleGuard],
+  data: { requiredPermission: 'users.read' }
+}
+```
+
+---
+
+## 📡 Integração com API Backend
+
+### Headers automáticos (via `ApiClient`)
+
+| Header | Valor | Quando |
+|--------|-------|--------|
+| `X-Tenant` | `environment.tenantSlug` | Sempre |
+| `Authorization` | `Bearer {token}` | Quando autenticado |
+| `X-Idempotency-Key` | `crypto.randomUUID()` | POST/PUT críticos |
+
+### Tratamento de erros (ProblemDetails RFC 9457)
+
+```ts
+// Erro 400 com validação de campos
+{
+  "status": 400,
+  "errors": {
+    "email": ["Email inválido."],
+    "password": ["Mínimo 8 caracteres."]
+  }
+}
+→ Mapeado automaticamente nos campos do formulário
+
+// Erro 5xx
+{
+  "status": 500,
+  "detail": "Erro interno"
+}
++ Header: X-Correlation-ID: abc-123
+→ Exibido ao usuário: "Erro inesperado. ID de suporte: abc-123"
+```
+
+---
+
+## 🧪 Testes
+
+```bash
+# Executar testes unitários
 ng test
+
+# Executar com cobertura
+ng test --coverage
+
+# Build + testes em CI
+ng build --configuration production && ng test --watch=false
 ```
 
-## Running end-to-end tests
+### Cobertura esperada
 
-For end-to-end (e2e) testing, run:
+| Artefato | Cobertura mínima |
+|----------|------------------|
+| Stores | 80% branches |
+| Services | 80% branches |
+| Guards | 100% |
+| Components reutilizáveis | 70% |
 
-```bash
-ng e2e
+Veja padrões em `.ai/rules/12-tests.md`.
+
+---
+
+## 🌍 Multi-tenant
+
+Configure o tenant em `src/environments/environment.ts`:
+
+```ts
+export const environment = {
+  apiUrl: 'https://api.exemplo.com/api/v1',
+  tenantSlug: 'acme',  // ← slug do tenant
+  oauthRedirectUri: 'https://app.exemplo.com/auth/callback'
+};
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+O header `X-Tenant: acme` será enviado automaticamente em todas as requisições.
 
-## Additional Resources
+---
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 📚 Documentação Adicional
+
+| Arquivo | Conteúdo |
+|---------|----------|
+| `docs/backendSummary/api-contracts.md` | Todos os endpoints da API |
+| `docs/backendSummary/auth-guide.md` | Fluxos de autenticação |
+| `docs/backendSummary/rbac-guide.md` | Roles, permissions, policies |
+| `docs/backendSummary/error-handling.md` | ProblemDetails, códigos HTTP |
+| `docs/gap-analysis.md` | Auditoria de alinhamento |
+| `.ai/examples/feature-example.md` | Referência da feature Products |
+
+---
+
+## 🛠️ Stack Tecnológica
+
+- **Angular 21.2** — Framework com standalone components
+- **TypeScript 5.9** — Strict mode habilitado
+- **Signals** — Estado reativo (RxJS apenas para I/O)
+- **Reactive Forms** — Validação tipada
+- **Jasmine + Karma** — Testes unitários
+- **Tailwind CSS** — Utilitários (opcional)
+
+---
+
+## 🤝 Contribuindo
+
+1. Leia as regras em `.ai/rules/00-global.md`
+2. Use os prompts em `.ai/prompts/` para gerar código
+3. Valide com os checklists em `.ai/checklists/`
+4. Execute `ng build` e `ng test` antes de commitar
+5. Certifique-se que a feature fica em chunk lazy separado
+
+---
+
+## 📄 Licença
+
+[MIT](LICENSE) — Template enterprise mantido pelo time de arquitetura.
+
+---
+
+## 🔗 Links Úteis
+
+- [Angular Documentation](https://angular.dev)
+- [Backend Product.Template](link-do-backend-repo)
+- [Documentação da API](link-do-scalar-ou-swagger)
+- [Guia de RBAC](docs/backendSummary/rbac-guide.md)
