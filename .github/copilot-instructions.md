@@ -264,9 +264,10 @@ Sempre que tiver dúvida, consulte a implementação **real** da feature `produc
 
 1. **Sempre pergunte** se há uma regra em `.ai/rules/` antes de gerar
 2. **Use os prompts** em `.ai/prompts/` como template
-3. **Valide com os checklists** em `.ai/checklists/`
-4. **Consulte o exemplo** em `.ai/examples/feature-example.md`
-5. **Leia a documentação do backend** em `docs/backendSummary/`
+3. **Consulte o design system** em `.ai/design/` para interfaces
+4. **Valide com os checklists** em `.ai/checklists/`
+5. **Consulte o exemplo** em `.ai/examples/feature-example.md`
+6. **Leia a documentação do backend** em `docs/backendSummary/`
 
 ---
 
