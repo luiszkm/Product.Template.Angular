@@ -2,7 +2,8 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": "90221ffc-3df1-43c7-880e-6367ecfe7160"
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -59,7 +60,12 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.development.ts"
                 }
-              ]
+              ],
+              "define": {
+                "NG_APP_API_URL": "process.env.NG_APP_API_URL",
+                "NG_APP_TENANT_SLUG": "process.env.NG_APP_TENANT_SLUG",
+                "NG_APP_OAUTH_REDIRECT_URI": "process.env.NG_APP_OAUTH_REDIRECT_URI"
+              }
             }
           },
           "defaultConfiguration": "production"

@@ -42,3 +42,11 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Environment variables (NÃO comitar valores reais!)
+.env.development
+.env.production
+.env.local
+.env*.local
+env-defines.json
+
