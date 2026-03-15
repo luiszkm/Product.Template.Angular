@@ -13,6 +13,7 @@ Você está trabalhando em um **template Angular enterprise AI-first** que se in
 - TypeScript 5.9 strict
 - Signals (RxJS apenas para I/O)
 - Reactive Forms
+- Tailwind CSS (utility-first styling)
 - RBAC (JWT com roles/permissions)
 - Multi-tenant (header X-Tenant)
 
@@ -38,6 +39,7 @@ Você está trabalhando em um **template Angular enterprise AI-first** que se in
 | `.ai/rules/11-forms.md` | Reactive Forms, validação | Ao criar formulários |
 | `.ai/rules/12-tests.md` | Specs de Store/Service/Guard | Ao testar |
 | `.ai/rules/13-observability.md` | Correlation ID, Retry-After | Ao tratar erros |
+| `.ai/rules/14-tailwind.md` | Utility classes, @apply, responsividade | Ao estilizar componentes |
 
 ---
 
@@ -209,6 +211,35 @@ component: UsersPage                             // usar loadChildren
 canActivate: [authGuard]                         // adicionar roleGuard se precisa permissão
 ```
 
+### Tailwind CSS
+```html
+<!-- ✅ SEMPRE usar utility classes do Tailwind -->
+<div class="flex items-center gap-4 p-6 bg-white rounded-lg shadow-md">
+  <button class="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 
+                 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
+    Salvar
+  </button>
+</div>
+
+<!-- ✅ Usar @apply para componentes reutilizáveis (somente em arquivos .css de componentes) -->
+/* component.css */
+.btn-primary {
+  @apply px-4 py-2 bg-primary-600 text-white rounded-md;
+  @apply hover:bg-primary-700 focus:outline-none focus:ring-2;
+  @apply focus:ring-primary-500 focus:ring-offset-2;
+}
+
+<!-- ❌ NUNCA usar CSS inline ou custom CSS -->
+<div style="display: flex; padding: 24px;">  <!-- usar Tailwind classes -->
+</div>
+
+<!-- ❌ NUNCA criar CSS custom quando existe utility do Tailwind -->
+.my-custom-flex {                             <!-- usar classes Tailwind diretamente -->
+  display: flex;
+  align-items: center;
+}
+```
+
 ---
 
 ## 📋 Checklist de Validação
@@ -231,6 +262,7 @@ Antes de considerar o código completo, verifique:
 - [ ] `roleGuard` + `data` se precisa permissão
 - [ ] `title` na rota
 - [ ] Spec com `TestBed` (não `new`)
+- [ ] Tailwind classes (não CSS inline ou custom)
 
 ---
 
@@ -257,6 +289,8 @@ Sempre que tiver dúvida, consulte a implementação **real** da feature `produc
 - Page sem `providers: [Store]`
 - Rota sem `title`
 - Teste com `new Store()` (usar `TestBed`)
+- CSS inline (usar Tailwind classes)
+- CSS custom (usar Tailwind utilities ou @apply)
 
 ---
 
