@@ -17,6 +17,8 @@
 
 ## Padrão de teste de Store
 
+> ⚠️ Stores usam `inject()` — **nunca instanciar com `new Store()`**. Usar `TestBed.inject()`.
+
 ```ts
 describe('ProductsStore', () => {
   let store: ProductsStore;
@@ -24,7 +26,15 @@ describe('ProductsStore', () => {
 
   beforeEach(() => {
     service = jasmine.createSpyObj('ProductsService', ['list', 'create', 'remove']);
-    store = new ProductsStore(service);
+
+    TestBed.configureTestingModule({
+      providers: [
+        ProductsStore,
+        { provide: ProductsService, useValue: service }
+      ]
+    });
+
+    store = TestBed.inject(ProductsStore);
   });
 
   it('deve setar items após load com sucesso', () => {
@@ -38,19 +48,34 @@ describe('ProductsStore', () => {
     expect(store.items()).toHaveSize(1);
     expect(store.loading()).toBeFalse();
     expect(store.error()).toBeNull();
+    expect(store.validationErrors()).toBeNull();
   });
 
-  it('deve setar error após falha no load', () => {
+  it('deve setar error após falha 500 no load', () => {
     const apiError: ApiError = {
       status: 500,
-      problem: { title: 'Error', status: 500, detail: 'Erro interno' }
+      problem: { title: 'Error', status: 500, detail: 'Erro interno' },
+      correlationId: 'abc-123'
     };
     service.list.and.returnValue(throwError(() => apiError));
 
     store.load();
 
-    expect(store.error()).toBe('Erro interno');
+    expect(store.error()).toContain('abc-123');
     expect(store.loading()).toBeFalse();
+  });
+
+  it('deve setar validationErrors após 400 com errors no create', () => {
+    const apiError: ApiError = {
+      status: 400,
+      problem: { title: 'Validation', status: 400, errors: { name: ['Nome obrigatório.'] } }
+    };
+    service.create.and.returnValue(throwError(() => apiError));
+
+    store.create({ name: '', sku: 'X', price: 1, stock: 0 });
+
+    expect(store.validationErrors()).toEqual({ name: ['Nome obrigatório.'] });
+    expect(store.error()).toBeNull();
   });
 });
 ```
@@ -64,7 +89,16 @@ describe('ProductsService', () => {
 
   beforeEach(() => {
     apiClient = jasmine.createSpyObj('ApiClient', ['get', 'post', 'put', 'delete']);
-    service = new ProductsService(apiClient);
+
+    TestBed.configureTestingModule({
+      providers: [
+        ProductsService,
+        { provide: ApiClient, useValue: apiClient },
+        { provide: API_BASE_URL, useValue: 'http://test' }
+      ]
+    });
+
+    service = TestBed.inject(ProductsService);
   });
 
   it('deve chamar GET /products com filtros corretos', () => {

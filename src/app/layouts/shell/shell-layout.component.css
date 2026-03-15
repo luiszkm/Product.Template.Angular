@@ -1,0 +1,32 @@
+.shell {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+}
+
+.shell__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #dbeafe;
+  background: #ffffff;
+}
+
+.shell__nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.shell__nav a {
+  color: #1e293b;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.shell__nav a.active {
+  color: #1d4ed8;
+}
+
+.shell__content {
+  padding: 1.5rem;
+}

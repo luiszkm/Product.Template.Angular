@@ -42,17 +42,33 @@ console.error('[API Error]', {
 
 Respostas `429 Too Many Requests` incluem o header `Retry-After` (segundos). O frontend deve:
 
-1. Exibir mensagem com contagem regressiva.
+1. Exibir mensagem com o tempo de espera ao usuário.
 2. **Não** fazer retry automático sem o controle do usuário em formulários.
-3. Para polling/refresh automático, aplicar `retryWhen` + `delayWhen` com o valor do header.
+3. Para polling/refresh automático, usar `retry({ count, delay })` do RxJS 7+:
 
 ```ts
-// No interceptor ou store, ao receber 429:
+// RxJS 7+ — retry com delay baseado no Retry-After
+import { retry, timer } from 'rxjs';
+
+this.apiClient.get('/status').pipe(
+  retry({
+    count: 3,
+    delay: (error: ApiError) => {
+      const seconds = error.retryAfterSeconds ?? 60;
+      return timer(seconds * 1000);
+    }
+  })
+).subscribe(...)
+```
+
+> ⚠️ `retryWhen` está **deprecado** no RxJS 7+ — usar sempre `retry({ count, delay })`.
+
+```ts
+// No store/interceptor, ao receber 429 sem retry automático:
 const retryAfter = apiError.retryAfterSeconds ?? 60;
 this.error.set(`Muitas requisições. Aguarde ${retryAfter}s antes de tentar novamente.`);
 ```
 
-> O `ApiError` deve incluir `retryAfterSeconds?: number` parseado do header `Retry-After`.
 
 ## Health Check
 

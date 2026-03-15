@@ -1,0 +1,47 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="product-form" aria-label="Formulário de produto">
+  <fieldset [disabled]="false">
+
+    <div class="field">
+      <label for="name">Nome</label>
+      <input id="name" type="text" formControlName="name"
+             [attr.aria-invalid]="form.controls.name.invalid && form.controls.name.touched"
+             aria-describedby="name-error" />
+      @if (fieldError('name')) {
+        <span id="name-error" class="field-error" role="alert">{{ fieldError('name') }}</span>
+      }
+    </div>
+
+    <div class="field">
+      <label for="sku">SKU</label>
+      <input id="sku" type="text" formControlName="sku"
+             [attr.aria-invalid]="form.controls.sku.invalid && form.controls.sku.touched"
+             aria-describedby="sku-error" />
+      @if (fieldError('sku')) {
+        <span id="sku-error" class="field-error" role="alert">{{ fieldError('sku') }}</span>
+      }
+    </div>
+
+    <div class="field">
+      <label for="price">Preço</label>
+      <input id="price" type="number" formControlName="price" step="0.01"
+             [attr.aria-invalid]="form.controls.price.invalid && form.controls.price.touched"
+             aria-describedby="price-error" />
+      @if (fieldError('price')) {
+        <span id="price-error" class="field-error" role="alert">{{ fieldError('price') }}</span>
+      }
+    </div>
+
+    <div class="field">
+      <label for="stock">Estoque</label>
+      <input id="stock" type="number" formControlName="stock"
+             [attr.aria-invalid]="form.controls.stock.invalid && form.controls.stock.touched"
+             aria-describedby="stock-error" />
+      @if (fieldError('stock')) {
+        <span id="stock-error" class="field-error" role="alert">{{ fieldError('stock') }}</span>
+      }
+    </div>
+
+    <button type="submit">Salvar produto</button>
+
+  </fieldset>
+</form>

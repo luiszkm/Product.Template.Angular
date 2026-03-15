@@ -1,0 +1,16 @@
+<section class="products-page">
+  <header class="products-page__header">
+    <h2>Products</h2>
+    <p>Feature de referência para arquitetura AI-first com Angular signals.</p>
+  </header>
+
+  @if (vm().error) {
+    <p class="products-page__error" role="alert">{{ vm().error }}</p>
+  }
+
+  <div class="products-page__content">
+    <app-product-form (create)="onCreate($event)" [apiErrors]="vm().validationErrors" />
+
+    <app-product-table [items]="vm().items" [loading]="vm().loading" (remove)="onRemove($event)" />
+  </div>
+</section>
