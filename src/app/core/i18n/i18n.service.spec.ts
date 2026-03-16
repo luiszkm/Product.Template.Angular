@@ -116,7 +116,7 @@ describe('I18nService', () => {
     const req = httpMock.expectOne('/i18n/pt-BR.json');
     req.flush({});
 
-    const consoleSpy = spyOn(console, 'error');
+    const consoleSpy = vi.spyOn(console, 'error');
 
     service.setLocale('invalid-locale');
 
@@ -135,7 +135,7 @@ describe('I18nService', () => {
   });
 
   it('deve tratar erro no carregamento de traduções', () => {
-    const consoleSpy = spyOn(console, 'error');
+    const consoleSpy = vi.spyOn(console, 'error');
 
     const req = httpMock.expectOne('/i18n/pt-BR.json');
     req.error(new ProgressEvent('error'));
