@@ -13,6 +13,7 @@ npm install -D tailwindcss@3 postcss autoprefixer
 ```js
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class', // ✅ Class-based dark mode
   content: [
     "./src/**/*.{html,ts}",
   ],
@@ -46,6 +47,7 @@ module.exports = {
 Toda a documentação sobre como usar Tailwind CSS neste projeto está em:
 
 - **Regra completa**: `.ai/rules/14-tailwind.md`
+- **Dark Theme**: `.ai/rules/16-darktheme.md` e `DARKTHEME.md`
 - **Instruções do Copilot**: `.github/copilot-instructions.md`
 
 ## 🎯 Convenções obrigatórias
@@ -71,7 +73,8 @@ Toda a documentação sobre como usar Tailwind CSS neste projeto está em:
 ### Botão primário
 ```html
 <button class="px-4 py-2 bg-primary-600 text-white rounded-md 
-               hover:bg-primary-700 focus:ring-2 focus:ring-primary-500 
+               hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600
+               focus:ring-2 focus:ring-primary-500 
                disabled:opacity-50">
   Salvar
 </button>
@@ -81,16 +84,23 @@ Toda a documentação sobre como usar Tailwind CSS neste projeto está em:
 ```html
 <input
   type="email"
-  class="block w-full px-3 py-2 border border-gray-300 rounded-md
+  class="block w-full px-3 py-2 
+         border border-gray-300 dark:border-gray-600 
+         bg-white dark:bg-slate-800
+         text-gray-900 dark:text-gray-50
+         rounded-md
          focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
 />
 ```
 
 ### Card
 ```html
-<div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-  <h3 class="text-lg font-semibold text-gray-900">Título</h3>
-  <p class="text-sm text-gray-600">Descrição...</p>
+<div class="bg-white dark:bg-slate-800 
+            border border-gray-200 dark:border-gray-700
+            rounded-lg shadow-md hover:shadow-lg 
+            p-6 transition-shadow">
+  <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-50">Título</h3>
+  <p class="text-sm text-gray-600 dark:text-gray-400">Descrição...</p>
 </div>
 ```
 

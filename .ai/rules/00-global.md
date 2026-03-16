@@ -19,8 +19,9 @@ Gerar código Angular enterprise consistente com Clean Architecture, DDD pragmá
 | `11-forms.md` | Reactive Forms, validação, erros da API |
 | `12-tests.md` | Testes de Store, Service, Guard, Component |
 | `13-observability.md` | Correlation ID, Retry-After, health check |
-
-## Regras mandatórias
+| `14-tailwind.md` | Utility classes, @apply, responsividade |
+| `15-i18n.md` | Internacionalização PT-BR/EN-US, translate pipe |
+| `16-darktheme.md` | Dark theme com Tailwind, toggle, persistência |
 - Usar somente componentes standalone.
 - Não usar NgModules.
 - Usar `ChangeDetectionStrategy.OnPush` em todos os componentes.

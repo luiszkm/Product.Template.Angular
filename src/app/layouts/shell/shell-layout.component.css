@@ -10,11 +10,13 @@
   padding: 1rem 1.5rem;
   border-bottom: 1px solid #dbeafe;
   background: #ffffff;
+  gap: 1rem;
 }
 
 .shell__nav {
   display: flex;
   gap: 1rem;
+  flex: 1;
 }
 
 .shell__nav a {
@@ -25,6 +27,12 @@
 
 .shell__nav a.active {
   color: #1d4ed8;
+}
+
+.shell__actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .shell__content {

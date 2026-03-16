@@ -128,8 +128,9 @@ Este template foi projetado para **maximizar a produtividade com IA**. Todas as 
 | `11-forms.md` | Reactive Forms, validação, erros da API |
 | `12-tests.md` | Specs de Store, Service, Guard, Component |
 | `13-observability.md` | Correlation ID, Retry-After, health check |
-
-### Validação automatizada
+| `14-tailwind.md` | Utility classes, @apply, responsividade |
+| `15-i18n.md` | Internacionalização PT-BR/EN-US, translate pipe |
+| `16-darktheme.md` | Dark theme, toggle, class-based, persistência |
 
 Antes de commitar, execute os checklists:
 
@@ -282,6 +283,45 @@ Este projeto usa **Tailwind CSS v3** como framework de estilização padrão.
 
 - **VSCode Extension:** "Tailwind CSS IntelliSense"
 - **Prettier Plugin:** `prettier-plugin-tailwindcss`
+
+---
+
+## 🌙 Dark Theme
+
+O template suporta **dark mode** com alternância dinâmica.
+
+### Uso básico
+
+```html
+<!-- Componentes adaptam automaticamente -->
+<div class="bg-white dark:bg-slate-900 text-gray-900 dark:text-gray-50">
+  Conteúdo adaptável
+</div>
+
+<!-- Toggle já incluído no shell layout -->
+<app-theme-toggle />
+```
+
+### Configuração
+
+```typescript
+// Component
+readonly theme = inject(ThemeService);
+
+// Mudar tema
+theme.setTheme('dark');  // 'light' | 'dark' | 'system'
+theme.toggleTheme();     // Alterna entre light/dark
+```
+
+### Padrões
+
+- ✅ Class-based dark mode (Tailwind `dark:` classes)
+- ✅ Persistência no localStorage
+- ✅ Detecção automática do tema do OS (`system` mode)
+- ✅ Transições suaves entre temas
+- ✅ Contraste WCAG AA em ambos os temas
+
+**Detalhes:** Ver `.ai/rules/16-darktheme.md`
 
 ---
 

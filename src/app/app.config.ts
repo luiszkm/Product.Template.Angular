@@ -11,6 +11,7 @@ import {
 import { routes } from './app.routes';
 import { API_BASE_URL } from './core/api/api.config';
 import { refreshTokenInterceptor } from './core/interceptors/refresh-token.interceptor';
+import { i18nInterceptor } from './core/i18n/i18n.interceptor';
 import { AuthSessionService } from './core/auth/auth-session.service';
 import { environment } from '../environments/environment';
 
@@ -18,7 +19,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(
-      withInterceptors([refreshTokenInterceptor])
+      withInterceptors([refreshTokenInterceptor, i18nInterceptor])
     ),
     provideRouter(
       routes,

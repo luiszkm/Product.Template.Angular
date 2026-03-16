@@ -40,6 +40,8 @@ Você está trabalhando em um **template Angular enterprise AI-first** que se in
 | `.ai/rules/12-tests.md` | Specs de Store/Service/Guard | Ao testar |
 | `.ai/rules/13-observability.md` | Correlation ID, Retry-After | Ao tratar erros |
 | `.ai/rules/14-tailwind.md` | Utility classes, @apply, responsividade | Ao estilizar componentes |
+| `.ai/rules/15-i18n.md` | Internacionalização PT-BR/EN-US, translate pipe | Ao adicionar textos/mensagens |
+| `.ai/rules/16-darktheme.md` | Dark theme, toggle, class-based, persistência | Ao estilizar com suporte dark mode |
 
 ---
 

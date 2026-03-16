@@ -23,6 +23,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*.json",
+                "input": "src/i18n",
+                "output": "/i18n"
               }
             ],
             "styles": [
