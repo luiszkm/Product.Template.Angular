@@ -25,23 +25,13 @@ export const routes: Routes = [
     component: ShellLayoutComponent,
     canActivate: [authGuard],
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'products' },
-      {
-        path: 'products',
-        title: 'Produtos',
-        loadChildren: () => import('./features/products/products.routes').then(m => m.PRODUCTS_ROUTES)
-      },
+      { path: '', pathMatch: 'full', redirectTo: 'users' },
       {
         path: 'users',
         title: 'Usuários',
         canActivate: [roleGuard],
         data: { requiredPermission: 'identity.user.read' },
         loadChildren: () => import('./features/users/users.routes').then(m => m.USERS_ROUTES)
-      },
-      {
-        path: 'orders',
-        title: 'Pedidos',
-        loadChildren: () => import('./features/orders/orders.routes').then(m => m.ORDERS_ROUTES)
       },
       {
         path: 'roles',
