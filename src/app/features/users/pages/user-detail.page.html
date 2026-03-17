@@ -1,0 +1,87 @@
+<section class="user-detail">
+  <header class="user-detail__header">
+    <a routerLink="/users" class="user-detail__back">← Voltar</a>
+  </header>
+
+  @if (vm().loading && !vm().user) {
+    <p>Carregando...</p>
+  } @else if (vm().error) {
+    <p class="user-detail__error" role="alert">{{ vm().error }}</p>
+  } @else if (vm().user; as user) {
+    <div class="user-detail__card">
+      <h2>{{ user.firstName }} {{ user.lastName }}</h2>
+      <dl class="user-detail__info">
+        <dt>E-mail</dt>
+        <dd>{{ user.email }}</dd>
+        <dt>E-mail confirmado</dt>
+        <dd>{{ user.emailConfirmed ? 'Sim' : 'Não' }}</dd>
+        <dt>Criado em</dt>
+        <dd>{{ user.createdAt | date: 'medium' }}</dd>
+        <dt>Último login</dt>
+        <dd>{{ user.lastLoginAt ? (user.lastLoginAt | date: 'medium') : '-' }}</dd>
+      </dl>
+
+      @if (canViewRoles) {
+        <div class="user-detail__roles">
+          <h3>Roles</h3>
+          @if (vm().roles.length > 0) {
+            <ul>
+              @for (role of vm().roles; track role.id) {
+                <li>
+                  {{ role.name }} — {{ role.description }}
+                  @if (canManageRoles) {
+                    <button type="button" (click)="onRemoveRole(role.id)">Remover</button>
+                  }
+                </li>
+              }
+            </ul>
+          } @else {
+            <p>Nenhum role atribuído.</p>
+          }
+          @if (canManageRoles && availableRoles().length > 0) {
+            <div class="user-detail__add-role">
+              <select #roleSelect (change)="onAddRole(roleSelect.value)">
+                <option value="">Adicionar role...</option>
+                @for (r of availableRoles(); track r.id) {
+                  <option [value]="r.id">{{ r.name }}</option>
+                }
+              </select>
+            </div>
+          }
+        </div>
+      }
+
+      @if (canEdit()) {
+        @if (editing()) {
+          <form [formGroup]="form" (ngSubmit)="saveEdit()" class="user-detail__form">
+            <div class="field">
+              <label for="firstName">Nome</label>
+              <input id="firstName" formControlName="firstName" />
+              @if (fieldError('firstName')) {
+                <span class="field-error">{{ fieldError('firstName') }}</span>
+              }
+            </div>
+            <div class="field">
+              <label for="lastName">Sobrenome</label>
+              <input id="lastName" formControlName="lastName" />
+              @if (fieldError('lastName')) {
+                <span class="field-error">{{ fieldError('lastName') }}</span>
+              }
+            </div>
+            <div class="user-detail__actions">
+              <button type="submit" class="btn btn-primary">Salvar</button>
+              <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancelar</button>
+            </div>
+          </form>
+        } @else {
+          <div class="user-detail__actions">
+            <button type="button" class="btn btn-primary" (click)="startEdit()">Editar</button>
+            @if (canManage) {
+              <button type="button" class="btn btn-danger" (click)="onRemove()">Excluir</button>
+            }
+          </div>
+        }
+      }
+    </div>
+  }
+</section>

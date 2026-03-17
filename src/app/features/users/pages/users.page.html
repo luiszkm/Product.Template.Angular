@@ -1,0 +1,51 @@
+<section class="users-page">
+  <header class="users-page__header">
+    <h2>Usuários</h2>
+    <p>Lista de usuários do sistema.</p>
+  </header>
+
+  @if (vm().error) {
+    <p class="users-page__error" role="alert">{{ vm().error }}</p>
+  }
+
+  <div class="users-page__toolbar">
+    <input
+      type="search"
+      placeholder="Buscar por nome ou e-mail..."
+      [value]="vm().searchTerm || ''"
+      (input)="onSearch($any($event.target).value)"
+      class="users-page__search"
+    />
+  </div>
+
+  <div class="users-page__content">
+    <app-users-table
+      [items]="vm().items"
+      [loading]="vm().loading"
+      [canManage]="canManage"
+      (remove)="onRemove($event)"
+    />
+  </div>
+
+  @if (vm().totalCount > vm().pageSize) {
+    <nav class="users-page__pagination" aria-label="Paginação">
+      <button
+        type="button"
+        [disabled]="vm().pageNumber <= 1"
+        (click)="onPageChange(vm().pageNumber - 1)"
+      >
+        Anterior
+      </button>
+      <span>
+        Página {{ vm().pageNumber }} de {{ totalPages() }}
+      </span>
+      <button
+        type="button"
+        [disabled]="vm().pageNumber * vm().pageSize >= vm().totalCount"
+        (click)="onPageChange(vm().pageNumber + 1)"
+      >
+        Próxima
+      </button>
+    </nav>
+  }
+</section>

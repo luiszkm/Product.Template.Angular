@@ -1,47 +1,44 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  OnInit,
-  computed,
   inject,
   signal
 } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ApiClient } from '../api/api-client';
 import { ApiError } from '../api/api-types';
-import { AuthSessionService, LoginResponse } from './auth-session.service';
-import { environment } from '../../../environments/environment';
 
-interface ProvidersResponse {
-  providers: string[];
-  count: number;
+export interface UserOutput {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  emailConfirmed: boolean;
+  createdAt: string;
+  lastLoginAt: string | null;
 }
 
 @Component({
-  selector: 'app-login-page',
+  selector: 'app-register-page',
   standalone: true,
   imports: [ReactiveFormsModule, RouterLink],
-  templateUrl: './login.page.html',
+  templateUrl: './register.page.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginPage implements OnInit {
+export class RegisterPage {
   private readonly fb = inject(FormBuilder);
   private readonly api = inject(ApiClient);
-  private readonly session = inject(AuthSessionService);
   private readonly router = inject(Router);
 
-  readonly providers = signal<string[]>([]);
   readonly loading = signal(false);
   readonly globalError = signal<string | null>(null);
-  readonly rateLimitSeconds = signal<number | null>(null);
-
-  readonly hasMicrosoft = computed(() => this.providers().includes('microsoft'));
 
   readonly form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(8)]]
+    password: ['', [Validators.required, Validators.minLength(8)]],
+    firstName: ['', [Validators.required]],
+    lastName: ['', [Validators.required]]
   });
 
   get emailError(): string | null {
@@ -62,11 +59,18 @@ export class LoginPage implements OnInit {
     return null;
   }
 
-  ngOnInit(): void {
-    this.api.get<ProvidersResponse>('/identity/providers').subscribe({
-      next: (res) => this.providers.set(res.providers),
-      error: () => { /* falha silenciosa — exibe apenas formulário local */ }
-    });
+  get firstNameError(): string | null {
+    const ctrl = this.form.controls.firstName;
+    if (!ctrl.touched || ctrl.valid) return null;
+    if (ctrl.hasError('required')) return 'Nome é obrigatório.';
+    return null;
+  }
+
+  get lastNameError(): string | null {
+    const ctrl = this.form.controls.lastName;
+    if (!ctrl.touched || ctrl.valid) return null;
+    if (ctrl.hasError('required')) return 'Sobrenome é obrigatório.';
+    return null;
   }
 
   onSubmit(): void {
@@ -77,32 +81,25 @@ export class LoginPage implements OnInit {
     }
 
     this.loading.set(true);
-    const { email, password } = this.form.getRawValue();
+    const { email, password, firstName, lastName } = this.form.getRawValue();
 
     this.api
-      .post<LoginResponse, { email: string; password: string }>(
-        '/identity/login',
-        { email, password }
+      .post<UserOutput, { email: string; password: string; firstName: string; lastName: string }>(
+        '/identity/register',
+        { email, password, firstName, lastName }
       )
       .subscribe({
-        next: (response) => {
-          this.session.setSession(response);
-          this.router.navigateByUrl('/');
+        next: () => {
+          this.router.navigate(['/login'], { queryParams: { registered: 'true' } });
         },
         error: (apiError: ApiError) => {
           this.loading.set(false);
-          this.handleLoginError(apiError);
+          this.handleRegisterError(apiError);
         }
       });
   }
 
-  onMicrosoftLogin(): void {
-    // Redireciona para o backend que inicia o fluxo OAuth com o Azure AD
-    const redirectUri = encodeURIComponent(environment.oauthRedirectUri);
-    window.location.href = `${environment.apiUrl.replace('/api/v1', '')}/auth/microsoft?redirectUri=${redirectUri}`;
-  }
-
-  private handleLoginError(apiError: ApiError): void {
+  private handleRegisterError(apiError: ApiError): void {
     if (apiError.status === 400 && apiError.problem.errors) {
       const errors = apiError.problem.errors;
       if (errors['email']) {
@@ -111,18 +108,17 @@ export class LoginPage implements OnInit {
       if (errors['password']) {
         this.form.controls.password.setErrors({ apiError: errors['password'][0] });
       }
+      if (errors['firstName']) {
+        this.form.controls.firstName.setErrors({ apiError: errors['firstName'][0] });
+      }
+      if (errors['lastName']) {
+        this.form.controls.lastName.setErrors({ apiError: errors['lastName'][0] });
+      }
       return;
     }
 
-    if (apiError.status === 401) {
-      this.globalError.set('Email ou senha incorretos.');
-      return;
-    }
-
-    if (apiError.status === 429) {
-      const seconds = apiError.retryAfterSeconds ?? 60;
-      this.rateLimitSeconds.set(seconds);
-      this.globalError.set(`Muitas tentativas. Aguarde ${seconds} segundos antes de tentar novamente.`);
+    if (apiError.status === 409) {
+      this.form.controls.email.setErrors({ apiError: apiError.problem.detail ?? 'E-mail já cadastrado.' });
       return;
     }
 

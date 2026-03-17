@@ -1,4 +1,10 @@
-import { HttpInterceptorFn, HttpRequest, HttpHandlerFn, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpInterceptorFn,
+  HttpRequest,
+  HttpHandlerFn,
+  HttpErrorResponse,
+  HttpHeaders
+} from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, switchMap, throwError } from 'rxjs';
@@ -16,6 +22,7 @@ interface RefreshResponse {
  * Interceptor de refresh token.
  * Em caso de 401 com refresh token disponível, tenta renovar o access token.
  * Se o refresh falhar, limpa a sessão e redireciona para login.
+ * O backend exige X-Tenant em todas as requisições, incluindo refresh.
  */
 export const refreshTokenInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
@@ -43,9 +50,14 @@ export const refreshTokenInterceptor: HttpInterceptorFn = (
         return throwError(() => error);
       }
 
-      // Tentar renovar o token
+      // Tentar renovar o token — incluir X-Tenant obrigatório em todas as requisições
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-Tenant': session.tenant()
+      });
       return http
-        .post<RefreshResponse>(`${environment.apiUrl}/identity/refresh`, { refreshToken })
+        .post<RefreshResponse>(`${environment.apiUrl}/identity/refresh`, { refreshToken }, { headers })
         .pipe(
           switchMap((response) => {
             session.updateToken(response.accessToken, response.refreshToken);

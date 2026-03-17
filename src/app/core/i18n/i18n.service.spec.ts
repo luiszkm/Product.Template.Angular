@@ -8,8 +8,9 @@ describe('I18nService', () => {
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
-    // Limpar localStorage antes de cada teste
     localStorage.clear();
+    // Forçar pt-BR como locale do browser para testes consistentes
+    Object.defineProperty(navigator, 'language', { value: 'pt-BR', configurable: true });
 
     TestBed.configureTestingModule({
       providers: [
@@ -28,6 +29,8 @@ describe('I18nService', () => {
   });
 
   it('deve ser criado', () => {
+    const req = httpMock.expectOne('/i18n/pt-BR.json');
+    req.flush({});
     expect(service).toBeTruthy();
   });
 
@@ -72,13 +75,11 @@ describe('I18nService', () => {
   });
 
   it('deve mudar idioma e recarregar traduções', () => {
-    // Primeira requisição (pt-BR)
     const req1 = httpMock.expectOne('/i18n/pt-BR.json');
     req1.flush({ common: { save: 'Salvar' } });
 
     expect(service.currentLocale()).toBe('pt-BR');
 
-    // Mudar para en-US
     service.setLocale('en-US');
 
     const req2 = httpMock.expectOne('/i18n/en-US.json');
@@ -100,18 +101,6 @@ describe('I18nService', () => {
     expect(localStorage.getItem('locale')).toBe('en-US');
   });
 
-  it('deve restaurar locale do localStorage', () => {
-    localStorage.setItem('locale', 'en-US');
-
-    // Criar novo serviço (vai ler do localStorage)
-    const newService = TestBed.inject(I18nService);
-
-    const req = httpMock.expectOne('/i18n/en-US.json');
-    req.flush({});
-
-    expect(newService.currentLocale()).toBe('en-US');
-  });
-
   it('deve ignorar locale inválido', () => {
     const req = httpMock.expectOne('/i18n/pt-BR.json');
     req.flush({});
@@ -121,7 +110,7 @@ describe('I18nService', () => {
     service.setLocale('invalid-locale');
 
     expect(consoleSpy).toHaveBeenCalledWith('[I18n] Locale not available: invalid-locale');
-    expect(service.currentLocale()).toBe('pt-BR'); // Mantém o atual
+    expect(service.currentLocale()).toBe('pt-BR');
   });
 
   it('deve ter locales disponíveis', () => {
@@ -153,6 +142,38 @@ describe('I18nService', () => {
     req2.flush({});
 
     expect(document.documentElement.lang).toBe('en-US');
+  });
+});
+
+describe('I18nService - restauração do localStorage', () => {
+  let service: I18nService;
+  let httpMock: HttpTestingController;
+
+  beforeEach(() => {
+    localStorage.clear();
+    localStorage.setItem('locale', 'en-US');
+
+    TestBed.configureTestingModule({
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
+    });
+
+    service = TestBed.inject(I18nService);
+    httpMock = TestBed.inject(HttpTestingController);
+  });
+
+  afterEach(() => {
+    httpMock.verify();
+    localStorage.clear();
+  });
+
+  it('deve restaurar locale do localStorage', () => {
+    const req = httpMock.expectOne('/i18n/en-US.json');
+    req.flush({});
+
+    expect(service.currentLocale()).toBe('en-US');
   });
 });
 

@@ -1,0 +1,68 @@
+<section class="role-detail">
+  <header class="role-detail__header">
+    <a routerLink="/roles" class="role-detail__back">← Voltar</a>
+  </header>
+
+  @if (vm().loading && !vm().role) {
+    <p>Carregando...</p>
+  } @else if (vm().error) {
+    <p class="role-detail__error" role="alert">{{ vm().error }}</p>
+  } @else if (vm().role; as role) {
+    <div class="role-detail__card">
+      @if (editing()) {
+        <form [formGroup]="form" (ngSubmit)="saveEdit()" class="role-detail__form">
+          <div class="field">
+            <label for="name">Nome</label>
+            <input id="name" formControlName="name" />
+          </div>
+          <div class="field">
+            <label for="description">Descrição</label>
+            <input id="description" formControlName="description" />
+          </div>
+          <div class="role-detail__actions">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancelar</button>
+          </div>
+        </form>
+      } @else {
+        <h2>{{ role.name }}</h2>
+        <p>{{ role.description }}</p>
+        @if (canManage) {
+          <div class="role-detail__actions">
+            <button type="button" class="btn btn-primary" (click)="startEdit()">Editar</button>
+            <button type="button" class="btn btn-danger" (click)="onRemove()">Excluir</button>
+          </div>
+        }
+      }
+
+      <div class="role-detail__permissions">
+        <h3>Permissões</h3>
+        @if (role.permissions.length > 0) {
+          <ul>
+            @for (p of role.permissions; track p.id) {
+              <li>
+                {{ p.name }} — {{ p.description }}
+                @if (canManage) {
+                  <button type="button" (click)="onRemovePermission(p.id)">Remover</button>
+                }
+              </li>
+            }
+          </ul>
+        } @else {
+          <p>Nenhuma permissão atribuída.</p>
+        }
+
+        @if (canManage && availablePermissions().length > 0) {
+          <div class="role-detail__add">
+            <select #permSelect (change)="onPermissionSelect(permSelect.value)">
+              <option value="">Adicionar permissão...</option>
+              @for (p of availablePermissions(); track p.id) {
+                <option [value]="p.id">{{ p.name }}</option>
+              }
+            </select>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</section>

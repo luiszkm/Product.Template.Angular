@@ -1,6 +1,6 @@
 <main class="login-shell">
   <section class="login-card">
-    <h1 class="login-title">Entrar</h1>
+    <h1 class="login-title">Criar conta</h1>
 
     @if (globalError()) {
       <div class="alert alert-error" role="alert">{{ globalError() }}</div>
@@ -31,7 +31,7 @@
             id="password"
             type="password"
             formControlName="password"
-            autocomplete="current-password"
+            autocomplete="new-password"
             placeholder="••••••••"
             [class.field-invalid]="passwordError"
             aria-describedby="password-error"
@@ -41,23 +41,47 @@
           }
         </div>
 
+        <div class="field">
+          <label for="firstName">Nome</label>
+          <input
+            id="firstName"
+            type="text"
+            formControlName="firstName"
+            autocomplete="given-name"
+            placeholder="Seu nome"
+            [class.field-invalid]="firstNameError"
+            aria-describedby="firstName-error"
+          />
+          @if (firstNameError) {
+            <span id="firstName-error" class="field-error" role="alert">{{ firstNameError }}</span>
+          }
+        </div>
+
+        <div class="field">
+          <label for="lastName">Sobrenome</label>
+          <input
+            id="lastName"
+            type="text"
+            formControlName="lastName"
+            autocomplete="family-name"
+            placeholder="Seu sobrenome"
+            [class.field-invalid]="lastNameError"
+            aria-describedby="lastName-error"
+          />
+          @if (lastNameError) {
+            <span id="lastName-error" class="field-error" role="alert">{{ lastNameError }}</span>
+          }
+        </div>
+
         <button type="submit" class="btn btn-primary" [disabled]="loading()">
-          @if (loading()) { Entrando... } @else { Entrar }
+          @if (loading()) { Criando conta... } @else { Criar conta }
         </button>
 
       </fieldset>
     </form>
 
-    @if (hasMicrosoft()) {
-      <div class="divider"><span>ou</span></div>
-      <button type="button" class="btn btn-microsoft" (click)="onMicrosoftLogin()">
-        Entrar com Microsoft
-      </button>
-    }
-
     <p class="register-link">
-      Não tem uma conta? <a routerLink="/register">Criar conta</a>
+      Já tem uma conta? <a routerLink="/login">Entrar</a>
     </p>
   </section>
 </main>
-

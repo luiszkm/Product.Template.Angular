@@ -3,10 +3,29 @@
     <h1>Product Template Angular</h1>
     <nav aria-label="Navegação principal" class="shell__nav">
       <a routerLink="/products" routerLinkActive="active">Products</a>
-      <a routerLink="/users" routerLinkActive="active">Users</a>
+      @if (session.hasPermission('identity.user.read') || session.isAdmin()) {
+        <a routerLink="/users" routerLinkActive="active">Users</a>
+      }
       <a routerLink="/orders" routerLinkActive="active">Orders</a>
+      @if (session.hasPermission('authorization.role.read') || session.isAdmin()) {
+        <a routerLink="/roles" routerLinkActive="active">Roles</a>
+      }
+      @if (session.hasPermission('authorization.permission.read') || session.isAdmin()) {
+        <a routerLink="/permissions" routerLinkActive="active">Permissions</a>
+      }
+      @if (session.hasPermission('tenants.read') || session.isAdmin()) {
+        <a routerLink="/tenants" routerLinkActive="active">Tenants</a>
+      }
     </nav>
     <div class="shell__actions">
+      @if (session.user(); as user) {
+        <span class="shell__user" [attr.aria-label]="'Usuário: ' + user.email">
+          {{ user.firstName || user.email }}
+        </span>
+        <button type="button" class="shell__logout" (click)="logout()">
+          {{ 'auth.logout' | translate }}
+        </button>
+      }
       <app-language-selector />
     </div>
   </header>

@@ -1,0 +1,82 @@
+<section class="permissions-page">
+  <header class="permissions-page__header">
+    <h2>Permissões</h2>
+    <p>Gestão de permissões do sistema.</p>
+  </header>
+
+  @if (vm().error) {
+    <p class="permissions-page__error" role="alert">{{ vm().error }}</p>
+  }
+
+  @if (canManage) {
+    <div class="permissions-page__toolbar">
+      @if (showCreateForm()) {
+        <form [formGroup]="form" (ngSubmit)="onCreate()" class="permissions-page__form">
+          <input formControlName="name" placeholder="Nome (ex: module.resource.action)" />
+          <input formControlName="description" placeholder="Descrição" />
+          <button type="submit" class="btn btn-primary">Criar</button>
+          <button type="button" class="btn btn-secondary" (click)="showCreateForm.set(false)">
+            Cancelar
+          </button>
+        </form>
+      } @else {
+        <button type="button" class="btn btn-primary" (click)="showCreateForm.set(true)">
+          Nova permissão
+        </button>
+      }
+    </div>
+  }
+
+  <div class="permissions-page__content">
+    @if (vm().loading) {
+      <p>Carregando...</p>
+    } @else if (vm().items.length === 0) {
+      <p>Nenhuma permissão encontrada.</p>
+    } @else {
+      <table class="permissions-table">
+        <thead>
+          <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Descrição</th>
+            @if (canManage) {
+              <th scope="col">Ações</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of vm().items; track item.id) {
+            <tr>
+              <td>{{ item.name }}</td>
+              <td>{{ item.description }}</td>
+              @if (canManage) {
+                <td>
+                  <button type="button" (click)="onRemove(item.id)">Excluir</button>
+                </td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </div>
+
+  @if (vm().totalCount > vm().pageSize) {
+    <nav class="permissions-page__pagination">
+      <button
+        type="button"
+        [disabled]="vm().pageNumber <= 1"
+        (click)="onPageChange(vm().pageNumber - 1)"
+      >
+        Anterior
+      </button>
+      <span>Página {{ vm().pageNumber }} de {{ totalPages() }}</span>
+      <button
+        type="button"
+        [disabled]="vm().pageNumber * vm().pageSize >= vm().totalCount"
+        (click)="onPageChange(vm().pageNumber + 1)"
+      >
+        Próxima
+      </button>
+    </nav>
+  }
+</section>

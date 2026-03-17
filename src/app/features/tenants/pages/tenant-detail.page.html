@@ -1,0 +1,54 @@
+<section class="tenant-detail">
+  <header class="tenant-detail__header">
+    <a routerLink="/tenants" class="tenant-detail__back">← Voltar</a>
+  </header>
+
+  @if (loading()) {
+    <p>Carregando...</p>
+  } @else if (error()) {
+    <p class="tenant-detail__error" role="alert">{{ error() }}</p>
+  } @else if (tenant(); as t) {
+    <div class="tenant-detail__card">
+      @if (editing()) {
+        <form [formGroup]="form" (ngSubmit)="saveEdit()" class="tenant-detail__form">
+          <div class="field">
+            <label for="displayName">Nome de exibição</label>
+            <input id="displayName" formControlName="displayName" />
+          </div>
+          <div class="field">
+            <label for="contactEmail">E-mail de contato</label>
+            <input id="contactEmail" type="email" formControlName="contactEmail" />
+          </div>
+          <div class="tenant-detail__actions">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancelar</button>
+          </div>
+        </form>
+      } @else {
+        <h2>{{ t.displayName }}</h2>
+        <dl class="tenant-detail__info">
+          <dt>ID</dt>
+          <dd>{{ t.tenantId }}</dd>
+          <dt>Chave</dt>
+          <dd>{{ t.tenantKey }}</dd>
+          <dt>E-mail de contato</dt>
+          <dd>{{ t.contactEmail ?? '-' }}</dd>
+          <dt>Ativo</dt>
+          <dd>{{ t.isActive ? 'Sim' : 'Não' }}</dd>
+          <dt>Modo de isolamento</dt>
+          <dd>{{ t.isolationMode }}</dd>
+          <dt>Criado em</dt>
+          <dd>{{ t.createdAt | date: 'medium' }}</dd>
+        </dl>
+        @if (canManage) {
+          <div class="tenant-detail__actions">
+            <button type="button" class="btn btn-primary" (click)="startEdit()">Editar</button>
+            @if (t.isActive) {
+              <button type="button" class="btn btn-danger" (click)="onRemove()">Desativar</button>
+            }
+          </div>
+        }
+      }
+    </div>
+  }
+</section>

@@ -4,6 +4,8 @@ export interface SessionUser {
   id: string;
   email: string;
   firstName: string;
+  lastName?: string;
+  lastLoginAt?: string | null;
   roles: string[];
 }
 
@@ -18,6 +20,7 @@ export interface LoginResponse {
 interface JwtPayload {
   sub: string;
   email: string;
+  given_name?: string;
   role: string | string[];
   permission?: string | string[];
   exp: number;
@@ -109,11 +112,16 @@ export class AuthSessionService {
       if (token) {
         this.tokenSignal.set(token);
         const payload = this.decodeJwt(token);
-        // Reconstituir usuário mínimo do JWT (sem firstName)
+        // Reconstituir usuário mínimo do JWT
         const roles = payload.role
           ? Array.isArray(payload.role) ? payload.role : [payload.role]
           : [];
-        this.userSignal.set({ id: payload.sub, email: payload.email, firstName: '', roles });
+        this.userSignal.set({
+          id: payload.sub,
+          email: payload.email,
+          firstName: payload.given_name ?? '',
+          roles
+        });
       }
       if (refreshToken) this.refreshTokenSignal.set(refreshToken);
     } catch { /* token inválido */ }
@@ -140,6 +148,11 @@ export class AuthSessionService {
       localStorage.removeItem('access_token');
       sessionStorage.removeItem('refresh_token');
     } catch { /* */ }
+  }
+
+  /** Alias semântico para clear() — use antes de redirecionar para login */
+  logout(): void {
+    this.clear();
   }
 
   private decodeJwt(token: string): JwtPayload {

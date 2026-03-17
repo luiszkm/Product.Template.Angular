@@ -88,6 +88,7 @@ export class ApiClient {
   private buildHeaders(options?: RequestOptions): HttpHeaders {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
+      'Accept': 'application/json',
       'X-Tenant': this.session.tenant()
     });
 

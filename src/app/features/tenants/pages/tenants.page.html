@@ -1,0 +1,98 @@
+<section class="tenants-page">
+  <header class="tenants-page__header">
+    <h2>Tenants</h2>
+    <p>Painel superadmin — gestão de tenants.</p>
+  </header>
+
+  @if (vm().error) {
+    <p class="tenants-page__error" role="alert">{{ vm().error }}</p>
+  }
+
+  @if (canManage) {
+    <div class="tenants-page__toolbar">
+      @if (showCreateForm()) {
+        <form [formGroup]="form" (ngSubmit)="onCreate()" class="tenants-page__form">
+          <input type="number" formControlName="tenantId" placeholder="ID (número)" />
+          <input formControlName="tenantKey" placeholder="Chave (ex: acme)" />
+          <input formControlName="displayName" placeholder="Nome de exibição" />
+          <input type="email" formControlName="contactEmail" placeholder="E-mail de contato" />
+          <select formControlName="isolationMode">
+            @for (mode of isolationModes; track mode) {
+              <option [value]="mode">{{ mode }}</option>
+            }
+          </select>
+          <button type="submit" class="btn btn-primary">Criar</button>
+          <button type="button" class="btn btn-secondary" (click)="showCreateForm.set(false)">
+            Cancelar
+          </button>
+        </form>
+      } @else {
+        <button type="button" class="btn btn-primary" (click)="showCreateForm.set(true)">
+          Novo tenant
+        </button>
+      }
+    </div>
+  }
+
+  <div class="tenants-page__content">
+    @if (vm().loading) {
+      <p>Carregando...</p>
+    } @else if (vm().items.length === 0) {
+      <p>Nenhum tenant encontrado.</p>
+    } @else {
+      <table class="tenants-table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Chave</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Ativo</th>
+            <th scope="col">Isolamento</th>
+            @if (canManage) {
+              <th scope="col">Ações</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of vm().items; track item.tenantId) {
+            <tr [class.tenants-table__inactive]="!item.isActive">
+              <td>{{ item.tenantId }}</td>
+              <td>{{ item.tenantKey }}</td>
+              <td>{{ item.displayName }}</td>
+              <td>{{ item.isActive ? 'Sim' : 'Não' }}</td>
+              <td>{{ item.isolationMode }}</td>
+              @if (canManage) {
+                <td>
+                  <a [routerLink]="['/tenants', item.tenantId]">Ver</a>
+                  @if (item.isActive) {
+                    <button type="button" (click)="onRemove(item.tenantId)">Desativar</button>
+                  }
+                </td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </div>
+
+  @if (vm().totalCount > vm().pageSize) {
+    <nav class="tenants-page__pagination">
+      <button
+        type="button"
+        [disabled]="vm().pageNumber <= 1"
+        (click)="onPageChange(vm().pageNumber - 1)"
+      >
+        Anterior
+      </button>
+      <span>Página {{ vm().pageNumber }} de {{ totalPages() }}</span>
+      <button
+        type="button"
+        [disabled]="vm().pageNumber * vm().pageSize >= vm().totalCount"
+        (click)="onPageChange(vm().pageNumber + 1)"
+      >
+        Próxima
+      </button>
+    </nav>
+  }
+</section>
