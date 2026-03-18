@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, HostListener, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { LucideAngularModule, LayoutDashboard, Users, Shield, Key, Building2, Search, Sun, Moon, Bell, User, Menu, ChevronLeft, ChevronRight, LogOut } from 'lucide-angular';
+import { LucideAngularModule, LayoutDashboard, Users, Shield, Key, Building2, Search, Sun, Moon, Bell, User, Menu, ChevronLeft, ChevronRight, ChevronDown, LogOut } from 'lucide-angular';
 import { LanguageSelectorComponent } from '../../shared/components/language-selector.component';
 import { AuthSessionService } from '../../core/auth/auth-session.service';
 import { ThemeService } from '../../core/theme/theme.service';
@@ -29,6 +29,7 @@ export class ShellLayoutComponent {
   protected readonly sidebarOpen = signal(false);
   protected readonly notificationsOpen = signal(false);
   protected readonly sidebarCollapsed = signal(this.getInitialSidebarCollapsed());
+  protected readonly authSubmenuOpen = signal(false);
 
   protected readonly icons = {
     LayoutDashboard,
@@ -44,8 +45,17 @@ export class ShellLayoutComponent {
     Menu,
     ChevronLeft,
     ChevronRight,
+    ChevronDown,
     LogOut
   };
+
+  protected toggleAuthSubmenu(): void {
+    this.authSubmenuOpen.update(v => !v);
+  }
+
+  protected isAuthRoute(): boolean {
+    return this.router.url.includes('/roles') || this.router.url.includes('/permissions');
+  }
 
   private getInitialSidebarCollapsed(): boolean {
     if (typeof localStorage === 'undefined') return false;

@@ -339,6 +339,16 @@ textarea:focus-visible {
   border-color: var(--neutral-400);
 }
 
+.btn-danger {
+  background: color-mix(in srgb, var(--error) 10%, transparent);
+  color: var(--error);
+  border: 1px solid color-mix(in srgb, var(--error) 20%, transparent);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--error) 20%, transparent);
+}
+
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   *,

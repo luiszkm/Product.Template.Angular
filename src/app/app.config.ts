@@ -18,6 +18,7 @@ import {
   TrendingUp,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   LogOut
 } from 'lucide-angular';
 import {
@@ -54,6 +55,7 @@ const lucideIcons = {
   TrendingUp,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   LogOut
 };
 

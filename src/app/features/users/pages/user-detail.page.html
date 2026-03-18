@@ -1,15 +1,18 @@
 <section class="user-detail">
   <header class="user-detail__header">
-    <a routerLink="/users" class="user-detail__back">← Voltar</a>
+    <a routerLink="/users" class="user-detail__back">← Voltar para Usuários</a>
+    @if (vm().user; as user) {
+      <h1 class="user-detail__title">{{ user.firstName }} {{ user.lastName }}</h1>
+      <p class="user-detail__subtitle">{{ user.email }}</p>
+    }
   </header>
 
   @if (vm().loading && !vm().user) {
-    <p>Carregando...</p>
+    <p class="user-detail__loading">Carregando...</p>
   } @else if (vm().error) {
     <p class="user-detail__error" role="alert">{{ vm().error }}</p>
   } @else if (vm().user; as user) {
     <div class="user-detail__card">
-      <h2>{{ user.firstName }} {{ user.lastName }}</h2>
       <dl class="user-detail__info">
         <dt>E-mail</dt>
         <dd>{{ user.email }}</dd>

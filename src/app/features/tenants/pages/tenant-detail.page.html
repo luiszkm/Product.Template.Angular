@@ -1,10 +1,14 @@
 <section class="tenant-detail">
   <header class="tenant-detail__header">
-    <a routerLink="/tenants" class="tenant-detail__back">← Voltar</a>
+    <a routerLink="/tenants" class="tenant-detail__back">← Voltar para Tenants</a>
+    @if (tenant(); as t) {
+      <h1 class="tenant-detail__title">{{ t.displayName }}</h1>
+      <p class="tenant-detail__subtitle">{{ t.contactEmail || t.tenantKey || 'Sem informações adicionais' }}</p>
+    }
   </header>
 
   @if (loading()) {
-    <p>Carregando...</p>
+    <p class="tenant-detail__loading">Carregando...</p>
   } @else if (error()) {
     <p class="tenant-detail__error" role="alert">{{ error() }}</p>
   } @else if (tenant(); as t) {
@@ -25,7 +29,6 @@
           </div>
         </form>
       } @else {
-        <h2>{{ t.displayName }}</h2>
         <dl class="tenant-detail__info">
           <dt>ID</dt>
           <dd>{{ t.tenantId }}</dd>

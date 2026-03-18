@@ -1,10 +1,14 @@
 <section class="role-detail">
   <header class="role-detail__header">
-    <a routerLink="/roles" class="role-detail__back">← Voltar</a>
+    <a routerLink="/roles" class="role-detail__back">← Voltar para Roles</a>
+    @if (vm().role; as role) {
+      <h1 class="role-detail__title">{{ role.name }}</h1>
+      <p class="role-detail__subtitle">{{ role.description || 'Sem descrição' }}</p>
+    }
   </header>
 
   @if (vm().loading && !vm().role) {
-    <p>Carregando...</p>
+    <p class="role-detail__loading">Carregando...</p>
   } @else if (vm().error) {
     <p class="role-detail__error" role="alert">{{ vm().error }}</p>
   } @else if (vm().role; as role) {
@@ -25,8 +29,6 @@
           </div>
         </form>
       } @else {
-        <h2>{{ role.name }}</h2>
-        <p>{{ role.description }}</p>
         @if (canManage) {
           <div class="role-detail__actions">
             <button type="button" class="btn btn-primary" (click)="startEdit()">Editar</button>

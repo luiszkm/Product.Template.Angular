@@ -11,32 +11,43 @@
       </button>
     </div>
     <nav class="sidebar__nav" aria-label="Navegação principal">
-      <a routerLink="/dashboard" routerLinkActive="sidebar__link--active" class="sidebar__link" [attr.title]="sidebarCollapsed() ? 'Dashboard' : null">
+      <a routerLink="/dashboard" routerLinkActive="sidebar__link--active" class="sidebar__link" [attr.title]="sidebarCollapsed() ? ('navigation.dashboard' | translate) : null">
         <lucide-icon [img]="icons.LayoutDashboard" [size]="20" aria-hidden="true" />
-        <span class="sidebar__link-text">Dashboard</span>
+        <span class="sidebar__link-text">{{ 'navigation.dashboard' | translate }}</span>
       </a>
       @if (session.hasPermission('identity.user.read') || session.isAdmin()) {
-        <a routerLink="/users" routerLinkActive="sidebar__link--active" class="sidebar__link" [attr.title]="sidebarCollapsed() ? 'Users' : null">
+        <a routerLink="/users" routerLinkActive="sidebar__link--active" class="sidebar__link" [attr.title]="sidebarCollapsed() ? ('navigation.users' | translate) : null">
           <lucide-icon [img]="icons.Users" [size]="20" aria-hidden="true" />
-          <span class="sidebar__link-text">Users</span>
+          <span class="sidebar__link-text">{{ 'navigation.users' | translate }}</span>
         </a>
       }
-      @if (session.hasPermission('authorization.role.read') || session.isAdmin()) {
-        <a routerLink="/roles" routerLinkActive="sidebar__link--active" class="sidebar__link" [attr.title]="sidebarCollapsed() ? 'Roles' : null">
-          <lucide-icon [img]="icons.Shield" [size]="20" aria-hidden="true" />
-          <span class="sidebar__link-text">Roles</span>
-        </a>
-      }
-      @if (session.hasPermission('authorization.permission.read') || session.isAdmin()) {
-        <a routerLink="/permissions" routerLinkActive="sidebar__link--active" class="sidebar__link" [attr.title]="sidebarCollapsed() ? 'Permissions' : null">
-          <lucide-icon [img]="icons.Key" [size]="20" aria-hidden="true" />
-          <span class="sidebar__link-text">Permissions</span>
-        </a>
+      @if (session.hasPermission('authorization.role.read') || session.hasPermission('authorization.permission.read') || session.isAdmin()) {
+        <div class="sidebar__submenu" [class.sidebar__submenu--open]="authSubmenuOpen() || isAuthRoute()">
+          <button type="button" class="sidebar__link sidebar__submenu-trigger" (click)="toggleAuthSubmenu()" [attr.title]="sidebarCollapsed() ? ('navigation.authorization' | translate) : null" [class.sidebar__link--active]="isAuthRoute()">
+            <lucide-icon [img]="icons.Shield" [size]="20" aria-hidden="true" />
+            <span class="sidebar__link-text">{{ 'navigation.authorization' | translate }}</span>
+            <lucide-icon [img]="icons.ChevronDown" [size]="16" class="sidebar__submenu-chevron" aria-hidden="true" />
+          </button>
+          <div class="sidebar__submenu-items">
+            @if (session.hasPermission('authorization.role.read') || session.isAdmin()) {
+              <a routerLink="/roles" routerLinkActive="sidebar__link--active" class="sidebar__link sidebar__link--child" [attr.title]="sidebarCollapsed() ? ('navigation.roles' | translate) : null">
+                <lucide-icon [img]="icons.Shield" [size]="20" aria-hidden="true" />
+                <span class="sidebar__link-text">{{ 'navigation.roles' | translate }}</span>
+              </a>
+            }
+            @if (session.hasPermission('authorization.permission.read') || session.isAdmin()) {
+              <a routerLink="/permissions" routerLinkActive="sidebar__link--active" class="sidebar__link sidebar__link--child" [attr.title]="sidebarCollapsed() ? ('navigation.permissions' | translate) : null">
+                <lucide-icon [img]="icons.Key" [size]="20" aria-hidden="true" />
+                <span class="sidebar__link-text">{{ 'navigation.permissions' | translate }}</span>
+              </a>
+            }
+          </div>
+        </div>
       }
       @if (session.hasPermission('tenants.read') || session.isAdmin()) {
-        <a routerLink="/tenants" routerLinkActive="sidebar__link--active" class="sidebar__link" [attr.title]="sidebarCollapsed() ? 'Tenants' : null">
+        <a routerLink="/tenants" routerLinkActive="sidebar__link--active" class="sidebar__link" [attr.title]="sidebarCollapsed() ? ('navigation.tenants' | translate) : null">
           <lucide-icon [img]="icons.Building2" [size]="20" aria-hidden="true" />
-          <span class="sidebar__link-text">Tenants</span>
+          <span class="sidebar__link-text">{{ 'navigation.tenants' | translate }}</span>
         </a>
       }
     </nav>
