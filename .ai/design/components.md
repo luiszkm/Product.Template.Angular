@@ -6,10 +6,65 @@ Biblioteca de componentes padronizados para uso em todo o projeto.
 
 ## 🔘 Botões
 
-### app-button
+### Implementação Actual (classes em `src/styles.css`)
+
+O projeto usa **classes CSS** em vez de componentes Angular para botões. Use sempre:
+
+```html
+<button type="button" class="btn btn-primary" (click)="save()">Salvar</button>
+<button type="button" class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+<button type="button" class="btn btn-danger" (click)="remove()">Excluir</button>
+```
+
+**Variantes disponíveis:** `.btn-primary`, `.btn-secondary`, `.btn-danger`
+
+### Classes CSS (implementadas em styles.css)
+```css
+.btn {
+  padding: var(--spacing-2) var(--spacing-4);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.btn-primary {
+  background: var(--primary-600);
+  color: var(--primary-foreground);
+  border: none;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-700);
+}
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--muted);
+  border-color: var(--neutral-400);
+}
+
+.btn-danger {
+  background: color-mix(in srgb, var(--error) 10%, transparent);
+  color: var(--error);
+  border: 1px solid color-mix(in srgb, var(--error) 20%, transparent);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--error) 20%, transparent);
+}
+```
+
+### app-button (referência futura)
 
 ```ts
-// Interface
+// Interface - componente a implementar
 interface ButtonProps {
   variant: 'primary' | 'secondary' | 'danger' | 'ghost';
   size: 'sm' | 'md' | 'lg';
@@ -20,105 +75,8 @@ interface ButtonProps {
 ```
 
 ```html
-<!-- Uso -->
-<app-button variant="primary" size="md" (click)="save()">
-  Salvar
-</app-button>
-
-<app-button variant="secondary" size="sm" [disabled]="true">
-  Desabilitado
-</app-button>
-
-<app-button variant="danger" size="lg" [loading]="saving()">
-  Excluir
-</app-button>
-
-<app-button variant="ghost" size="md">
-  Cancelar
-</app-button>
-```
-
-### Classes CSS
-```css
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-2);
-  font-family: var(--font-family-sans);
-  font-weight: var(--font-weight-medium);
-  border-radius: var(--radius-md);
-  border: var(--border-width-1) solid transparent;
-  cursor: pointer;
-  transition: var(--transition-colors);
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.btn:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
-}
-
-.btn:disabled {
-  opacity: var(--opacity-disabled);
-  cursor: not-allowed;
-}
-
-/* Variants */
-.btn-primary {
-  background: var(--color-primary-500);
-  color: var(--color-text-inverse);
-}
-
-.btn-primary:hover:not(:disabled) {
-  background: var(--color-primary-600);
-}
-
-.btn-secondary {
-  background: var(--color-background);
-  color: var(--color-text-primary);
-  border-color: var(--color-border);
-}
-
-.btn-secondary:hover:not(:disabled) {
-  background: var(--color-surface);
-}
-
-.btn-danger {
-  background: var(--color-error-500);
-  color: var(--color-text-inverse);
-}
-
-.btn-danger:hover:not(:disabled) {
-  background: var(--color-error-600);
-}
-
-.btn-ghost {
-  background: transparent;
-  color: var(--color-text-secondary);
-}
-
-.btn-ghost:hover:not(:disabled) {
-  background: var(--color-surface);
-  color: var(--color-text-primary);
-}
-
-/* Sizes */
-.btn-sm {
-  padding: var(--spacing-1) var(--spacing-3);
-  font-size: var(--font-size-sm);
-}
-
-.btn-md {
-  padding: var(--spacing-2) var(--spacing-4);
-  font-size: var(--font-size-base);
-}
-
-.btn-lg {
-  padding: var(--spacing-3) var(--spacing-6);
-  font-size: var(--font-size-lg);
-}
+<!-- Uso quando componente existir -->
+<app-button variant="primary" size="md" (click)="save()">Salvar</app-button>
 ```
 
 ---
@@ -191,28 +149,28 @@ interface BadgeProps {
 }
 
 .badge-default {
-  background: var(--color-gray-100);
-  color: var(--color-gray-700);
+  background: var(--muted);
+  color: var(--foreground-secondary);
 }
 
 .badge-success {
-  background: var(--color-success-50);
-  color: var(--color-success-700);
+  background: color-mix(in srgb, var(--success) 10%, transparent);
+  color: var(--success);
 }
 
 .badge-warning {
-  background: var(--color-warning-50);
-  color: var(--color-warning-700);
+  background: color-mix(in srgb, var(--warning) 10%, transparent);
+  color: var(--warning);
 }
 
 .badge-error {
-  background: var(--color-error-50);
-  color: var(--color-error-700);
+  background: color-mix(in srgb, var(--error) 10%, transparent);
+  color: var(--error);
 }
 
 .badge-info {
-  background: var(--color-info-50);
-  color: var(--color-info-700);
+  background: color-mix(in srgb, var(--info) 10%, transparent);
+  color: var(--info);
 }
 ```
 

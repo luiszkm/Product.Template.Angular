@@ -10,47 +10,46 @@ Referência rápida para gerar telas consistentes com IA.
 ```
 Ao gerar código Angular para este projeto:
 
-1. Consulte `.ai/design/tokens.md` para cores, espaçamentos e tipografia
+1. Consulte `.ai/design/tokens.md` para tokens ERP (--foreground, --card, etc.)
 2. Siga `.ai/design/ui-contracts.md` para estrutura de páginas e formulários
-3. Use componentes de `.ai/design/components.md` quando disponíveis
-4. Implemente acessibilidade conforme `.ai/design/accessibility.md`
-5. Aplique responsividade conforme `.ai/design/responsive.md`
-6. Consulte `.ai/design/examples.md` para referência completa
+3. Use classes .btn, .btn-primary, .btn-secondary, .btn-danger (ver components.md)
+4. Páginas de detalhe: padrão feature-detail__* em ui-contracts.md
+5. Layout shell: docs/erp-layout-prompt.md
+6. Implemente acessibilidade conforme `.ai/design/accessibility.md`
+7. Consulte `.ai/design/examples.md` para referência completa
 
 Nunca use valores hard-coded - sempre use tokens CSS (var(--*)).
 ```
 
 ---
 
-## 🎨 Tokens Mais Usados
+## 🎨 Tokens Mais Usados (ERP)
 
 ### Cores
 ```css
-/* Primárias */
-var(--color-primary-500)      /* Botões, links */
-var(--color-primary-600)      /* Hover */
+/* Interface (preferidos - suportam dark mode) */
+var(--foreground)             /* Texto principal */
+var(--foreground-secondary)   /* Texto secundário */
+var(--card)                   /* Fundo de cards */
+var(--card-foreground)        /* Texto em cards */
+var(--primary-600)           /* Links, botões primários */
+var(--primary-700)           /* Hover */
+var(--error)                  /* Erros, botões de perigo */
+var(--border)                 /* Bordas */
+var(--input-background)      /* Fundo de inputs */
 
-/* Texto */
-var(--color-text-primary)     /* Texto principal */
-var(--color-text-secondary)   /* Texto secundário */
-
-/* Superfície */
-var(--color-background)       /* Fundo principal */
-var(--color-surface)          /* Cards, inputs */
-var(--color-border)           /* Bordas */
-
-/* Semânticas */
-var(--color-success-500)      /* Sucesso */
-var(--color-error-500)        /* Erro */
-var(--color-warning-500)      /* Aviso */
+/* Alertas com color-mix */
+background: color-mix(in srgb, var(--error) 10%, transparent);
+border: 1px solid color-mix(in srgb, var(--error) 20%, transparent);
 ```
 
-### Espaçamentos
+### Espaçamentos (base 8px)
 ```css
-var(--spacing-2)   /* 8px - gap pequeno */
-var(--spacing-4)   /* 16px - padding padrão */
-var(--spacing-6)   /* 24px - gap grande */
-var(--spacing-8)   /* 32px - seções */
+var(--spacing-1)   /* 8px - gap pequeno */
+var(--spacing-2)   /* 16px - padding padrão */
+var(--spacing-3)   /* 24px - gap médio */
+var(--spacing-4)   /* 32px - seções, gap grande */
+var(--spacing-6)   /* 48px */
 ```
 
 ### Tipografia
@@ -77,9 +76,7 @@ var(--font-weight-semibold)   /* 600 - títulos */
         <p class="page-subtitle">{{ subtitle }}</p>
       </div>
       <div class="page-actions">
-        <app-button variant="primary" (click)="create()">
-          Novo
-        </app-button>
+        <button type="button" class="btn btn-primary" (click)="create()">Novo</button>
       </div>
     </div>
   </header>
@@ -111,15 +108,42 @@ var(--font-weight-semibold)   /* 600 - títulos */
   </div>
 
   <div class="form-actions">
-    <app-button type="button" variant="secondary" (click)="cancel()">
-      Cancelar
-    </app-button>
-    <app-button type="submit" variant="primary" [disabled]="form.invalid">
-      Salvar
-    </app-button>
+    <button type="button" class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Salvar</button>
   </div>
 </form>
 ```
+
+### Página de Detalhe
+```html
+<section class="feature-detail">
+  <header class="feature-detail__header">
+    <a routerLink="/feature" class="feature-detail__back">← Voltar para Feature</a>
+    @if (item(); as item) {
+      <h1 class="feature-detail__title">{{ item.name }}</h1>
+      <p class="feature-detail__subtitle">{{ item.subtitle }}</p>
+    }
+  </header>
+
+  @if (loading()) {
+    <p class="feature-detail__loading">Carregando...</p>
+  } @else if (error()) {
+    <p class="feature-detail__error" role="alert">{{ error() }}</p>
+  } @else if (item(); as item) {
+    <div class="feature-detail__card">
+      <dl class="feature-detail__info">
+        <dt>Campo</dt>
+        <dd>{{ item.field }}</dd>
+      </dl>
+      <div class="feature-detail__actions">
+        <button type="button" class="btn btn-primary" (click)="edit()">Editar</button>
+        <button type="button" class="btn btn-danger" (click)="remove()">Excluir</button>
+      </div>
+    </div>
+  }
+</section>
+```
+Ver estrutura completa em `ui-contracts.md` (secção Página de Detalhe).
 
 ### Tabela
 ```html
@@ -140,7 +164,7 @@ var(--font-weight-semibold)   /* 600 - títulos */
             {{ item.price | currency:'BRL' }}
           </td>
           <td class="table-td table-td-actions">
-            <app-icon-button icon="edit" (click)="edit(item.id)" />
+            <button type="button" class="btn btn-secondary" (click)="edit(item.id)">Editar</button>
           </td>
         </tr>
       }
@@ -155,9 +179,9 @@ var(--font-weight-semibold)   /* 600 - títulos */
 
 Antes de gerar código, verifique:
 
-- [ ] Usou tokens CSS (não valores hard-coded)
-- [ ] Seguiu estrutura de UI contract
-- [ ] Reutilizou componentes existentes
+- [ ] Usou tokens ERP (--foreground, --card, etc.)
+- [ ] Seguiu estrutura de UI contract (incl. Página de Detalhe se aplicável)
+- [ ] Usou classes .btn em vez de componentes inexistentes
 - [ ] Adicionou ARIA labels
 - [ ] Implementou focus visível
 - [ ] Aplicou mobile-first
@@ -169,6 +193,7 @@ Antes de gerar código, verifique:
 
 - **Tokens**: `.ai/design/tokens.md`
 - **UI Contracts**: `.ai/design/ui-contracts.md`
+- **Layout ERP (shell, sidebar)**: `docs/erp-layout-prompt.md`
 - **Componentes**: `.ai/design/components.md`
 - **Acessibilidade**: `.ai/design/accessibility.md`
 - **Responsividade**: `.ai/design/responsive.md`

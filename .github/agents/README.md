@@ -2,6 +2,11 @@
 
 Os agentes deste diretório padronizam o fluxo AI para frontend Angular.
 
+## Integração Cursor
+
+- **Regras:** `.cursor/rules/` — aplicadas automaticamente por tipo de ficheiro
+- **AGENTS.md:** Raiz do projeto — instruções gerais e referência a agentes
+
 ## Agentes
 - `frontend-architect.agent.md`: valida arquitetura e limites de camadas.
 - `component-builder.agent.md`: gera componentes reutilizáveis.

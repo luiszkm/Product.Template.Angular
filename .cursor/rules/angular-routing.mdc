@@ -1,0 +1,24 @@
+---
+description: Routing Angular — lazy loading, guards, title, loadChildren
+globs: "**/*.routes.ts,**/app.routes.ts"
+alwaysApply: false
+---
+
+# Routing
+
+**Fonte:** `.ai/rules/10-routing.md`
+
+## Feature routes
+- `loadChildren` — nunca `component` directo para features
+- `title` na rota
+- Export: `FEATURE_ROUTES` ou `FEATURE_ROUTES: Routes`
+
+## Rotas protegidas
+- `canActivate: [authGuard]` — rotas autenticadas
+- `canActivate: [authGuard, roleGuard]` + `data: { requiredPermission: 'x.read' }` — RBAC
+
+Exemplo: @src/app/features/users/users.routes.ts
+
+## Registo em app.routes.ts
+- Dentro do shell (children)
+- `loadChildren: () => import('./features/{feature}/{feature}.routes').then(m => m.FEATURE_ROUTES)`

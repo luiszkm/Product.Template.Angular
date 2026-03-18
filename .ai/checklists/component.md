@@ -30,6 +30,10 @@
 - [ ] `type="button"` em botões não-submit
 - [ ] `aria-label` descritivo em botões de ação
 
+## Design (ver .ai/design/)
+- [ ] Tokens ERP em CSS (var(--foreground), var(--card), etc.)
+- [ ] Botões com classes .btn (não inventar estilos)
+
 ## Qualidade
 - [ ] Spec criado (`*.spec.ts`) com `TestBed.configureTestingModule`
 - [ ] Spec cobre: cria, emite output válido, não emite com inválido

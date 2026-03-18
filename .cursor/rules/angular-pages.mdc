@@ -1,0 +1,28 @@
+---
+description: Páginas Angular — estrutura, store, vm, RBAC
+globs: "**/*.page.ts,**/*.page.html"
+alwaysApply: false
+---
+
+# Páginas Angular
+
+**Fontes:** `.ai/prompts/create-page.md`, `.ai/checklists/feature.md`
+
+## Estrutura
+- `providers: [FeatureStore]` no decorador
+- `readonly vm = this.store.vm` — único ponto de leitura
+- `[apiErrors]="vm().validationErrors"` passado ao form
+- Erro 5xx: exibir `vm().error` (inclui correlationId)
+
+## Template
+- `@if` / `@else` — nunca `*ngIf`
+- Sem lógica de negócio
+- RBAC: `computed(() => session.hasPermission('x'))` quando aplicável
+
+## Estilo
+- Classes `.btn` para botões
+- Tokens ERP em CSS
+- Página de detalhe: padrão `feature-detail__*` em `.ai/design/ui-contracts.md`
+
+Exemplo de página de detalhe:
+@src/app/features/authorization/pages/role-detail.page.html

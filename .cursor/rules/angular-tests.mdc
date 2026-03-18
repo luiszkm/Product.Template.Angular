@@ -1,0 +1,27 @@
+---
+description: Testes — TestBed, mocks, coverage
+globs: "**/*.spec.ts"
+alwaysApply: false
+---
+
+# Testes
+
+**Fonte:** `.ai/rules/12-tests.md`
+
+## Store
+- `TestBed.inject(Store)` — nunca `new Store()`
+- Mock do Service: `jasmine.createSpyObj` ou `{ provide: X, useValue: mock }`
+- Casos: load sucesso, load erro 5xx, create erro 400 com validationErrors
+
+## Service
+- Mock ApiClient ou HttpTestingController
+- Um teste por método HTTP
+
+## Component
+- `TestBed.configureTestingModule({ imports: [Component] })`
+- Casos: criação, output válido, output inválido
+- Pipes importados explicitamente
+
+## Guard
+- Retorna `true` se autenticado
+- Redireciona para `/unauthorized` ou `/login` se não

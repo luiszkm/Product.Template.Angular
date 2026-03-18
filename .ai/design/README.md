@@ -25,10 +25,10 @@ Permitir que agentes de IA (GitHub Copilot, ChatGPT, etc.) gerem código Angular
 
 ## 🚀 Como Usar (Para Agentes de IA)
 
-### 1. Leia os Tokens
+### 1. Leia os Tokens ERP
 ```ts
-// ✅ Use as variáveis CSS definidas em tokens.md
-<button class="btn-primary">Salvar</button>
+// ✅ Use tokens ERP (--foreground, --card, --primary-600, etc.)
+<button class="btn btn-primary">Salvar</button>
 
 // ❌ Não invente cores/espaços
 <button style="background: #3498db; padding: 8px 16px;">Salvar</button>
@@ -55,10 +55,10 @@ Permitir que agentes de IA (GitHub Copilot, ChatGPT, etc.) gerem código Angular
 </div>
 ```
 
-### 3. Use Componentes Existentes
+### 3. Use Classes .btn Existentes
 ```ts
-// ✅ Componente padronizado (ver components.md)
-<app-button variant="primary" size="md" (click)="save()">Salvar</app-button>
+// ✅ Classes em styles.css (ver components.md)
+<button type="button" class="btn btn-primary" (click)="save()">Salvar</button>
 
 // ❌ HTML direto (inconsistente)
 <button class="custom-btn">Salvar</button>
@@ -81,11 +81,12 @@ Permitir que agentes de IA (GitHub Copilot, ChatGPT, etc.) gerem código Angular
 
 Antes de gerar código, verifique:
 
-- [ ] Usei cores/espaçamentos de `tokens.md`
-- [ ] Segui a estrutura de `ui-contracts.md`
-- [ ] Reutilizei componentes de `components.md`
+- [ ] Usei tokens ERP de `tokens.md` (--foreground, --card, etc.)
+- [ ] Segui a estrutura de `ui-contracts.md` (incl. Página de Detalhe se aplicável)
+- [ ] Usei classes .btn (btn-primary, btn-secondary, btn-danger)
+- [ ] Página de detalhe usa padrão `feature-detail__*`
+- [ ] Layout shell: `docs/erp-layout-prompt.md`
 - [ ] Implementei acessibilidade de `accessibility.md`
-- [ ] Apliquei responsividade de `responsive.md`
 - [ ] Consultei exemplos de `examples.md`
 
 ---
@@ -100,6 +101,7 @@ Ver `.ai/design/examples.md` para uma página completa (CRUD de produtos) com to
 
 - **Tokens**: `.ai/design/tokens.md`
 - **UI Contracts**: `.ai/design/ui-contracts.md`
+- **Layout ERP (shell, sidebar)**: `docs/erp-layout-prompt.md`
 - **Componentes**: `.ai/design/components.md`
 - **Acessibilidade**: `.ai/design/accessibility.md`
 - **Responsividade**: `.ai/design/responsive.md`

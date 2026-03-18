@@ -20,9 +20,9 @@ Este agente valida:
 10. ✅ **Forms** — Reactive, validação, apiErrors
 11. ✅ **Tests** — TestBed, specs
 12. ✅ **Observability** — Correlation ID, Retry-After
-13. ✅ **Tailwind** — Utility classes, @apply, dark mode
+13. ✅ **Design** — Tokens ERP, classes .btn, ui-contracts
 14. ✅ **I18n** — Translate pipe, namespaces
-15. ✅ **Dark Theme** — Classes dark:, tokens
+15. ✅ **Dark Theme** — Tokens ERP (automático via .dark) ou classes dark:
 
 ---
 
@@ -88,14 +88,13 @@ Este agente valida:
 - [ ] `correlationId` exibido em erros 5xx
 - [ ] Validação 400 mapeada em formulários
 
-### Tailwind
+### Design (ver .ai/design/, .cursor/rules/design-system.mdc)
 
-- [ ] Utility classes usadas
+- [ ] Tokens ERP usados (--foreground, --card, --border, etc.)
+- [ ] Classes .btn para botões (não app-button)
 - [ ] Sem CSS inline
-- [ ] Sem CSS custom global
-- [ ] Classes `dark:` em backgrounds, textos, bordas
-- [ ] Hover/focus states completos (incluindo dark mode)
-- [ ] `@apply` apenas em componentes reutilizáveis
+- [ ] Sem cores hardcoded
+- [ ] Página de detalhe: padrão feature-detail__* se aplicável
 
 ### I18n
 
@@ -189,6 +188,9 @@ Copiar checklist acima e revisar manualmente antes de commit.
 ---
 
 ## 📚 Referências
+
+- **Regras Cursor:** `.cursor/rules/` (aplicadas por tipo de ficheiro)
+- **Design:** `.ai/design/`, `.ai/checklists/code-review.md`
 
 Cada problema reportado referencia a regra específica:
 

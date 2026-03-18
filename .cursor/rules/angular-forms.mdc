@@ -1,0 +1,30 @@
+---
+description: Formulários reativos — FormBuilder, apiErrors, fieldError
+globs: "**/*-form*.ts,**/*-form*.html"
+alwaysApply: false
+---
+
+# Formulários Reativos
+
+**Fontes:** `.ai/rules/11-forms.md`, `.ai/prompts/create-form.md`
+
+## Estrutura
+- `FormBuilder.nonNullable.group()` para campos obrigatórios
+- `apiErrors = input<Record<string, string[]> | null>(null)`
+- `effect()` que aplica apiErrors nos controles
+- `fieldError(name)` getter — nunca lógica no template
+- `<fieldset [disabled]="loading()">` durante submit
+- `markAllAsTouched()` antes de validar
+
+## Template
+- `.field` ou `.form-group` com label + input
+- `[attr.aria-invalid]="fieldError('x') ? 'true' : 'false'"`
+- `aria-describedby` para erro
+- Botões: `.btn`, `.btn-primary`, `.btn-secondary`
+
+Exemplo: @src/app/features/products/components/product-form.component.html
+
+## Validação
+- Validators alinhados ao backend
+- Sem `[(ngModel)]`
+- Emitir via `output()` — store/page trata HTTP

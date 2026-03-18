@@ -79,6 +79,11 @@ Adicionar em `app.routes.ts` dentro do shell:
 }
 ```
 
+## Design (ver .ai/design/)
+- Tokens ERP em CSS de páginas e componentes.
+- Classes .btn para botões.
+- Página de detalhe (se aplicável): padrão feature-detail__* em ui-contracts.md.
+
 ## Saída obrigatória
 - Todos os arquivos listados acima, compiláveis sem erro.
 - Spec de store (3 casos: sucesso, erro 5xx, erro 400 com validationErrors).

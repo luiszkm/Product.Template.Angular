@@ -82,6 +82,12 @@ export class FeaturePage implements OnInit {
 6. Sem lógica de negócio no template.
 7. Delegar toda operação assíncrona para o store.
 
+## Estilo (ver .ai/design/)
+- Usar classes `.btn`, `.btn-primary`, `.btn-secondary`, `.btn-danger` para botões.
+- Páginas de listagem: estrutura em `ui-contracts.md` (page-container, page-header).
+- Páginas de detalhe: padrão `feature-detail__*` em `ui-contracts.md`.
+- Tokens ERP em CSS: `var(--foreground)`, `var(--card)`, `var(--border)`, etc.
+
 ## Restrições
 - Sem NgModule.
 - Sem `any`.

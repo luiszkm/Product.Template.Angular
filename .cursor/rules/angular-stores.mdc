@@ -1,0 +1,27 @@
+---
+description: Stores Angular — signals, vm computed, validationErrors, correlationId
+globs: "**/*.store.ts"
+alwaysApply: false
+---
+
+# Stores (Estado)
+
+**Fontes:** `.ai/rules/05-state.md`, `.ai/checklists/feature.md`
+
+## Estrutura
+- `inject(FeatureService)` — nunca constructor
+- Signals: `items`, `loading`, `error`, `validationErrors`, paginação
+- `readonly vm = computed(() => ({ ... }))` — único ponto de leitura
+- Provider na page: `providers: [FeatureStore]`
+
+## Tratamento de erros
+- 400: `validationErrors.set(problem.errors)`
+- 5xx: `error.set(...)` com correlationId quando presente
+- Limpar validationErrors antes de create/update
+
+Exemplo: @src/app/features/users/state/users.store.ts
+
+## Métodos
+- Void — não retornam Observable
+- `finalize(() => this.loading.set(false))`
+- Effects privados: `private readonly _nomeEffect = effect(...)`

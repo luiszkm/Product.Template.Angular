@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+.angular/
+*.map
+
+# Test coverage
+coverage/
+
+# IDE
+.idea/
+*.iml
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment (secrets)
+.env
+.env.local
+.env.*.local

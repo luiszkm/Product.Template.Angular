@@ -1,0 +1,25 @@
+---
+description: Guards — authGuard, roleGuard, CanActivateFn
+globs: "**/*.guard.ts"
+alwaysApply: false
+---
+
+# Guards
+
+**Fonte:** `.ai/rules/10-routing.md`, `.ai/rules/08-security.md`
+
+## Tipos
+- `authGuard` — valida token presente (AuthSessionService)
+- `roleGuard` — valida `requiredPermission` ou `requiredRole` em route.data
+
+## Implementação
+- `CanActivateFn` — funções, não classes
+- `inject(AuthSessionService)`, `inject(Router)`
+- `route.data['requiredPermission']` para RBAC
+- Redirecionar para `/unauthorized` se sem permissão
+
+## Uso em rotas
+```ts
+canActivate: [authGuard, roleGuard],
+data: { requiredPermission: 'users.read' }
+```

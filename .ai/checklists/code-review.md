@@ -135,33 +135,27 @@ Use este checklist para revisar código antes de commit/merge.
 
 ---
 
-### 9. Tailwind CSS (Regra 14)
+### 9. Design / Estilo (Regra 14, .ai/design/)
 
-- [ ] Utility classes usadas
+- [ ] Tokens ERP usados em CSS: `var(--foreground)`, `var(--card)`, `var(--border)`, etc.
+- [ ] Botões com classes `.btn`, `.btn-primary`, `.btn-secondary`, `.btn-danger`
 - [ ] Sem CSS inline (`style="..."`)
-- [ ] Sem CSS custom global
-- [ ] `@apply` apenas em componentes reutilizáveis
-- [ ] Responsividade: `sm:`, `md:`, `lg:`, `xl:`
-- [ ] Hover/focus states: `hover:`, `focus:`
-- [ ] Transições: `transition-*`, `duration-*`
+- [ ] Sem cores hardcoded (usar tokens)
+- [ ] Página de detalhe: padrão `feature-detail__*` se aplicável
 
-**Score:** ___/7
+**Score:** ___/5
 
 ---
 
 ### 10. Dark Theme (Regra 16)
 
-- [ ] Classes `dark:` em backgrounds
-- [ ] Classes `dark:` em textos
-- [ ] Classes `dark:` em bordas
-- [ ] Classes `dark:` em hover states
-- [ ] Classes `dark:` em focus states
-- [ ] Sombras ajustadas: `dark:shadow-*`
+- [ ] Tokens ERP usados (--foreground, --card, etc.) — dark mode automático via .dark
+- [ ] Ou classes `dark:` quando Tailwind utility
 - [ ] Contraste WCAG AA verificado
-- [ ] Sem `@media (prefers-color-scheme)`
+- [ ] Sem `@media (prefers-color-scheme)` manual
 - [ ] Sem cores hardcoded
 
-**Score:** ___/9
+**Score:** ___/5
 
 ---
 
@@ -303,6 +297,7 @@ Porcentagem: ___%
 
 ## 🔗 Referências
 
+- **Design system:** `.ai/design/` (tokens ERP, UI contracts, componentes)
 - **Regras completas:** `.ai/rules/`
 - **Exemplos:** `.ai/examples/`
 - **Checklists:** `.ai/checklists/`

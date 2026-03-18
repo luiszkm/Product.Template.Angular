@@ -25,9 +25,10 @@
 | Spec | `.spec.ts` | `products.store.spec.ts` |
 
 ## UI/CSS
-- Tailwind CSS por padrão.
-- Angular Material opcional e encapsulado em `shared/ui`.
-- CSS utilitário e sem acoplamento global desnecessário.
+- **Design tokens** em `src/styles.css` — usar `var(--foreground)`, `var(--card)`, `var(--primary-600)`, etc. Ver `.ai/design/tokens.md`.
+- **Classes .btn** para botões: `.btn`, `.btn-primary`, `.btn-secondary`, `.btn-danger`.
+- Tailwind CSS disponível; páginas usam CSS custom com tokens para consistência e dark mode.
+- Layout shell: `docs/erp-layout-prompt.md`.
 
 ## Qualidade
 - ESLint + Prettier obrigatórios.

@@ -719,13 +719,187 @@ export class ProductFormComponent {
 
 ---
 
+## 📋 Página de Detalhe (role-detail)
+
+Referência: `src/app/features/authorization/pages/role-detail.page.html`
+
+### role-detail.page.html
+```html
+<section class="role-detail">
+  <header class="role-detail__header">
+    <a routerLink="/roles" class="role-detail__back">← Voltar para Roles</a>
+    @if (vm().role; as role) {
+      <h1 class="role-detail__title">{{ role.name }}</h1>
+      <p class="role-detail__subtitle">{{ role.description || 'Sem descrição' }}</p>
+    }
+  </header>
+
+  @if (vm().loading && !vm().role) {
+    <p class="role-detail__loading">Carregando...</p>
+  } @else if (vm().error) {
+    <p class="role-detail__error" role="alert">{{ vm().error }}</p>
+  } @else if (vm().role; as role) {
+    <div class="role-detail__card">
+      @if (editing()) {
+        <form [formGroup]="form" (ngSubmit)="saveEdit()" class="role-detail__form">
+          <div class="field">
+            <label for="name">Nome</label>
+            <input id="name" formControlName="name" />
+          </div>
+          <div class="field">
+            <label for="description">Descrição</label>
+            <input id="description" formControlName="description" />
+          </div>
+          <div class="role-detail__actions">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancelar</button>
+          </div>
+        </form>
+      } @else {
+        @if (canManage) {
+          <div class="role-detail__actions">
+            <button type="button" class="btn btn-primary" (click)="startEdit()">Editar</button>
+            <button type="button" class="btn btn-danger" (click)="onRemove()">Excluir</button>
+          </div>
+        }
+      }
+
+      <div class="role-detail__permissions">
+        <h3>Permissões</h3>
+        @if (role.permissions.length > 0) {
+          <ul>
+            @for (p of role.permissions; track p.id) {
+              <li>
+                {{ p.name }} — {{ p.description }}
+                @if (canManage) {
+                  <button type="button" (click)="onRemovePermission(p.id)">Remover</button>
+                }
+              </li>
+            }
+          </ul>
+        } @else {
+          <p>Nenhuma permissão atribuída.</p>
+        }
+
+        @if (canManage && availablePermissions().length > 0) {
+          <div class="role-detail__add">
+            <select #permSelect (change)="onPermissionSelect(permSelect.value)">
+              <option value="">Adicionar permissão...</option>
+              @for (p of availablePermissions(); track p.id) {
+                <option [value]="p.id">{{ p.name }}</option>
+              }
+            </select>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</section>
+```
+
+### role-detail.page.css (tokens ERP)
+```css
+.role-detail {
+  max-width: 1600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.role-detail__header { margin-bottom: var(--spacing-4); }
+
+.role-detail__title {
+  margin: var(--spacing-2) 0 var(--spacing-1);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--foreground);
+}
+
+.role-detail__subtitle {
+  margin: 0;
+  font-size: var(--font-size-base);
+  color: var(--foreground-secondary);
+}
+
+.role-detail__back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--primary-600);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.role-detail__back:hover { color: var(--primary-700); }
+
+.role-detail__error {
+  padding: var(--spacing-3) var(--spacing-4);
+  background: color-mix(in srgb, var(--error) 10%, transparent);
+  color: var(--error);
+  border: 1px solid color-mix(in srgb, var(--error) 20%, transparent);
+  border-radius: var(--radius-md);
+}
+
+.role-detail__card {
+  padding: var(--spacing-4);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.role-detail__form .field {
+  margin-bottom: var(--spacing-4);
+}
+
+.role-detail__form .field label {
+  display: block;
+  margin-bottom: var(--spacing-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--foreground);
+}
+
+.role-detail__form .field input {
+  width: 100%;
+  padding: var(--spacing-2) var(--spacing-3);
+  font-size: var(--font-size-base);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--input-background);
+  color: var(--foreground);
+}
+
+.role-detail__form .field input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--primary-500);
+}
+
+.role-detail__actions {
+  display: flex;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-4);
+}
+
+.role-detail__loading {
+  font-size: var(--font-size-sm);
+  color: var(--foreground-secondary);
+}
+```
+
+O mesmo padrão aplica-se a `user-detail` e `tenant-detail`. Ver `ui-contracts.md` para a estrutura genérica.
+
+---
+
 ## ✅ Resumo
 
 Este exemplo completo demonstra:
 
-- ✅ Design tokens (cores, espaçamentos, tipografia)
-- ✅ UI contracts (estrutura de página, formulário, tabela)
-- ✅ Componentes reutilizáveis (button, badge, spinner)
+- ✅ Tokens ERP (--foreground, --card, color-mix para erros)
+- ✅ UI contracts (estrutura de página, formulário, tabela, página de detalhe)
+- ✅ Classes .btn (btn-primary, btn-secondary, btn-danger)
 - ✅ Acessibilidade (ARIA, foco, contraste)
 - ✅ Responsividade (mobile-first, breakpoints)
 - ✅ Signals e OnPush

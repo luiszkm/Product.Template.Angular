@@ -1,9 +1,12 @@
-# Regra 14 — Tailwind CSS
+# Regra 14 — Estilização (Tailwind + Design Tokens)
 
-## Estratégia obrigatória
-- Usar **somente utility classes do Tailwind** para estilização.
+## Estratégia do projeto
+O projeto usa **design tokens** em `src/styles.css` para páginas e componentes. Ver `.ai/design/`.
+
+- **Páginas e detail pages**: CSS custom com `var(--foreground)`, `var(--card)`, `var(--border)`, etc. Suporta dark mode via classe `.dark`.
+- **Tailwind**: Disponível para utilitários; cores primárias em `tailwind.config.js`.
+- **Botões**: Usar classes `.btn`, `.btn-primary`, `.btn-secondary`, `.btn-danger` de `styles.css`.
 - Proibido CSS inline (`style="..."`).
-- CSS custom permitido **apenas** via `@apply` em arquivos `.css` de componentes reutilizáveis.
 
 ## Configuração
 
@@ -13,15 +16,32 @@ O Tailwind está configurado em `tailwind.config.js` com:
 
 ## Padrão obrigatório
 
-### ✅ SEMPRE usar utility classes
+### ✅ Páginas: usar tokens ERP em CSS custom
 
 ```html
-<div class="flex items-center gap-4 p-6 bg-white rounded-lg shadow-md">
-  <button class="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 
-                 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2
-                 disabled:opacity-50 disabled:cursor-not-allowed">
-    Salvar
-  </button>
+<!-- feature.page.html -->
+<section class="feature-page">
+  <div class="feature-page__card">
+    <button type="button" class="btn btn-primary">Salvar</button>
+  </div>
+</section>
+```
+
+```css
+/* feature.page.css */
+.feature-page__card {
+  padding: var(--spacing-4);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+```
+
+### ✅ Tailwind: quando usar utility classes
+
+```html
+<div class="flex items-center gap-4 p-6">
+  <button class="btn btn-primary">Salvar</button>
 </div>
 ```
 
@@ -170,28 +190,20 @@ Usar `bg-primary-600`, `text-primary-700`, etc.
 </div>
 ```
 
-## Botões
+## Botões (preferir classes de styles.css)
 
 ```html
 <!-- Primary -->
-<button class="px-4 py-2 bg-primary-600 text-white rounded-md 
-               hover:bg-primary-700 focus:ring-2 focus:ring-primary-500 
-               disabled:opacity-50">
-  Salvar
-</button>
+<button type="button" class="btn btn-primary">Salvar</button>
 
 <!-- Secondary -->
-<button class="px-4 py-2 bg-gray-200 text-gray-900 rounded-md 
-               hover:bg-gray-300 focus:ring-2 focus:ring-gray-500">
-  Cancelar
-</button>
+<button type="button" class="btn btn-secondary">Cancelar</button>
 
 <!-- Danger -->
-<button class="px-4 py-2 bg-red-600 text-white rounded-md 
-               hover:bg-red-700 focus:ring-2 focus:ring-red-500">
-  Deletar
-</button>
+<button type="button" class="btn btn-danger">Deletar</button>
 ```
+
+Ver `.ai/design/components.md` para detalhes.
 
 ## Cards
 
@@ -285,15 +297,11 @@ Usar `bg-primary-600`, `text-primary-700`, etc.
 </div>
 ```
 
-## Dark Mode (opcional)
+## Dark Mode
 
-Se o projeto suportar dark mode:
+O projeto usa tokens ERP que mudam com a classe `.dark` no `html`. Ver `rules/16-darktheme.md`.
 
-```html
-<div class="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
-  <!-- conteúdo -->
-</div>
-```
+Ao usar `var(--foreground)`, `var(--card)`, `var(--border)`, etc., o dark mode é automático — não é necessário `dark:` em cada elemento.
 
 ## Performance
 

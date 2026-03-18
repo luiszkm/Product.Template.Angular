@@ -113,6 +113,172 @@ Estruturas padronizadas para páginas, formulários, tabelas, cards e modais.
 
 ---
 
+## 📋 Página de Detalhe (Detail Page)
+
+Padrão usado em role-detail, user-detail, tenant-detail. Referência: `src/app/features/authorization/pages/role-detail.page.html`
+
+### Estrutura HTML
+```html
+<section class="feature-detail">
+  <header class="feature-detail__header">
+    <a routerLink="/feature" class="feature-detail__back">← Voltar para Feature</a>
+    @if (item(); as item) {
+      <h1 class="feature-detail__title">{{ item.name }}</h1>
+      <p class="feature-detail__subtitle">{{ item.subtitle || 'Sem descrição' }}</p>
+    }
+  </header>
+
+  @if (loading()) {
+    <p class="feature-detail__loading">Carregando...</p>
+  } @else if (error()) {
+    <p class="feature-detail__error" role="alert">{{ error() }}</p>
+  } @else if (item(); as item) {
+    <div class="feature-detail__card">
+      @if (editing()) {
+        <form [formGroup]="form" (ngSubmit)="saveEdit()" class="feature-detail__form">
+          <div class="field">
+            <label for="name">Nome</label>
+            <input id="name" formControlName="name" />
+          </div>
+          <div class="feature-detail__actions">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancelar</button>
+          </div>
+        </form>
+      } @else {
+        <dl class="feature-detail__info">
+          <dt>Campo 1</dt>
+          <dd>{{ item.field1 }}</dd>
+          <dt>Campo 2</dt>
+          <dd>{{ item.field2 }}</dd>
+        </dl>
+        <div class="feature-detail__actions">
+          <button type="button" class="btn btn-primary" (click)="startEdit()">Editar</button>
+          <button type="button" class="btn btn-danger" (click)="onRemove()">Excluir</button>
+        </div>
+      }
+    </div>
+  }
+</section>
+```
+
+### Classes CSS (usar tokens ERP)
+```css
+.feature-detail {
+  max-width: 1600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.feature-detail__header { margin-bottom: var(--spacing-4); }
+
+.feature-detail__title {
+  margin: var(--spacing-2) 0 var(--spacing-1);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--foreground);
+}
+
+.feature-detail__subtitle {
+  margin: 0;
+  font-size: var(--font-size-base);
+  color: var(--foreground-secondary);
+}
+
+.feature-detail__back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--primary-600);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.feature-detail__back:hover { color: var(--primary-700); }
+
+.feature-detail__error {
+  padding: var(--spacing-3) var(--spacing-4);
+  background: color-mix(in srgb, var(--error) 10%, transparent);
+  color: var(--error);
+  border: 1px solid color-mix(in srgb, var(--error) 20%, transparent);
+  border-radius: var(--radius-md);
+}
+
+.feature-detail__card {
+  padding: var(--spacing-4);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.feature-detail__info {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--spacing-2) var(--spacing-4);
+  margin-bottom: var(--spacing-4);
+}
+
+.feature-detail__info dt {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--foreground-secondary);
+}
+
+.feature-detail__info dd {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--card-foreground);
+}
+
+.feature-detail__form .field {
+  margin-bottom: var(--spacing-4);
+}
+
+.feature-detail__form .field label {
+  display: block;
+  margin-bottom: var(--spacing-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--foreground);
+}
+
+.feature-detail__form .field input {
+  width: 100%;
+  padding: var(--spacing-2) var(--spacing-3);
+  font-size: var(--font-size-base);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--input-background);
+  color: var(--foreground);
+}
+
+.feature-detail__form .field input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--primary-500);
+}
+
+.feature-detail__actions {
+  display: flex;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-4);
+}
+
+.feature-detail__loading {
+  font-size: var(--font-size-sm);
+  color: var(--foreground-secondary);
+}
+```
+
+### Variante .field vs .form-group
+- **`.form-group`**: usado em formulários modais/listagem (ver secção Formulários)
+- **`.field`**: usado em páginas de detalhe (role-detail, user-detail, tenant-detail). Estrutura mais compacta com `label` + `input` directos.
+
+---
+
 ## 📝 Formulários
 
 ### Estrutura Padrão
@@ -781,7 +947,8 @@ fieldError(name: keyof typeof this.form.controls): string | null {
 ## ✅ Checklist de UI Contract
 
 - [ ] Página tem header com título e ações
-- [ ] Formulário usa `form-group` + `form-label` + `form-input`
+- [ ] Página de detalhe usa padrão `feature-detail__*` (ver secção Página de Detalhe)
+- [ ] Formulário usa `form-group` ou `.field` (detail pages)
 - [ ] Erros de validação via `fieldError()`
 - [ ] Tabela tem hover, células numéricas alinhadas à direita
 - [ ] Cards têm sombra e transição no hover

@@ -95,6 +95,10 @@ export class FeatureTableComponent {
 7. Sem estado de negócio — apenas renderização e eventos.
 8. Paginação server-side: emitir `pageChange(numero)` — nunca paginar no frontend.
 
+## Estilo (ver .ai/design/)
+- Usar tokens ERP em CSS: `var(--card)`, `var(--border)`, `var(--foreground-secondary)`.
+- Botões de acção: `.btn`, `.btn-secondary`, `.btn-danger`.
+
 ## Restrições
 - Sem chamada HTTP direta.
 - Sem lógica de ordenação local para datasets grandes — emitir evento e deixar backend ordenar.

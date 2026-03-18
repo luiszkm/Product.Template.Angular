@@ -56,6 +56,11 @@
 - [ ] Refresh token gerenciado pelo `refresh-token.interceptor` ✓
 - [ ] `idempotencyKey` em POST/PUT críticos
 
+## Design (ver .ai/design/)
+- [ ] Tokens ERP usados em CSS (--foreground, --card, --border, etc.)
+- [ ] Botões com classes .btn, .btn-primary, .btn-secondary, .btn-danger
+- [ ] Página de detalhe (se aplicável) segue padrão feature-detail__*
+
 ## Qualidade
 - [ ] Compila sem erro (`ng build` limpo)
 - [ ] Feature em chunk lazy separado no build output

@@ -1,0 +1,36 @@
+---
+description: Design System ERP — tokens CSS, classes .btn, estrutura de páginas
+globs: "**/*.page.css,**/*.page.html,**/*.component.css,**/*.component.html"
+alwaysApply: false
+---
+
+# Design System
+
+**Fontes:** `.ai/design/tokens.md`, `.ai/design/ui-contracts.md`, `.ai/design/components.md`
+
+## Tokens ERP (CSS)
+Usar sempre — suportam dark mode:
+- `var(--foreground)`, `var(--card)`, `var(--card-foreground)`
+- `var(--primary-600)`, `var(--border)`, `var(--input-background)`
+- `var(--spacing-1)` a `var(--spacing-6)` (base 8px)
+- Erros: `color-mix(in srgb, var(--error) 10%, transparent)`
+
+## Botões
+Classes em `styles.css`:
+```html
+<button type="button" class="btn btn-primary">Salvar</button>
+<button type="button" class="btn btn-secondary">Cancelar</button>
+<button type="button" class="btn btn-danger">Excluir</button>
+```
+
+## Páginas
+- **Listagem:** `page-container`, `page-header`, `page-actions` (ver ui-contracts.md)
+- **Detalhe:** `feature-detail__header`, `__back`, `__title`, `__card`, `__info`, `__actions`
+
+Referência de página de detalhe:
+@src/app/features/authorization/pages/role-detail.page.html
+@src/app/features/authorization/pages/role-detail.page.css
+
+## Proibido
+- Cores hardcoded (#fff, #333, etc.)
+- `app-button` ou componentes inexistentes

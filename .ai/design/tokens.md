@@ -2,9 +2,64 @@
 
 Valores centralizados para cores, espaçamentos, tipografia, sombras, bordas e estados.
 
+**Implementação:** `src/styles.css` | **Especificação ERP:** `docs/erp-layout-prompt.md`
+
 ---
 
-## 🎨 Cores
+## 🎯 Tokens ERP (Preferidos)
+
+Use estes tokens em novas páginas e componentes. Suportam light/dark mode automaticamente.
+
+### Cores de Interface
+```css
+--foreground: #1a1a1a;           /* Texto principal */
+--foreground-secondary: #6b7280; /* Texto secundário, labels */
+--card: #ffffff;                 /* Fundo de cards */
+--card-foreground: #1a1a1a;      /* Texto em cards */
+--primary-600: #2563eb;          /* Links, botões primários */
+--primary-700: #1d4ed8;         /* Hover de links/botões */
+--error: #ef4444;                /* Erros, botões de perigo */
+--border: rgba(0, 0, 0, 0.08);   /* Bordas */
+--input-background: #f5f5f5;     /* Fundo de inputs/selects */
+--muted: #f5f5f5;               /* Fundo alternativo, hover */
+```
+
+### Alertas/Erros com color-mix
+Para fundos e bordas de alertas (compatível com dark mode):
+```css
+/* Fundo de erro */
+background: color-mix(in srgb, var(--error) 10%, transparent);
+
+/* Borda de erro */
+border: 1px solid color-mix(in srgb, var(--error) 20%, transparent);
+
+/* Texto de erro */
+color: var(--error);
+```
+
+---
+
+## 🌓 Dark Mode
+
+O tema escuro é activado pela classe `.dark` no `html` ou `body`. Os tokens ERP mudam automaticamente.
+
+```css
+.dark {
+  --foreground: #fafafa;
+  --foreground-secondary: #a3a3a3;
+  --card: #262626;
+  --card-foreground: #fafafa;
+  --primary-600: #93c5fd;
+  --primary-700: #bfdbfe;
+  --border: rgba(255, 255, 255, 0.08);
+  --input-background: #2d2d2d;
+  --muted: #2d2d2d;
+}
+```
+
+---
+
+## 🎨 Cores (Legacy / Referência)
 
 ### Cores Primárias
 ```css
@@ -80,41 +135,40 @@ Valores centralizados para cores, espaçamentos, tipografia, sombras, bordas e e
 
 ## 📏 Espaçamentos
 
-Sistema baseado em múltiplos de 4px:
+Sistema baseado em múltiplos de 8px (implementação em `src/styles.css`):
 
 ```css
 --spacing-0: 0;
---spacing-1: 0.25rem;  /* 4px */
---spacing-2: 0.5rem;   /* 8px */
---spacing-3: 0.75rem;  /* 12px */
---spacing-4: 1rem;     /* 16px */
---spacing-5: 1.25rem;  /* 20px */
---spacing-6: 1.5rem;   /* 24px */
---spacing-8: 2rem;     /* 32px */
---spacing-10: 2.5rem;  /* 40px */
---spacing-12: 3rem;    /* 48px */
---spacing-16: 4rem;    /* 64px */
---spacing-20: 5rem;    /* 80px */
---spacing-24: 6rem;    /* 96px */
+--spacing-1: 0.5rem;   /* 8px */
+--spacing-2: 1rem;    /* 16px */
+--spacing-3: 1.5rem;  /* 24px */
+--spacing-4: 2rem;    /* 32px */
+--spacing-6: 3rem;    /* 48px */
+--spacing-8: 4rem;    /* 64px */
+--spacing-10: 2.5rem; /* 40px */
+--spacing-12: 3rem;   /* 48px */
+--spacing-16: 4rem;   /* 64px */
+--spacing-20: 5rem;   /* 80px */
+--spacing-24: 6rem;   /* 96px */
 ```
 
 ### Uso Comum
 ```css
 /* Padding de componentes */
---spacing-component-sm: var(--spacing-2);   /* 8px */
---spacing-component-md: var(--spacing-4);   /* 16px */
---spacing-component-lg: var(--spacing-6);   /* 24px */
+--spacing-component-sm: var(--spacing-2);   /* 16px */
+--spacing-component-md: var(--spacing-4);   /* 32px */
+--spacing-component-lg: var(--spacing-6);   /* 48px */
 
 /* Gap entre elementos */
---spacing-gap-xs: var(--spacing-1);   /* 4px */
---spacing-gap-sm: var(--spacing-2);   /* 8px */
---spacing-gap-md: var(--spacing-4);   /* 16px */
---spacing-gap-lg: var(--spacing-6);   /* 24px */
+--spacing-gap-xs: var(--spacing-1);   /* 8px */
+--spacing-gap-sm: var(--spacing-2);   /* 16px */
+--spacing-gap-md: var(--spacing-4);   /* 32px */
+--spacing-gap-lg: var(--spacing-6);   /* 48px */
 
 /* Margens de seção */
---spacing-section-sm: var(--spacing-8);   /* 32px */
---spacing-section-md: var(--spacing-12);  /* 48px */
---spacing-section-lg: var(--spacing-16);  /* 64px */
+--spacing-section-sm: var(--spacing-4);   /* 32px */
+--spacing-section-md: var(--spacing-6);   /* 48px */
+--spacing-section-lg: var(--spacing-8);   /* 64px */
 ```
 
 ---
@@ -280,10 +334,24 @@ Sistema baseado em múltiplos de 4px:
 ### Focus Ring
 ```css
 --focus-ring-width: 2px;
---focus-ring-color: var(--color-primary-500);
+--focus-ring-color: var(--primary-500);
 --focus-ring-offset: 2px;
 --focus-ring: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
 ```
+
+---
+
+## 🔗 Legacy Aliases
+
+Para compatibilidade, `--color-*` são aliases em `src/styles.css`:
+- `--color-primary-500` → `var(--primary-500)`
+- `--color-text-primary` → `var(--foreground)`
+- `--color-background` → `var(--background)`
+- `--color-surface` → `var(--surface)`
+- `--color-border` → `var(--border)`
+- `--color-error-50`, `--color-error-500`, `--color-error-700` → cores fixas (light)
+
+**Prefira tokens ERP** em novo código.
 
 ---
 
@@ -292,35 +360,41 @@ Sistema baseado em múltiplos de 4px:
 ### No CSS Global (`src/styles.css`)
 ```css
 :root {
-  /* Importar todos os tokens */
-  /* Já devem estar definidos aqui */
+  /* Tokens definidos em :root e .dark */
 }
 ```
 
-### Em Componentes
+### Em Componentes (ERP)
 ```css
-/* ✅ Usar variáveis CSS */
-.my-button {
-  padding: var(--spacing-2) var(--spacing-4);
-  background-color: var(--color-primary-500);
-  color: var(--color-text-inverse);
-  border-radius: var(--radius-md);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  box-shadow: var(--shadow-button);
-  transition: var(--transition-colors);
+/* ✅ Usar tokens ERP */
+.my-card {
+  padding: var(--spacing-4);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  color: var(--card-foreground);
 }
 
-.my-button:hover {
-  background-color: var(--color-primary-600);
+.my-link {
+  color: var(--primary-600);
+  transition: color var(--transition-fast);
+}
+
+.my-link:hover {
+  color: var(--primary-700);
+}
+
+.my-error {
+  background: color-mix(in srgb, var(--error) 10%, transparent);
+  color: var(--error);
+  border: 1px solid color-mix(in srgb, var(--error) 20%, transparent);
 }
 
 /* ❌ NUNCA usar valores hard-coded */
-.my-button {
-  padding: 8px 16px;
-  background-color: #3b82f6;
-  color: white;
-  border-radius: 6px;
+.my-card {
+  padding: 32px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
 }
 ```
 

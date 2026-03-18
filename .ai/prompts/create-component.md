@@ -43,6 +43,10 @@ describe('NomeComponent', () => {
 });
 ```
 
+## Estilo (ver .ai/design/)
+- Usar tokens ERP em CSS: `var(--foreground)`, `var(--card)`, `var(--border)`, etc.
+- Botões: classes `.btn`, `.btn-primary`, `.btn-secondary`, `.btn-danger`.
+
 ## Saída obrigatória
 - Código TypeScript/HTML/CSS compilável.
 - Spec com pelo menos 3 casos: criação, output válido, output inválido.

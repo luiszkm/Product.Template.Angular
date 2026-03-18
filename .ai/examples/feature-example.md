@@ -2,6 +2,8 @@
 
 Este é o exemplo de referência da feature **Products**, já implementada no template seguindo todas as regras em `.ai/rules/`.
 
+**Design:** Ver `.ai/design/` para tokens ERP, classes .btn, estrutura de páginas e página de detalhe.
+
 ---
 
 ## Estrutura completa

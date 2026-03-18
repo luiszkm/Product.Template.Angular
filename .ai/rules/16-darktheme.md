@@ -5,6 +5,17 @@ Implementar suporte a **dark theme** com alternância dinâmica, persistência d
 
 ---
 
+## Tokens ERP (implementação actual)
+
+O projeto usa **CSS variables** em `src/styles.css` que mudam com a classe `.dark` no `html`:
+
+- `--foreground`, `--foreground-secondary`, `--card`, `--card-foreground`
+- `--primary-600`, `--primary-700`, `--border`, `--input-background`, `--muted`
+
+**Ao usar estes tokens**, o dark mode é automático — não é necessário `dark:` em cada elemento. Ver `.ai/design/tokens.md`.
+
+---
+
 ## Stack Dark Theme
 
 | Ferramenta | Função |
@@ -668,8 +679,8 @@ Antes de considerar uma feature completa, validar:
 Ver implementação real em:
 - `src/app/core/theme/theme.service.ts`
 - `src/app/core/theme/theme-toggle.component.ts`
-- `src/styles/themes/tokens.css`
-- `tailwind.config.js`
+- `src/styles.css` (tokens :root e .dark)
+- `.ai/design/tokens.md` (documentação)
 
 ---
 

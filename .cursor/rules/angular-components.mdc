@@ -1,0 +1,33 @@
+---
+description: Componentes Angular — standalone, signals, acessibilidade
+globs: "**/*.component.ts,**/*.component.html"
+alwaysApply: false
+---
+
+# Componentes Angular
+
+**Fontes:** `.ai/rules/03-components.md`, `.ai/prompts/create-component.md`
+
+## Obrigatório
+- `standalone: true`, `OnPush`
+- `input()` / `input.required()`, `output()` — signal-based
+- `inject()` — nunca constructor
+- `@for (item of items(); track item.id)` — sempre com track
+- Pipes importados explicitamente (DecimalPipe, DatePipe, CurrencyPipe)
+
+## Formulários (se aplicável)
+- `apiErrors = input<Record<string, string[]> | null>(null)`
+- `effect()` para aplicar apiErrors nos controles
+- `fieldError(name)` getter — lógica fora do template
+- `<fieldset [disabled]="loading()">`
+
+## Acessibilidade
+- `aria-invalid`, `aria-describedby`, `role="alert"` em erros
+- `aria-label` em botões de ícone
+- `type="button"` em botões não-submit
+
+Exemplo: @src/app/shared/components/badge.component.ts
+
+## Design
+- Tokens ERP em CSS
+- Classes `.btn` para botões

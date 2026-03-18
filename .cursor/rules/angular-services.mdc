@@ -1,0 +1,26 @@
+---
+description: Services Angular — stateless, ApiClient, idempotencyKey
+globs: "**/*.service.ts"
+alwaysApply: false
+---
+
+# Services HTTP
+
+**Fontes:** `.ai/rules/04-services.md`, `.ai/rules/06-api.md`
+
+## Obrigatório
+- `inject(ApiClient)` — nunca constructor
+- Stateless — sem signals/BehaviorSubject
+- `create()` com `idempotencyKey: crypto.randomUUID()`
+- Tipagem completa — sem `any`
+- Erros propagam via `throwError()` — não silenciar
+
+## Headers (automáticos via ApiClient)
+- `X-Tenant`, `Authorization: Bearer`
+- `X-Idempotency-Key` em POST/PUT críticos
+
+Exemplo: @src/app/features/users/services/users.service.ts
+
+## Contratos
+- Tratar ProblemDetails (RFC 9457)
+- Respeitar Retry-After em 429

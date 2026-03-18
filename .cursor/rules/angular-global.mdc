@@ -1,0 +1,29 @@
+---
+description: Regras globais Angular — standalone, OnPush, inject, signals, sem any
+alwaysApply: true
+---
+
+# Angular Global
+
+**Fonte:** `.ai/rules/00-global.md`, `.ai/rules/07-style.md`
+
+## Obrigatório
+- `standalone: true` em todos os componentes
+- `ChangeDetectionStrategy.OnPush`
+- `inject()` — nunca `constructor(private ...)`
+- Sem `any` — tipagem explícita
+- Sem NgModules
+- Sem lógica de negócio no template
+- `@if` / `@for` — nunca `*ngIf` / `*ngFor`
+- HTTP via `ApiClient` (core/api) — nunca HttpClient direto
+
+## Convenções de ficheiros
+| Artefato | Sufixo | Exemplo |
+|----------|--------|---------|
+| Page | `.page.ts` | `users.page.ts` |
+| Componente | `.component.ts` | `user-form.component.ts` |
+| Service | `.service.ts` | `users.service.ts` |
+| Store | `.store.ts` | `users.store.ts` |
+
+## Regras completas
+Consultar `.ai/rules/` para detalhes (01 a 16).

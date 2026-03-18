@@ -1,0 +1,20 @@
+---
+description: Models/Interfaces — Entity, CreateRequest, UpdateRequest, Filters
+globs: "**/*.model.ts"
+alwaysApply: false
+---
+
+# Models
+
+**Fonte:** `.ai/rules/`, `.ai/prompts/create-feature.md`
+
+## Estrutura típica
+- `Entity` — tipo da entidade (id, campos, createdAt, etc.)
+- `CreateRequest` — payload para POST
+- `UpdateRequest` — payload para PUT (geralmente Partial<CreateRequest>)
+- `Filters` — filtros de listagem (search, page, pageSize)
+
+## Convenções
+- Interfaces em `models/{feature}.model.ts`
+- Tipagem explícita — sem `any`
+- Alinhar com contratos de API (ProblemDetails, paginação)

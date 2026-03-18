@@ -10,31 +10,31 @@ Este guia permite que você especifique designs que **agentes de IA** (como GitH
 
 ---
 
-## 📐 1. Cores
+## 📐 1. Cores (Tokens ERP)
 
-### Paleta Disponível
+O projeto usa tokens CSS que suportam light/dark mode automaticamente. Ver `tokens.md`.
 
-**Primária (Azul):**
-- `primary-50` → Muito claro (fundos)
-- `primary-500` → Base (botões, links)
-- `primary-700` → Escuro (hover, ênfase)
-
-**Neutros (Cinza):**
-- `gray-50` → Muito claro (fundos alternativos)
-- `gray-200` → Claro (bordas)
-- `gray-500` → Médio (texto secundário)
-- `gray-900` → Escuro (texto principal)
+**Interface:**
+- `--foreground` → Texto principal
+- `--foreground-secondary` → Texto secundário
+- `--card` → Fundo de cards
+- `--card-foreground` → Texto em cards
+- `--primary-600` → Links, botões primários
+- `--primary-700` → Hover
+- `--error` → Erros, botões de perigo
+- `--border` → Bordas
+- `--input-background` → Fundo de inputs
 
 **Semânticas:**
-- `success` → Verde (sucesso, ativo)
-- `error` → Vermelho (erro, perigo)
-- `warning` → Amarelo (aviso, atenção)
-- `info` → Azul claro (informação)
+- `--success` → Verde (sucesso, ativo)
+- `--error` → Vermelho (erro, perigo)
+- `--warning` → Amarelo (aviso)
+- `--info` → Azul (informação)
 
 ### Como Especificar
 ```
-✅ "Botão com fundo primary-500 e texto branco"
-✅ "Borda gray-200"
+✅ "Botão primário (classes .btn .btn-primary)"
+✅ "Card com background var(--card) e borda var(--border)"
 ✅ "Badge verde (success) com texto 'Ativo'"
 ```
 
@@ -42,22 +42,21 @@ Este guia permite que você especifique designs que **agentes de IA** (como GitH
 
 ## 📏 2. Espaçamentos
 
-### Escala (múltiplos de 4px)
+### Escala (base 8px — ver `tokens.md`)
 
 | Nome | Tamanho | Uso |
 |------|---------|-----|
-| `spacing-1` | 4px | Gap mínimo |
-| `spacing-2` | 8px | Gap pequeno entre elementos |
-| `spacing-4` | 16px | Padding padrão, gap médio |
-| `spacing-6` | 24px | Padding grande, gap grande |
-| `spacing-8` | 32px | Espaçamento de seções |
-| `spacing-12` | 48px | Espaçamento muito grande |
+| `spacing-1` | 8px | Gap mínimo |
+| `spacing-2` | 16px | Gap pequeno, padding |
+| `spacing-3` | 24px | Gap médio |
+| `spacing-4` | 32px | Padding padrão, seções |
+| `spacing-6` | 48px | Gap grande |
 
 ### Como Especificar
 ```
-✅ "Card com padding de 16px (spacing-4)"
-✅ "Gap de 8px (spacing-2) entre botões"
-✅ "Margem inferior de 24px (spacing-6)"
+✅ "Card com padding var(--spacing-4)"
+✅ "Gap var(--spacing-2) entre botões"
+✅ "Margem inferior var(--spacing-4)"
 ```
 
 ---
@@ -86,33 +85,29 @@ Este guia permite que você especifique designs que **agentes de IA** (como GitH
 
 ### Como Especificar
 ```
-✅ "Título em font-2xl, weight-semibold, color gray-900"
-✅ "Label em font-sm, weight-medium, color gray-700"
-✅ "Texto normal em font-base, weight-normal, color gray-700"
+✅ "Título em font-size-3xl, font-weight-semibold, color var(--foreground)"
+✅ "Label em font-size-sm, font-weight-medium, color var(--foreground-secondary)"
+✅ "Texto normal em font-size-base, color var(--card-foreground)"
 ```
 
 ---
 
 ## 🎨 4. Componentes Prontos
 
-### Botões
+### Botões (classes em `styles.css`)
+
+O projeto usa classes `.btn` em vez de componentes. Ver `components.md`.
 
 **Variantes:**
-- `primary` → Ação principal (azul)
-- `secondary` → Ação secundária (cinza com borda)
-- `danger` → Ação destrutiva (vermelho)
-- `ghost` → Ação terciária (transparente)
-
-**Tamanhos:**
-- `sm` → Pequeno (tabelas, inline)
-- `md` → Médio (padrão)
-- `lg` → Grande (hero sections)
+- `.btn-primary` → Ação principal
+- `.btn-secondary` → Ação secundária (borda)
+- `.btn-danger` → Ação destrutiva
 
 **Especificar:**
 ```
-✅ "Botão primário médio com texto 'Salvar'"
-✅ "Botão secundário pequeno com texto 'Cancelar'"
-✅ "Botão de perigo grande com texto 'Excluir Permanentemente'"
+✅ "Botão primário com texto 'Salvar'" → class="btn btn-primary"
+✅ "Botão secundário com texto 'Cancelar'" → class="btn btn-secondary"
+✅ "Botão de perigo com texto 'Excluir'" → class="btn btn-danger"
 ```
 
 ### Badges
@@ -404,10 +399,11 @@ A IA vai gerar código Angular seguindo:
 ## 📚 Referência Completa
 
 Para detalhes técnicos, consulte:
-- **Tokens**: `.ai/design/tokens.md`
+- **Tokens ERP**: `.ai/design/tokens.md`
 - **UI Contracts**: `.ai/design/ui-contracts.md`
 - **Componentes**: `.ai/design/components.md`
 - **Exemplos**: `.ai/design/examples.md`
+- **Layout shell (sidebar, topbar)**: `docs/erp-layout-prompt.md`
 
 ---
 

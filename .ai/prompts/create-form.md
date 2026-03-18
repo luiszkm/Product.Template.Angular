@@ -104,6 +104,11 @@ ngOnInit() {
 }
 ```
 
+## Estilo (ver .ai/design/)
+- Usar classes `.field` ou `.form-group`; tokens ERP em CSS: `var(--foreground)`, `var(--input-background)`, `var(--border)`.
+- Botões: `.btn`, `.btn-primary`, `.btn-secondary`.
+- Erros: `color-mix(in srgb, var(--error) 10%, transparent)` para fundos.
+
 ## Restrições
 - `FormBuilder.nonNullable.group()` — obrigatório para campos com valor padrão.
 - Sem `[(ngModel)]`.

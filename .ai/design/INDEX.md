@@ -12,8 +12,9 @@ Visão completa dos arquivos criados em `.ai/design/`.
 │   └── Checklist de validação
 │
 ├── tokens.md                 # 🎨 Design Tokens (7.4 KB)
+│   ├── Tokens ERP (--foreground, --card, dark mode)
 │   ├── Cores (primárias, neutras, semânticas)
-│   ├── Espaçamentos (spacing-1 a spacing-24)
+│   ├── Espaçamentos (base 8px)
 │   ├── Tipografia (fontes, tamanhos, pesos)
 │   ├── Sombras (xs, sm, md, lg, xl, 2xl)
 │   ├── Bordas (raios, larguras, estilos)
@@ -23,6 +24,7 @@ Visão completa dos arquivos criados em `.ai/design/`.
 │
 ├── ui-contracts.md           # 📐 Estruturas Padrão (17 KB)
 │   ├── Estrutura de Página (header, filtros, alerts)
+│   ├── Página de Detalhe (feature-detail__*)
 │   ├── Formulários (campos, validação, erros)
 │   ├── Tabelas (header, body, células, ações)
 │   ├── Cards (básico, com imagem, footer)
@@ -68,9 +70,7 @@ Visão completa dos arquivos criados em `.ai/design/`.
 │
 ├── examples.md               # 💡 Exemplos Práticos (19 KB)
 │   ├── Página CRUD Completa (products)
-│   │   ├── products.page.ts
-│   │   ├── products.page.html
-│   │   └── products.page.css
+│   ├── Página de Detalhe (role-detail)
 │   ├── Componente de Formulário
 │   │   ├── product-form.component.ts
 │   │   └── product-form.component.html
@@ -80,8 +80,8 @@ Visão completa dos arquivos criados em `.ai/design/`.
 │
 ├── quick-reference.md        # ⚡ Referência Rápida (4.3 KB)
 │   ├── Prompt Base para IA
-│   ├── Tokens Mais Usados
-│   ├── Templates Prontos (página, formulário, tabela)
+│   ├── Tokens ERP Mais Usados
+│   ├── Templates Prontos (página, formulário, tabela, página de detalhe)
 │   ├── Checklist Rápido
 │   └── Links Importantes
 │
@@ -211,7 +211,8 @@ Todos os desenvolvedores/designers/IAs seguem o mesmo padrão
 | Preciso de... | Arquivo |
 |--------------|---------|
 | Visão geral | `README.md` |
-| Cores, espaçamentos | `tokens.md` |
+| Cores, espaçamentos (ERP) | `tokens.md` |
+| Layout shell (sidebar, topbar) | `docs/erp-layout-prompt.md` |
 | Estrutura de página | `ui-contracts.md` |
 | Componentes prontos | `components.md` |
 | ARIA, contraste | `accessibility.md` |

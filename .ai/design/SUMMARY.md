@@ -19,25 +19,23 @@ Guia principal do design system com visão geral e navegação.
 ---
 
 ### 2. **tokens.md** (7.4 KB)
-Todos os design tokens centralizados.
+Todos os design tokens centralizados. Implementação em `src/styles.css`.
 
 **Conteúdo:**
-- 🎨 **Cores**: Primárias, neutras, semânticas, superfície, texto
-- 📏 **Espaçamentos**: Sistema baseado em 4px (spacing-1 a spacing-24)
-- 🔤 **Tipografia**: Famílias, tamanhos, pesos, alturas de linha
-- 🌑 **Sombras**: xs, sm, md, lg, xl, 2xl
-- 🔲 **Bordas**: Raios, larguras, estilos
-- ⏱️ **Transições**: Fast, base, slow
-- 📐 **Z-Index**: Dropdown, sticky, modal, tooltip
-- 🎯 **Estados**: Opacidades, focus ring
+- 🎯 **Tokens ERP**: --foreground, --card, --primary-600, --error, --border, --input-background (suportam dark mode)
+- 🌓 **Dark Mode**: Classe `.dark` no html/body
+- 📏 **Espaçamentos**: Base 8px (spacing-1=8px, spacing-2=16px, spacing-4=32px)
+- 🔤 **Tipografia**: Famílias, tamanhos, pesos
+- 🌑 **Sombras**, 🔲 **Bordas**, ⏱️ **Transições**, 📐 **Z-Index**
+- 🔗 **Legacy aliases**: --color-* para compatibilidade
 
 **Uso:**
 ```css
-.btn-primary {
-  background: var(--color-primary-500);
-  padding: var(--spacing-2) var(--spacing-4);
-  border-radius: var(--radius-md);
-  font-size: var(--font-size-sm);
+.my-card {
+  padding: var(--spacing-4);
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--card-foreground);
 }
 ```
 
@@ -48,7 +46,8 @@ Estruturas padronizadas para páginas e componentes.
 
 **Conteúdo:**
 - 📄 **Estrutura de Página**: Header, filtros, alerts, conteúdo
-- 📝 **Formulários**: Campos, validação, erros, ações
+- 📋 **Página de Detalhe**: feature-detail__* (role-detail, user-detail, tenant-detail)
+- 📝 **Formulários**: Campos (.form-group ou .field), validação, erros, ações
 - 📊 **Tabelas**: Header, body, células numéricas, ações
 - 🗂️ **Cards**: Básico, com imagem, header, body, footer
 - 🔔 **Alerts**: Success, error, warning, info
@@ -60,7 +59,7 @@ Estruturas padronizadas para páginas e componentes.
   <header class="page-header">
     <h1 class="page-title">Título</h1>
     <div class="page-actions">
-      <app-button variant="primary">Novo</app-button>
+      <button type="button" class="btn btn-primary">Novo</button>
     </div>
   </header>
   <main class="page-content">
@@ -75,7 +74,7 @@ Estruturas padronizadas para páginas e componentes.
 Biblioteca de componentes reutilizáveis.
 
 **Conteúdo:**
-- 🔘 **Botões**: Variants (primary, secondary, danger, ghost), sizes
+- 🔘 **Botões**: Classes .btn, .btn-primary, .btn-secondary, .btn-danger em `styles.css`
 - 🎯 **Botão de Ícone**: Icon buttons com tooltip
 - 🏷️ **Badge**: Status badges (success, error, warning, info)
 - 📥 **Input**: Input com label, erro, help text
@@ -91,13 +90,8 @@ Biblioteca de componentes reutilizáveis.
 
 **Uso:**
 ```html
-<app-button variant="primary" size="md" (click)="save()">
-  Salvar
-</app-button>
-
+<button type="button" class="btn btn-primary" (click)="save()">Salvar</button>
 <app-badge variant="success">Ativo</app-badge>
-
-<app-spinner size="lg" color="primary" />
 ```
 
 ---
