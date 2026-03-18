@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiClient } from '../api/api-client';
+import { API_PATHS } from '../api/api-paths';
 import { AuthSessionService, LoginResponse } from './auth-session.service';
 import { environment } from '../../../environments/environment';
 
@@ -41,7 +42,7 @@ export class OAuthCallbackPage implements OnInit {
 
     this.api
       .post<LoginResponse, { provider: string; code: string; redirectUri: string }>(
-        '/identity/external-login',
+        API_PATHS.identity.externalLogin,
         { provider: 'microsoft', code, redirectUri: environment.oauthRedirectUri }
       )
       .subscribe({

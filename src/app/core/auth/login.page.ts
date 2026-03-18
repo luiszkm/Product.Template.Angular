@@ -10,6 +10,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
 import { ApiClient } from '../api/api-client';
+import { API_PATHS } from '../api/api-paths';
 import { ApiError } from '../api/api-types';
 import { AuthSessionService, LoginResponse } from './auth-session.service';
 import { environment } from '../../../environments/environment';
@@ -63,7 +64,7 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.api.get<ProvidersResponse>('/identity/providers').subscribe({
+    this.api.get<ProvidersResponse>(API_PATHS.identity.providers).subscribe({
       next: (res) => this.providers.set(res.providers),
       error: () => { /* falha silenciosa — exibe apenas formulário local */ }
     });
@@ -81,7 +82,7 @@ export class LoginPage implements OnInit {
 
     this.api
       .post<LoginResponse, { email: string; password: string }>(
-        '/identity/login',
+        API_PATHS.identity.login,
         { email, password }
       )
       .subscribe({
@@ -99,7 +100,8 @@ export class LoginPage implements OnInit {
   onMicrosoftLogin(): void {
     // Redireciona para o backend que inicia o fluxo OAuth com o Azure AD
     const redirectUri = encodeURIComponent(environment.oauthRedirectUri);
-    window.location.href = `${environment.apiUrl.replace('/api/v1', '')}/auth/microsoft?redirectUri=${redirectUri}`;
+    const authBase = environment.apiUrl.replace(/\/api\/?$/, '');
+    window.location.href = `${authBase}/auth/microsoft?redirectUri=${redirectUri}`;
   }
 
   private handleLoginError(apiError: ApiError): void {

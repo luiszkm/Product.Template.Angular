@@ -7,6 +7,7 @@ import {
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ApiClient } from '../api/api-client';
+import { API_PATHS } from '../api/api-paths';
 import { ApiError } from '../api/api-types';
 
 export interface UserOutput {
@@ -85,7 +86,7 @@ export class RegisterPage {
 
     this.api
       .post<UserOutput, { email: string; password: string; firstName: string; lastName: string }>(
-        '/identity/register',
+        API_PATHS.identity.register,
         { email, password, firstName, lastName }
       )
       .subscribe({

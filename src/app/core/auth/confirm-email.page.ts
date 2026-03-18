@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiClient } from '../api/api-client';
+import { API_PATHS } from '../api/api-paths';
 
 @Component({
   selector: 'app-confirm-email-page',
@@ -43,7 +44,7 @@ export class ConfirmEmailPage implements OnInit {
       return;
     }
 
-    this.api.post<void, object>(`/identity/${id}/confirm-email`, {}).subscribe({
+    this.api.post<void, object>(API_PATHS.identity.confirmEmail(id), {}).subscribe({
       next: () => {
         this.loading.set(false);
         this.success.set(true);

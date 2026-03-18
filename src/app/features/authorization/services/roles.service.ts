@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiClient } from '../../../core/api/api-client';
+import { API_PATHS } from '../../../core/api/api-paths';
 import { PaginatedResponse } from '../../../core/api/api-types';
 import { RoleOutput, RoleWithPermissionsOutput } from '../../../core/api/authorization.types';
 
@@ -9,39 +10,39 @@ export class RolesService {
   private readonly api = inject(ApiClient);
 
   list(pageNumber: number, pageSize: number): Observable<PaginatedResponse<RoleOutput>> {
-    return this.api.get<PaginatedResponse<RoleOutput>>('/authorization/roles', {
+    return this.api.get<PaginatedResponse<RoleOutput>>(API_PATHS.authorization.roles.base, {
       params: { pageNumber, pageSize }
     });
   }
 
   get(id: string): Observable<RoleWithPermissionsOutput> {
-    return this.api.get<RoleWithPermissionsOutput>(`/authorization/roles/${id}`);
+    return this.api.get<RoleWithPermissionsOutput>(API_PATHS.authorization.roles.byId(id));
   }
 
   create(data: { name: string; description: string }): Observable<RoleOutput> {
-    return this.api.post<RoleOutput, typeof data>('/authorization/roles', data);
+    return this.api.post<RoleOutput, typeof data>(API_PATHS.authorization.roles.base, data);
   }
 
   update(id: string, data: { roleId: string; name: string; description: string }): Observable<RoleOutput> {
-    return this.api.put<RoleOutput, typeof data>(`/authorization/roles/${id}`, data);
+    return this.api.put<RoleOutput, typeof data>(API_PATHS.authorization.roles.byId(id), data);
   }
 
   remove(id: string): Observable<void> {
-    return this.api.delete<void>(`/authorization/roles/${id}`);
+    return this.api.delete<void>(API_PATHS.authorization.roles.byId(id));
   }
 
   getPermissions(id: string): Observable<RoleWithPermissionsOutput> {
-    return this.api.get<RoleWithPermissionsOutput>(`/authorization/roles/${id}/permissions`);
+    return this.api.get<RoleWithPermissionsOutput>(API_PATHS.authorization.roles.permissions(id));
   }
 
   addPermission(roleId: string, permissionId: string): Observable<void> {
     return this.api.post<void, { permissionId: string }>(
-      `/authorization/roles/${roleId}/permissions`,
+      API_PATHS.authorization.roles.addPermission(roleId),
       { permissionId }
     );
   }
 
   removePermission(roleId: string, permissionId: string): Observable<void> {
-    return this.api.delete<void>(`/authorization/roles/${roleId}/permissions/${permissionId}`);
+    return this.api.delete<void>(API_PATHS.authorization.roles.removePermission(roleId, permissionId));
   }
 }

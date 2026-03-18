@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiClient } from '../../../core/api/api-client';
+import { API_PATHS } from '../../../core/api/api-paths';
 import { PaginatedResponse } from '../../../core/api/api-types';
 import { UserOutput } from '../../../core/api/identity.types';
 
@@ -24,22 +25,22 @@ export class UsersService {
     if (filters.searchTerm) params['searchTerm'] = filters.searchTerm;
     if (filters.sortBy) params['sortBy'] = filters.sortBy;
     if (filters.sortDirection) params['sortDirection'] = filters.sortDirection;
-    return this.api.get<PaginatedResponse<UserOutput>>('/identity', { params });
+    return this.api.get<PaginatedResponse<UserOutput>>(API_PATHS.identity.base, { params });
   }
 
   get(id: string): Observable<UserOutput> {
-    return this.api.get<UserOutput>(`/identity/${id}`);
+    return this.api.get<UserOutput>(API_PATHS.identity.byId(id));
   }
 
   update(id: string, data: { userId: string; firstName: string; lastName: string }): Observable<UserOutput> {
-    return this.api.put<UserOutput, typeof data>(`/identity/${id}`, data);
+    return this.api.put<UserOutput, typeof data>(API_PATHS.identity.byId(id), data);
   }
 
   remove(id: string): Observable<void> {
-    return this.api.delete<void>(`/identity/${id}`);
+    return this.api.delete<void>(API_PATHS.identity.byId(id));
   }
 
   getRoles(id: string): Observable<string[]> {
-    return this.api.get<string[]>(`/identity/${id}/roles`);
+    return this.api.get<string[]>(API_PATHS.identity.roles(id));
   }
 }

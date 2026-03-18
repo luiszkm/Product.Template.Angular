@@ -9,6 +9,7 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, switchMap, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { API_PATHS } from '../api/api-paths';
 import { AuthSessionService } from '../auth/auth-session.service';
 import { environment } from '../../../environments/environment';
 
@@ -32,8 +33,10 @@ export const refreshTokenInterceptor: HttpInterceptorFn = (
   const router = inject(Router);
   const http = inject(HttpClient);
 
-  // Não interceptar a própria chamada de refresh
-  if (req.url.includes('/identity/refresh') || req.url.includes('/identity/login')) {
+  // Não interceptar a própria chamada de refresh nem login
+  const refreshPath = API_PATHS.identity.refresh;
+  const loginPath = API_PATHS.identity.login;
+  if (req.url.includes(refreshPath) || req.url.includes(loginPath)) {
     return next(req);
   }
 
@@ -57,7 +60,7 @@ export const refreshTokenInterceptor: HttpInterceptorFn = (
         'X-Tenant': session.tenant()
       });
       return http
-        .post<RefreshResponse>(`${environment.apiUrl}/identity/refresh`, { refreshToken }, { headers })
+        .post<RefreshResponse>(`${environment.apiUrl}${API_PATHS.identity.refresh}`, { refreshToken }, { headers })
         .pipe(
           switchMap((response) => {
             session.updateToken(response.accessToken, response.refreshToken);
