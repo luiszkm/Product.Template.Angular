@@ -1,5 +1,8 @@
 .table-wrapper {
   overflow-x: auto;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
 }
 
 .table-wrapper table {
@@ -7,22 +10,40 @@
   border-collapse: collapse;
 }
 
-.table-wrapper th,
-.table-wrapper td {
-  padding: 0.75rem 1rem;
-  text-align: left;
-  border-bottom: 1px solid var(--color-border);
+.table-wrapper thead {
+  background: color-mix(in srgb, var(--muted) 50%, transparent);
 }
 
 .table-wrapper th {
-  font-weight: 600;
-  color: var(--color-text-primary);
+  padding: 12px 24px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--foreground-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: left;
+}
+
+.table-wrapper tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background-color var(--transition-fast);
+}
+
+.table-wrapper tbody tr:hover {
+  background: color-mix(in srgb, var(--muted) 30%, transparent);
+}
+
+.table-wrapper td {
+  padding: 16px 24px;
+  font-size: var(--font-size-sm);
+  color: var(--card-foreground);
 }
 
 .table-wrapper td a {
-  color: var(--color-primary-600);
+  color: var(--primary-600);
   text-decoration: none;
-  margin-right: 1rem;
+  margin-right: var(--spacing-4);
+  font-weight: var(--font-weight-medium);
 }
 
 .table-wrapper td a:hover {
@@ -30,15 +51,17 @@
 }
 
 .table-wrapper td button {
-  padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
-  color: var(--color-error-500);
-  background: transparent;
-  border: 1px solid var(--color-error-500);
-  border-radius: 0.25rem;
+  padding: 4px 8px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--error);
+  background: color-mix(in srgb, var(--error) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--error) 20%, transparent);
+  border-radius: var(--radius-md);
   cursor: pointer;
+  transition: background-color var(--transition-fast);
 }
 
 .table-wrapper td button:hover {
-  background: var(--color-error-50);
+  background: color-mix(in srgb, var(--error) 20%, transparent);
 }

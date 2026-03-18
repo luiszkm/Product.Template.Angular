@@ -1,0 +1,120 @@
+.page-container {
+  max-width: 1600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.page-header {
+  margin-bottom: var(--spacing-2);
+}
+
+.page-title {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--foreground);
+  margin: 0 0 8px;
+}
+
+.page-subtitle {
+  font-size: var(--font-size-base);
+  color: var(--foreground-secondary);
+  margin: 0;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-6);
+}
+
+@media (min-width: 768px) {
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .metrics-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-6);
+}
+
+@media (min-width: 1024px) {
+  .charts-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.table-container {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.table-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.table-title {
+  font-weight: var(--font-weight-semibold);
+  color: var(--card-foreground);
+  margin: 0;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table thead {
+  background: color-mix(in srgb, var(--muted) 50%, transparent);
+}
+
+.data-table th {
+  padding: 12px 24px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--foreground-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: left;
+}
+
+.data-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background-color var(--transition-fast);
+}
+
+.data-table tbody tr:hover {
+  background: color-mix(in srgb, var(--muted) 30%, transparent);
+}
+
+.data-table td {
+  padding: 16px 24px;
+  font-size: var(--font-size-sm);
+  color: var(--card-foreground);
+  white-space: nowrap;
+}
+
+.data-table__id,
+.data-table__amount {
+  font-weight: var(--font-weight-medium);
+}
+
+.data-table__date {
+  color: var(--foreground-secondary);
+}

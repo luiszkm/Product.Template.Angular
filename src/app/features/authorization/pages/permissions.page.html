@@ -28,6 +28,7 @@
   }
 
   <div class="permissions-page__content">
+    <div class="permissions-page__table-wrapper">
     @if (vm().loading) {
       <p>Carregando...</p>
     } @else if (vm().items.length === 0) {
@@ -58,6 +59,7 @@
         </tbody>
       </table>
     }
+    </div>
   </div>
 
   @if (vm().totalCount > vm().pageSize) {

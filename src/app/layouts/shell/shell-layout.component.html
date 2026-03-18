@@ -1,34 +1,102 @@
 <div class="shell">
-  <header class="shell__header">
-    <h1>Product Template Angular</h1>
-    <nav aria-label="Navegação principal" class="shell__nav">
+  <aside class="sidebar" [class.sidebar--open]="sidebarOpen()" [class.sidebar--collapsed]="sidebarCollapsed()">
+    <div class="sidebar__header">
+      <h2 class="sidebar__title" [class.sidebar__title--hidden]="sidebarCollapsed()">Product Template</h2>
+      <button type="button" class="sidebar__collapse-btn" (click)="toggleSidebarCollapsed()" [attr.aria-label]="sidebarCollapsed() ? 'Expandir barra lateral' : 'Recuar barra lateral'">
+        @if (sidebarCollapsed()) {
+          <lucide-icon [img]="icons.ChevronRight" [size]="20" aria-hidden="true" />
+        } @else {
+          <lucide-icon [img]="icons.ChevronLeft" [size]="20" aria-hidden="true" />
+        }
+      </button>
+    </div>
+    <nav class="sidebar__nav" aria-label="Navegação principal">
+      <a routerLink="/dashboard" routerLinkActive="sidebar__link--active" class="sidebar__link" [attr.title]="sidebarCollapsed() ? 'Dashboard' : null">
+        <lucide-icon [img]="icons.LayoutDashboard" [size]="20" aria-hidden="true" />
+        <span class="sidebar__link-text">Dashboard</span>
+      </a>
       @if (session.hasPermission('identity.user.read') || session.isAdmin()) {
-        <a routerLink="/users" routerLinkActive="active">Users</a>
+        <a routerLink="/users" routerLinkActive="sidebar__link--active" class="sidebar__link" [attr.title]="sidebarCollapsed() ? 'Users' : null">
+          <lucide-icon [img]="icons.Users" [size]="20" aria-hidden="true" />
+          <span class="sidebar__link-text">Users</span>
+        </a>
       }
       @if (session.hasPermission('authorization.role.read') || session.isAdmin()) {
-        <a routerLink="/roles" routerLinkActive="active">Roles</a>
+        <a routerLink="/roles" routerLinkActive="sidebar__link--active" class="sidebar__link" [attr.title]="sidebarCollapsed() ? 'Roles' : null">
+          <lucide-icon [img]="icons.Shield" [size]="20" aria-hidden="true" />
+          <span class="sidebar__link-text">Roles</span>
+        </a>
       }
       @if (session.hasPermission('authorization.permission.read') || session.isAdmin()) {
-        <a routerLink="/permissions" routerLinkActive="active">Permissions</a>
+        <a routerLink="/permissions" routerLinkActive="sidebar__link--active" class="sidebar__link" [attr.title]="sidebarCollapsed() ? 'Permissions' : null">
+          <lucide-icon [img]="icons.Key" [size]="20" aria-hidden="true" />
+          <span class="sidebar__link-text">Permissions</span>
+        </a>
       }
       @if (session.hasPermission('tenants.read') || session.isAdmin()) {
-        <a routerLink="/tenants" routerLinkActive="active">Tenants</a>
+        <a routerLink="/tenants" routerLinkActive="sidebar__link--active" class="sidebar__link" [attr.title]="sidebarCollapsed() ? 'Tenants' : null">
+          <lucide-icon [img]="icons.Building2" [size]="20" aria-hidden="true" />
+          <span class="sidebar__link-text">Tenants</span>
+        </a>
       }
     </nav>
-    <div class="shell__actions">
-      @if (session.user(); as user) {
-        <span class="shell__user" [attr.aria-label]="'Usuário: ' + user.email">
-          {{ user.firstName || user.email }}
-        </span>
-        <button type="button" class="shell__logout" (click)="logout()">
-          {{ 'auth.logout' | translate }}
-        </button>
-      }
-      <app-language-selector />
+    <div class="sidebar__footer">
+      <button type="button" class="sidebar__logout" (click)="logout()" [attr.title]="sidebarCollapsed() ? ('auth.logout' | translate) : null" [attr.aria-label]="'auth.logout' | translate">
+        <lucide-icon [img]="icons.LogOut" [size]="20" aria-hidden="true" />
+        <span class="sidebar__link-text">{{ 'auth.logout' | translate }}</span>
+      </button>
     </div>
-  </header>
+  </aside>
+  <div class="sidebar__backdrop" [class.sidebar__backdrop--visible]="sidebarOpen()" (click)="closeSidebar()" aria-hidden="true"></div>
 
-  <main class="shell__content">
-    <router-outlet />
-  </main>
+  <div class="shell__main" [class.shell__main--collapsed]="sidebarCollapsed()">
+    <header class="topbar">
+      <button type="button" class="topbar__menu-btn" (click)="toggleSidebar()" aria-label="Abrir menu">
+        <lucide-icon [img]="icons.Menu" [size]="20" aria-hidden="true" />
+      </button>
+      <div class="topbar__search">
+        <lucide-icon [img]="icons.Search" [size]="16" class="topbar__search-icon" aria-hidden="true" />
+        <input type="search" placeholder="Busca global..." class="topbar__search-input" (keydown.enter)="onSearch($event)" />
+      </div>
+      <div class="topbar__actions">
+        <button type="button" class="topbar__btn" (click)="theme.toggle()" [attr.aria-label]="theme.isDark() ? 'Ativar tema claro' : 'Ativar tema escuro'">
+          @if (theme.isDark()) {
+            <lucide-icon [img]="icons.Sun" [size]="20" aria-hidden="true" />
+          } @else {
+            <lucide-icon [img]="icons.Moon" [size]="20" aria-hidden="true" />
+          }
+        </button>
+        <div class="topbar__notifications-wrap" (click)="$event.stopPropagation()">
+          <button type="button" class="topbar__btn topbar__btn--notifications" (click)="notificationsOpen.update(v => !v)" [attr.aria-label]="'Notificações' + (notificationsOpen() ? ' (fechar)' : '')" [attr.aria-expanded]="notificationsOpen()">
+            <lucide-icon [img]="icons.Bell" [size]="20" aria-hidden="true" />
+            <span class="topbar__badge" aria-hidden="true"></span>
+          </button>
+          @if (notificationsOpen()) {
+            <div class="topbar__notifications-dropdown" role="menu">
+              <div class="topbar__notifications-empty">Nenhuma notificação</div>
+            </div>
+          }
+        </div>
+        <div class="topbar__profile">
+          @if (session.user(); as user) {
+            <div class="topbar__user">
+              <span class="topbar__user-name">{{ user.firstName || user.email }}</span>
+              <span class="topbar__user-role">{{ user.roles[0] || 'Usuário' }}</span>
+            </div>
+            <div class="topbar__avatar" [attr.aria-label]="'Usuário: ' + user.email">
+              <lucide-icon [img]="icons.User" [size]="20" aria-hidden="true" />
+            </div>
+          }
+          <app-language-selector />
+          <button type="button" class="topbar__logout" (click)="logout()">
+            {{ 'auth.logout' | translate }}
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="shell__content">
+      <router-outlet />
+    </main>
+  </div>
 </div>

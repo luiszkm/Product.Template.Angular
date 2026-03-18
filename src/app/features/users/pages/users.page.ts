@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, computed, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { UsersStore } from '../state/users.store';
 import { UsersTableComponent } from '../components/users-table.component';
 import { AuthSessionService } from '../../../core/auth/auth-session.service';
@@ -16,6 +16,7 @@ import { AuthSessionService } from '../../../core/auth/auth-session.service';
 export class UsersPage implements OnInit {
   protected readonly store = inject(UsersStore);
   protected readonly session = inject(AuthSessionService);
+  private readonly route = inject(ActivatedRoute);
 
   readonly vm = this.store.vm;
 
@@ -27,6 +28,10 @@ export class UsersPage implements OnInit {
   });
 
   ngOnInit(): void {
+    const search = this.route.snapshot.queryParamMap.get('search');
+    if (search) {
+      this.store.setSearch(search);
+    }
     this.store.load();
   }
 

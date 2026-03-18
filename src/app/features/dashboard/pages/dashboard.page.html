@@ -1,0 +1,74 @@
+<div class="page-container">
+  <header class="page-header">
+    <h1 class="page-title">Dashboard</h1>
+    <p class="page-subtitle">Visão geral do sistema ERP</p>
+  </header>
+
+  <div class="metrics-grid">
+    <app-metric-card
+      title="Receita Total"
+      value="R$ 189.450"
+      change="+12.5%"
+      [changeUp]="true"
+      [icon]="icons.DollarSign"
+    />
+    <app-metric-card
+      title="Novos Clientes"
+      value="1.234"
+      change="+8.2%"
+      [changeUp]="true"
+      [icon]="icons.Users"
+    />
+    <app-metric-card
+      title="Vendas"
+      value="856"
+      change="+15.3%"
+      [changeUp]="true"
+      [icon]="icons.ShoppingCart"
+    />
+    <app-metric-card
+      title="Taxa de Crescimento"
+      value="23.1%"
+      change="-2.4%"
+      [changeUp]="false"
+      [icon]="icons.TrendingUp"
+    />
+  </div>
+
+  <div class="charts-grid">
+    <app-sales-chart />
+    <app-revenue-chart />
+  </div>
+
+  <div class="table-container">
+    <div class="table-header">
+      <h3 class="table-title">Transações Recentes</h3>
+    </div>
+    <div class="table-wrapper">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Valor</th>
+            <th>Status</th>
+            <th>Data</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of transactions; track row.id) {
+            <tr>
+              <td class="data-table__id">{{ row.id }}</td>
+              <td>{{ row.customer }}</td>
+              <td class="data-table__amount">{{ row.amount }}</td>
+              <td>
+                <app-badge [variant]="row.statusVariant">{{ row.statusLabel }}</app-badge>
+              </td>
+              <td class="data-table__date">{{ row.date }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

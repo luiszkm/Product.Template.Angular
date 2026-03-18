@@ -25,7 +25,12 @@ export const routes: Routes = [
     component: ShellLayoutComponent,
     canActivate: [authGuard],
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'users' },
+      { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+      {
+        path: 'dashboard',
+        title: 'Dashboard',
+        loadComponent: () => import('./features/dashboard/pages/dashboard.page').then(m => m.DashboardPage)
+      },
       {
         path: 'users',
         title: 'Usuários',
