@@ -33,21 +33,24 @@ Template enterprise-grade de aplicação Angular standalone seguindo:
 ### Instalação
 
 ```bash
-# Clone o repositório
+# Clone o repositório (ou crie um repo a partir do template no GitHub)
 git clone <repo-url>
 cd ProductTemplateAngular
 
 # Instale dependências
 npm install
 
-# Configure o ambiente (ajuste .env ou src/environments/)
-# Ajuste apiUrl, tenantSlug, oauthRedirectUri
+# Variáveis de ambiente (obrigatório para arranque)
+cp .env.example .env.development
+# Edite NG_APP_API_URL, NG_APP_TENANT_SLUG, NG_APP_OAUTH_REDIRECT_URI
 
-# Inicie o dev server
-ng serve
+# Inicie o dev server (carrega .env.development)
+npm start
 
 # Acesse http://localhost:4200
 ```
+
+**Novo projeto a partir deste template** (GitHub Template, clone raso, renomeação do projeto): ver [docs/TEMPLATE-SETUP.md](docs/TEMPLATE-SETUP.md).
 
 ### Build de produção
 
@@ -83,6 +86,7 @@ src/
   checklists/               ← 3 checklists de validação
   examples/                 ← Exemplo de referência (products)
 docs/                       ← Documentação
+  TEMPLATE-SETUP.md         ← Template: setup rápido, checklist, init-template
   backendSummary/           ← Contratos da API backend
   gap-analysis.md           ← Auditoria de alinhamento
 ```

@@ -9,6 +9,7 @@
     "build:dev": "dotenv -e .env.development -- ng build --configuration development",
     "watch": "dotenv -e .env.development -- ng build --watch --configuration development",
     "test": "ng test",
+    "init-template": "node scripts/init-template.js",
     "test:env": "node scripts/test-env-validation.js",
     "review": "node scripts/code-review.js",
     "review:all": "find src/app -name '*.ts' -not -name '*.spec.ts' -exec node scripts/code-review.js {} \\;"

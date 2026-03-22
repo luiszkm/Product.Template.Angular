@@ -63,3 +63,4 @@ Cada feature segue: `{feature}.routes.ts`, `pages/`, `components/`, `models/`, `
 - **Cursor:** `.cursor/rules/`, `AGENTS.md`
 - **AI:** `.ai/rules/`, `.ai/design/`, `.ai/prompts/`
 - **Layout ERP:** `docs/erp-layout-prompt.md`
+- **Template / novo projeto:** `docs/TEMPLATE-SETUP.md`
