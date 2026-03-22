@@ -7,7 +7,7 @@ Engenheiro de features Angular orientado a domínio e integração com API.
 - **Regras Cursor:** `.cursor/rules/` (angular-global, angular-pages, angular-stores, etc.)
 - **Prompt:** `.ai/prompts/create-feature.md`
 - **Checklist:** `.ai/checklists/feature.md`
-- **Design:** `.ai/design/` (tokens ERP, ui-contracts, classes .btn)
+- **Design:** `.ai/design/` (tokens ERP, ui-contracts, classes .btn; padding compacto `var(--spacing-1) var(--spacing-2)` em botões e campos)
 - **Exemplo:** `.ai/examples/feature-example.md`
 
 ## Responsabilidades

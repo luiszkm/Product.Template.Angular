@@ -613,16 +613,16 @@ Padrões de layout responsivo para garantir que a aplicação funcione bem em to
 
 ### Touch Targets
 ```css
-/* ✅ Botões maiores em touch */
+/* ✅ Botões compactos no desktop; área mínima em touch */
 .btn {
   min-height: 36px;
-  padding: var(--spacing-2) var(--spacing-4);
+  padding: var(--spacing-1) var(--spacing-2);
 }
 
 @media (hover: none) {
   .btn {
     min-height: 44px;  /* iOS guideline */
-    padding: var(--spacing-3) var(--spacing-5);
+    padding: var(--spacing-2) var(--spacing-3);
   }
 }
 ```

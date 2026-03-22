@@ -1,13 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AppModalComponent } from '../../../shared/components/modal.component';
 import { RolesStore } from '../state/roles.store';
 import { AuthSessionService } from '../../../core/auth/auth-session.service';
 
 @Component({
   selector: 'app-roles-page',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, AppModalComponent],
   templateUrl: './roles.page.html',
   styleUrl: './roles.page.css',
   providers: [RolesStore],
@@ -20,7 +21,7 @@ export class RolesPage implements OnInit {
 
   readonly vm = this.store.vm;
   readonly canManage = this.session.hasPermission('authorization.role.manage') || this.session.isAdmin();
-  readonly showCreateForm = signal(false);
+  readonly createModalOpen = signal(false);
 
   readonly form = this.fb.nonNullable.group({
     name: ['', [Validators.required]],
@@ -41,7 +42,12 @@ export class RolesPage implements OnInit {
     }
     this.store.create(this.form.getRawValue());
     this.form.reset();
-    this.showCreateForm.set(false);
+    this.createModalOpen.set(false);
+  }
+
+  closeCreateModal(): void {
+    this.form.reset();
+    this.createModalOpen.set(false);
   }
 
   onRemove(id: string): void {

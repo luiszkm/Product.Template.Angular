@@ -20,7 +20,7 @@ Este agente valida:
 10. ✅ **Forms** — Reactive, validação, apiErrors
 11. ✅ **Tests** — TestBed, specs
 12. ✅ **Observability** — Correlation ID, Retry-After
-13. ✅ **Design** — Tokens ERP, classes .btn, ui-contracts
+13. ✅ **Design** — Tokens ERP, classes .btn, ui-contracts; botões e campos com padding `var(--spacing-1) var(--spacing-2)` salvo excepção
 14. ✅ **I18n** — Translate pipe, namespaces
 15. ✅ **Dark Theme** — Tokens ERP (automático via .dark) ou classes dark:
 
@@ -92,6 +92,7 @@ Este agente valida:
 
 - [ ] Tokens ERP usados (--foreground, --card, --border, etc.)
 - [ ] Classes .btn para botões (não app-button)
+- [ ] Inputs/selects/busca/paginação: padding alinhado (`var(--spacing-1) var(--spacing-2)`), ver `components.md`
 - [ ] Sem CSS inline
 - [ ] Sem cores hardcoded
 - [ ] Página de detalhe: padrão feature-detail__* se aplicável

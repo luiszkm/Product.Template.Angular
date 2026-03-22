@@ -31,12 +31,13 @@ import {
 } from '@angular/router';
 import { routes } from './app.routes';
 import { API_BASE_URL } from './core/api/api.config';
+import { APP_SETTINGS } from './core/config/app-settings.token';
 import { refreshTokenInterceptor } from './core/interceptors/refresh-token.interceptor';
 import { retry429Interceptor } from './core/interceptors/retry-429.interceptor';
 import { i18nInterceptor } from './core/i18n/i18n.interceptor';
 import { AuthSessionService } from './core/auth/auth-session.service';
 import { ThemeService } from './core/theme/theme.service';
-import { environment } from '../environments/environment';
+import type { AppEnvironment } from '../environments/env.validator';
 
 const lucideIcons = {
   LayoutDashboard,
@@ -59,30 +60,33 @@ const lucideIcons = {
   LogOut
 };
 
-export const appConfig: ApplicationConfig = {
-  providers: [
-    provideBrowserGlobalErrorListeners(),
-    { provide: LUCIDE_ICONS, multi: true, useValue: new LucideIconProvider(lucideIcons) },
-    provideHttpClient(
-      withInterceptors([retry429Interceptor, refreshTokenInterceptor, i18nInterceptor])
-    ),
-    provideRouter(
-      routes,
-      withPreloading(PreloadAllModules),
-      withComponentInputBinding(),
-      withViewTransitions(),
-      withInMemoryScrolling({ scrollPositionRestoration: 'top' })
-    ),
-    { provide: API_BASE_URL, useValue: environment.apiUrl },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: (session: AuthSessionService, theme: ThemeService) => () => {
-        theme.init();
-        session.restoreFromStorage();
-        session.setTenant(environment.tenantSlug);
-      },
-      deps: [AuthSessionService, ThemeService],
-      multi: true
-    }
-  ]
-};
+export function createAppConfig(settings: AppEnvironment): ApplicationConfig {
+  return {
+    providers: [
+      { provide: APP_SETTINGS, useValue: settings },
+      provideBrowserGlobalErrorListeners(),
+      { provide: LUCIDE_ICONS, multi: true, useValue: new LucideIconProvider(lucideIcons) },
+      provideHttpClient(
+        withInterceptors([retry429Interceptor, refreshTokenInterceptor, i18nInterceptor])
+      ),
+      provideRouter(
+        routes,
+        withPreloading(PreloadAllModules),
+        withComponentInputBinding(),
+        withViewTransitions(),
+        withInMemoryScrolling({ scrollPositionRestoration: 'top' })
+      ),
+      { provide: API_BASE_URL, useValue: settings.apiUrl },
+      {
+        provide: APP_INITIALIZER,
+        useFactory: (session: AuthSessionService, theme: ThemeService) => () => {
+          theme.init();
+          session.restoreFromStorage();
+          session.setTenant(settings.tenantSlug);
+        },
+        deps: [AuthSessionService, ThemeService],
+        multi: true
+      }
+    ]
+  };
+}

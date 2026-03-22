@@ -92,16 +92,12 @@
           @if (session.user(); as user) {
             <div class="topbar__user">
               <span class="topbar__user-name">{{ user.firstName || user.email }}</span>
-              <span class="topbar__user-role">{{ user.roles[0] || 'Usuário' }}</span>
             </div>
             <div class="topbar__avatar" [attr.aria-label]="'Usuário: ' + user.email">
               <lucide-icon [img]="icons.User" [size]="20" aria-hidden="true" />
             </div>
           }
           <app-language-selector />
-          <button type="button" class="topbar__logout" (click)="logout()">
-            {{ 'auth.logout' | translate }}
-          </button>
         </div>
       </div>
     </header>

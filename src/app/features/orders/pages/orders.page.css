@@ -1,0 +1,53 @@
+.orders-page {
+  display: grid;
+  gap: var(--spacing-4);
+}
+
+.orders-page__header p {
+  margin: 0;
+  color: var(--foreground-secondary);
+}
+
+.orders-page__hint {
+  margin: 0;
+  color: var(--foreground-secondary);
+}
+
+.orders-page__empty {
+  margin: 0;
+  padding: var(--spacing-4);
+  color: var(--foreground-secondary);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.orders-page__table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+}
+
+.orders-page__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.orders-page__table th,
+.orders-page__table td {
+  padding: var(--spacing-2) var(--spacing-3);
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.orders-page__table th {
+  color: var(--foreground-secondary);
+  font-weight: 600;
+}
+
+.orders-page__num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}

@@ -11,7 +11,7 @@ import { catchError, switchMap, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { API_PATHS } from '../api/api-paths';
 import { AuthSessionService } from '../auth/auth-session.service';
-import { environment } from '../../../environments/environment';
+import { APP_SETTINGS } from '../config/app-settings.token';
 
 interface RefreshResponse {
   accessToken: string;
@@ -32,6 +32,7 @@ export const refreshTokenInterceptor: HttpInterceptorFn = (
   const session = inject(AuthSessionService);
   const router = inject(Router);
   const http = inject(HttpClient);
+  const settings = inject(APP_SETTINGS);
 
   // Não interceptar a própria chamada de refresh nem login
   const refreshPath = API_PATHS.identity.refresh;
@@ -60,7 +61,7 @@ export const refreshTokenInterceptor: HttpInterceptorFn = (
         'X-Tenant': session.tenant()
       });
       return http
-        .post<RefreshResponse>(`${environment.apiUrl}${API_PATHS.identity.refresh}`, { refreshToken }, { headers })
+        .post<RefreshResponse>(`${settings.apiUrl}${API_PATHS.identity.refresh}`, { refreshToken }, { headers })
         .pipe(
           switchMap((response) => {
             session.updateToken(response.accessToken, response.refreshToken);

@@ -864,7 +864,7 @@ Referência: `src/app/features/authorization/pages/role-detail.page.html`
 
 .role-detail__form .field input {
   width: 100%;
-  padding: var(--spacing-2) var(--spacing-3);
+  padding: var(--spacing-1) var(--spacing-2);
   font-size: var(--font-size-base);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);

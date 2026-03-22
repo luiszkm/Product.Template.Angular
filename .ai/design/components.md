@@ -21,7 +21,7 @@ O projeto usa **classes CSS** em vez de componentes Angular para botões. Use se
 ### Classes CSS (implementadas em styles.css)
 ```css
 .btn {
-  padding: var(--spacing-2) var(--spacing-4);
+  padding: var(--spacing-1) var(--spacing-2);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   border-radius: var(--radius-md);
@@ -60,6 +60,25 @@ O projeto usa **classes CSS** em vez de componentes Angular para botões. Use se
   background: color-mix(in srgb, var(--error) 20%, transparent);
 }
 ```
+
+**Padding compacto:** `.btn` e controlos de formulário alinhados em `src/styles.css` e páginas usam **`var(--spacing-1) var(--spacing-2)`** (~8px × ~16px). Evitar duplicar blocos só para padding em `*__actions .btn` — a classe global já aplica.
+
+### Campos de texto (inputs, selects, busca)
+
+Em páginas (detalhe, listagens, login), inputs e selects seguem o mesmo par vertical/horizontal que os botões:
+
+```css
+/* Exemplo: .feature-detail__form .field input, filtros, busca */
+width: 100%;
+padding: var(--spacing-1) var(--spacing-2);
+font-size: var(--font-size-base);
+border: 1px solid var(--border);
+border-radius: var(--radius-md);
+background: var(--input-background);
+color: var(--foreground);
+```
+
+**Paginação** das listagens (botões «anterior / próximo»): mesmo padding `var(--spacing-1) var(--spacing-2)` para consistência com `.btn`.
 
 ### app-button (referência futura)
 
@@ -400,9 +419,9 @@ interface PaginationProps {
 }
 
 .pagination-button {
-  padding: var(--spacing-2);
+  padding: var(--spacing-1) var(--spacing-2);
   min-width: 36px;
-  height: 36px;
+  min-height: 36px;
   border: var(--border-width-1) solid var(--color-border);
   background: var(--color-background);
   border-radius: var(--radius-md);
@@ -507,7 +526,7 @@ interface SearchProps {
 
 .search-input {
   width: 100%;
-  padding: var(--spacing-2) var(--spacing-3) var(--spacing-2) var(--spacing-10);
+  padding: var(--spacing-1) var(--spacing-2) var(--spacing-1) var(--spacing-10);
   border: var(--border-width-1) solid var(--color-border);
   border-radius: var(--radius-md);
   font-size: var(--font-size-base);

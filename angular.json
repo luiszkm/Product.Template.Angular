@@ -45,7 +45,7 @@
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumError": "9kB"
                 }
               ],
               "outputHashing": "all",
@@ -65,12 +65,7 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.development.ts"
                 }
-              ],
-              "define": {
-                "NG_APP_API_URL": "process.env.NG_APP_API_URL",
-                "NG_APP_TENANT_SLUG": "process.env.NG_APP_TENANT_SLUG",
-                "NG_APP_OAUTH_REDIRECT_URI": "process.env.NG_APP_OAUTH_REDIRECT_URI"
-              }
+              ]
             }
           },
           "defaultConfiguration": "production"

@@ -9,7 +9,7 @@ Revisa os ficheiros em contexto usando o checklist do projeto.
 3. Para cada ficheiro relevante em contexto, valida:
    - Arquitetura e estrutura
    - Angular (standalone, OnPush, inject, signals)
-   - Design (tokens ERP, classes .btn)
+   - Design (tokens ERP, classes .btn; padding de controlos `var(--spacing-1) var(--spacing-2)`)
    - Acessibilidade
    - Segurança e API
 

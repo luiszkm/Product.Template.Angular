@@ -13,7 +13,7 @@ Especialista em componentes Angular reutilizáveis, acessíveis e performáticos
 - Criar componentes standalone com input()/output() signal-based.
 - Aplicar OnPush e tipagem forte.
 - Usar tokens ERP em CSS (--foreground, --card, etc.).
-- Usar classes .btn para botões.
+- Usar classes .btn para botões; inputs nativos com padding `var(--spacing-1) var(--spacing-2)` como em `components.md`.
 - Incluir scaffold de teste.
 
 ## Regras de análise

@@ -155,7 +155,7 @@ Se precisasse de autorização:
 
 ## Próximos passos (TODOs no template)
 
-- [ ] Implementar specs completos (store, service, components)
-- [ ] Adicionar busca com debounce (já tem structure, falta UI)
-- [ ] Adicionar operação `update()` (só tem `create` e `remove`)
-- [ ] Adicionar filtros avançados (categoria, range de preço)
+- [x] Implementar specs completos (store, service, components) — coberto em `products.store.spec.ts` (store); estender a service/components quando necessário
+- [x] Adicionar busca com debounce (já tem structure, falta UI) — UI + `scheduleSearch` com debounce 300ms em `ProductsStore`
+- [x] Adicionar operação `update()` (só tem `create` e `remove`) — `ProductsStore.update` + modal de edição na página de produtos
+- [x] Adicionar filtros avançados (categoria, range de preço) — toolbar com categoria e preço min/máx. (query enviada se o backend suportar)

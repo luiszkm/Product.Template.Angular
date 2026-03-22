@@ -1,12 +1,15 @@
-import { Injectable, computed, effect, inject, signal } from '@angular/core';
-import { finalize } from 'rxjs';
-import { Product, ProductFilters } from '../models/product.model';
+import { DestroyRef, Injectable, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Subject, debounceTime, distinctUntilChanged, finalize } from 'rxjs';
+import { Product, ProductFilters, UpdateProductRequest } from '../models/product.model';
 import { ProductsService } from '../services/products.service';
 import { ApiError } from '../../../core/api/api-types';
 
 @Injectable()
 export class ProductsStore {
   private readonly productsService = inject(ProductsService);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly searchSubject = new Subject<string>();
 
   readonly items = signal<Product[]>([]);
   readonly loading = signal<boolean>(false);
@@ -16,6 +19,9 @@ export class ProductsStore {
   readonly pageNumber = signal<number>(1);
   readonly pageSize = signal<number>(10);
   readonly search = signal<string>('');
+  readonly category = signal<string>('');
+  readonly minPrice = signal<number | undefined>(undefined);
+  readonly maxPrice = signal<number | undefined>(undefined);
 
   readonly vm = computed(() => ({
     items: this.items(),
@@ -28,12 +34,30 @@ export class ProductsStore {
     hasData: this.items().length > 0
   }));
 
-  private readonly _resetPageEffect = effect(() => {
-    const currentSearch = this.search();
-    if (currentSearch.length === 0 || currentSearch.length >= 2) {
-      this.pageNumber.set(1);
-    }
-  });
+  constructor() {
+    this.searchSubject
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((term) => {
+        this.search.set(term);
+        this.pageNumber.set(1);
+        this.load();
+      });
+  }
+
+  /** Atualiza a pesquisa com debounce (chamar a partir do campo de busca). */
+  scheduleSearch(term: string): void {
+    this.searchSubject.next(term);
+  }
+
+  /** Aplica categoria e intervalo de preço e recarrega a lista. */
+  applyAdvancedFilters(): void {
+    this.pageNumber.set(1);
+    this.load();
+  }
 
   load(): void {
     this.loading.set(true);
@@ -42,7 +66,10 @@ export class ProductsStore {
     const filters: ProductFilters = {
       pageNumber: this.pageNumber(),
       pageSize: this.pageSize(),
-      search: this.search() || undefined
+      search: this.search() || undefined,
+      category: this.category().trim() || undefined,
+      minPrice: this.minPrice(),
+      maxPrice: this.maxPrice()
     };
 
     this.productsService
@@ -57,10 +84,6 @@ export class ProductsStore {
           this.error.set(apiError.problem.detail ?? 'Erro ao carregar produtos.');
         }
       });
-  }
-
-  setSearch(search: string): void {
-    this.search.set(search);
   }
 
   setPage(pageNumber: number): void {
@@ -83,6 +106,26 @@ export class ProductsStore {
             this.validationErrors.set(apiError.problem.errors);
           } else {
             this.error.set(apiError.problem.detail ?? 'Erro ao criar produto.');
+          }
+        }
+      });
+  }
+
+  update(input: UpdateProductRequest): void {
+    this.loading.set(true);
+    this.error.set(null);
+    this.validationErrors.set(null);
+
+    this.productsService
+      .update(input)
+      .pipe(finalize(() => this.loading.set(false)))
+      .subscribe({
+        next: () => this.load(),
+        error: (apiError: ApiError) => {
+          if (apiError.status === 400 && apiError.problem.errors) {
+            this.validationErrors.set(apiError.problem.errors);
+          } else {
+            this.error.set(apiError.problem.detail ?? 'Erro ao atualizar produto.');
           }
         }
       });

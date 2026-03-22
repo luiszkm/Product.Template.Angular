@@ -1,13 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AppModalComponent } from '../../../shared/components/modal.component';
 import { TenantsStore } from '../state/tenants.store';
 import { AuthSessionService } from '../../../core/auth/auth-session.service';
 
 @Component({
   selector: 'app-tenants-page',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, AppModalComponent],
   templateUrl: './tenants.page.html',
   styleUrl: './tenants.page.css',
   providers: [TenantsStore],
@@ -20,7 +21,7 @@ export class TenantsPage implements OnInit {
 
   readonly vm = this.store.vm;
   readonly canManage = this.session.hasPermission('tenants.manage') || this.session.isAdmin();
-  readonly showCreateForm = signal(false);
+  readonly createModalOpen = signal(false);
 
   readonly isolationModes = ['SharedDb', 'SchemaPerTenant', 'DedicatedDb'] as const;
 
@@ -52,7 +53,12 @@ export class TenantsPage implements OnInit {
       isolationMode: value.isolationMode
     });
     this.form.reset({ tenantId: 0, tenantKey: '', displayName: '', contactEmail: '', isolationMode: 'SharedDb' });
-    this.showCreateForm.set(false);
+    this.createModalOpen.set(false);
+  }
+
+  closeCreateModal(): void {
+    this.form.reset({ tenantId: 0, tenantKey: '', displayName: '', contactEmail: '', isolationMode: 'SharedDb' });
+    this.createModalOpen.set(false);
   }
 
   onRemove(id: number): void {

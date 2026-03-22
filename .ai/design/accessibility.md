@@ -61,7 +61,7 @@ Padrões de acessibilidade para garantir que todos os usuários possam usar a ap
   left: 0;
   background: var(--color-primary-500);
   color: var(--color-text-inverse);
-  padding: var(--spacing-2) var(--spacing-4);
+  padding: var(--spacing-1) var(--spacing-2);
   text-decoration: none;
   z-index: 100;
 }

@@ -8,9 +8,93 @@
     <p class="products-page__error" role="alert">{{ vm().error }}</p>
   }
 
-  <div class="products-page__content">
-    <app-product-form (create)="onCreate($event)" [apiErrors]="vm().validationErrors" />
+  <div class="products-page__toolbar">
+    <div class="products-page__search">
+      <label class="products-page__label" for="product-search">Buscar</label>
+      <input
+        id="product-search"
+        type="search"
+        class="products-page__input"
+        placeholder="Nome ou SKU (debounce 300ms)"
+        [ngModel]="searchDraft()"
+        (ngModelChange)="onSearchInput($event)"
+        autocomplete="off"
+      />
+    </div>
+    <div class="products-page__filters">
+      <label class="products-page__label" for="product-category">Categoria</label>
+      <input
+        id="product-category"
+        type="text"
+        class="products-page__input products-page__input--narrow"
+        placeholder="Opcional"
+        [ngModel]="categoryDraft()"
+        (ngModelChange)="categoryDraft.set($event)"
+      />
+      <label class="products-page__label" for="product-min">Preço mín.</label>
+      <input
+        id="product-min"
+        type="number"
+        step="0.01"
+        class="products-page__input products-page__input--narrow"
+        placeholder="—"
+        [ngModel]="minPriceDraft()"
+        (ngModelChange)="minPriceDraft.set($event)"
+      />
+      <label class="products-page__label" for="product-max">Preço máx.</label>
+      <input
+        id="product-max"
+        type="number"
+        step="0.01"
+        class="products-page__input products-page__input--narrow"
+        placeholder="—"
+        [ngModel]="maxPriceDraft()"
+        (ngModelChange)="maxPriceDraft.set($event)"
+      />
+      <button type="button" class="btn btn-secondary" (click)="onApplyFilters()">Aplicar filtros</button>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="createModalOpen.set(true)">Novo produto</button>
+  </div>
 
-    <app-product-table [items]="vm().items" [loading]="vm().loading" (remove)="onRemove($event)" />
+  <app-modal
+    [open]="createModalOpen()"
+    title="Novo produto"
+    titleId="product-create-modal-title"
+    (closed)="closeCreateModal()"
+  >
+    @if (createModalOpen()) {
+      <app-product-form
+        mode="create"
+        (create)="onCreate($event)"
+        [apiErrors]="vm().validationErrors"
+      />
+    }
+  </app-modal>
+
+  <app-modal
+    [open]="editModalOpen()"
+    title="Editar produto"
+    titleId="product-edit-modal-title"
+    (closed)="closeEditModal()"
+  >
+    @if (editModalOpen()) {
+      @if (productToEdit(); as p) {
+        <app-product-form
+          mode="edit"
+          [initialProduct]="p"
+          (update)="onUpdate($event)"
+          [apiErrors]="vm().validationErrors"
+        />
+      }
+    }
+  </app-modal>
+
+  <div class="products-page__content">
+    <app-product-table
+      [items]="vm().items"
+      [loading]="vm().loading"
+      (edit)="onEdit($event)"
+      (remove)="onRemove($event)"
+    />
   </div>
 </section>

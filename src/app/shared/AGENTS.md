@@ -12,7 +12,7 @@ Componentes, pipes e directivas reutilizáveis em todo o app.
 - `input()`, `output()` signal-based
 - Sem chamadas HTTP — receber dados via inputs
 - Tokens ERP em CSS (`.ai/design/tokens.md`)
-- Classes `.btn` para botões
+- Classes `.btn` para botões; inputs/selects com padding `var(--spacing-1) var(--spacing-2)` (ver `.ai/design/components.md`)
 
 ## Referências
 - `.ai/prompts/create-component.md`

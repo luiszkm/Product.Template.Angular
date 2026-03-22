@@ -14,7 +14,10 @@ export class ProductsService {
       params: {
         pageNumber: filters.pageNumber,
         pageSize: filters.pageSize,
-        search: filters.search
+        search: filters.search,
+        category: filters.category,
+        minPrice: filters.minPrice,
+        maxPrice: filters.maxPrice
       }
     });
   }

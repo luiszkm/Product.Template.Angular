@@ -35,19 +35,26 @@
   margin-bottom: var(--spacing-4);
 }
 
-.tenants-page__form {
+.tenants-page__modal-form {
   display: flex;
+  flex-direction: column;
   gap: var(--spacing-2);
-  flex-wrap: wrap;
 }
 
-.tenants-page__form input,
-.tenants-page__form select {
-  padding: var(--spacing-2) var(--spacing-3);
+.tenants-page__modal-form input,
+.tenants-page__modal-form select {
+  padding: var(--spacing-1) var(--spacing-2);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   background: var(--input-background);
   color: var(--foreground);
+}
+
+.tenants-page__modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+  margin-top: var(--spacing-2);
 }
 
 .tenants-page__content {
@@ -134,7 +141,7 @@
 }
 
 .tenants-page__pagination button {
-  padding: var(--spacing-2) var(--spacing-4);
+  padding: var(--spacing-1) var(--spacing-2);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   border: 1px solid var(--border);

@@ -1,0 +1,35 @@
+<section class="orders-page">
+  <header class="orders-page__header">
+    <h2>Pedidos</h2>
+    <p>Listagem de pedidos. Quando a API estiver disponível, os dados passam a vir do backend.</p>
+  </header>
+
+  @if (loading()) {
+    <p class="orders-page__hint" aria-live="polite">A carregar…</p>
+  } @else if (items().length === 0) {
+    <p class="orders-page__empty">Nenhum pedido para mostrar (stub até contrato de API).</p>
+  } @else {
+    <div class="orders-page__table-wrap">
+      <table class="orders-page__table">
+        <thead>
+          <tr>
+            <th scope="col">Referência</th>
+            <th scope="col">Estado</th>
+            <th scope="col" class="orders-page__num">Total</th>
+            <th scope="col">Criado</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of items(); track trackById($index, item)) {
+            <tr>
+              <td>{{ item.reference }}</td>
+              <td>{{ item.status }}</td>
+              <td class="orders-page__num">{{ item.totalAmount | number: '1.2-2' }}</td>
+              <td>{{ item.createdAt }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

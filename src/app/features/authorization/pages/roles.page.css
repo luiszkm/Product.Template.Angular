@@ -35,18 +35,25 @@
   margin-bottom: var(--spacing-4);
 }
 
-.roles-page__form {
+.roles-page__modal-form {
   display: flex;
+  flex-direction: column;
   gap: var(--spacing-2);
-  flex-wrap: wrap;
 }
 
-.roles-page__form input {
-  padding: var(--spacing-2) var(--spacing-3);
+.roles-page__modal-form input {
+  padding: var(--spacing-1) var(--spacing-2);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   background: var(--input-background);
   color: var(--foreground);
+}
+
+.roles-page__modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+  margin-top: var(--spacing-2);
 }
 
 .roles-page__content {
@@ -129,7 +136,7 @@
 }
 
 .roles-page__pagination button {
-  padding: var(--spacing-2) var(--spacing-4);
+  padding: var(--spacing-1) var(--spacing-2);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   border: 1px solid var(--border);

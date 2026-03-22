@@ -13,7 +13,7 @@ import { ApiClient } from '../api/api-client';
 import { API_PATHS } from '../api/api-paths';
 import { ApiError } from '../api/api-types';
 import { AuthSessionService, LoginResponse } from './auth-session.service';
-import { environment } from '../../../environments/environment';
+import { APP_SETTINGS } from '../config/app-settings.token';
 
 interface ProvidersResponse {
   providers: string[];
@@ -32,6 +32,7 @@ export class LoginPage implements OnInit {
   private readonly api = inject(ApiClient);
   private readonly session = inject(AuthSessionService);
   private readonly router = inject(Router);
+  private readonly settings = inject(APP_SETTINGS);
 
   readonly providers = signal<string[]>([]);
   readonly loading = signal(false);
@@ -99,8 +100,8 @@ export class LoginPage implements OnInit {
 
   onMicrosoftLogin(): void {
     // Redireciona para o backend que inicia o fluxo OAuth com o Azure AD
-    const redirectUri = encodeURIComponent(environment.oauthRedirectUri);
-    const authBase = environment.apiUrl.replace(/\/api\/?$/, '');
+    const redirectUri = encodeURIComponent(this.settings.oauthRedirectUri);
+    const authBase = this.settings.apiUrl.replace(/\/api\/?$/, '');
     window.location.href = `${authBase}/auth/microsoft?redirectUri=${redirectUri}`;
   }
 

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiClient } from '../api/api-client';
 import { API_PATHS } from '../api/api-paths';
 import { AuthSessionService, LoginResponse } from './auth-session.service';
-import { environment } from '../../../environments/environment';
+import { APP_SETTINGS } from '../config/app-settings.token';
 
 @Component({
   selector: 'app-oauth-callback-page',
@@ -27,6 +27,7 @@ export class OAuthCallbackPage implements OnInit {
   private readonly router = inject(Router);
   private readonly api = inject(ApiClient);
   private readonly session = inject(AuthSessionService);
+  private readonly settings = inject(APP_SETTINGS);
 
   readonly error = signal<string | null>(null);
 
@@ -43,7 +44,7 @@ export class OAuthCallbackPage implements OnInit {
     this.api
       .post<LoginResponse, { provider: string; code: string; redirectUri: string }>(
         API_PATHS.identity.externalLogin,
-        { provider: 'microsoft', code, redirectUri: environment.oauthRedirectUri }
+        { provider: 'microsoft', code, redirectUri: this.settings.oauthRedirectUri }
       )
       .subscribe({
         next: (response) => {

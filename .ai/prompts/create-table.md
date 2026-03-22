@@ -98,6 +98,7 @@ export class FeatureTableComponent {
 ## Estilo (ver .ai/design/)
 - Usar tokens ERP em CSS: `var(--card)`, `var(--border)`, `var(--foreground-secondary)`.
 - Botões de acção: `.btn`, `.btn-secondary`, `.btn-danger`.
+- Botões de paginação (se existirem): **`padding: var(--spacing-1) var(--spacing-2)`**, como em `components.md`.
 
 ## Restrições
 - Sem chamada HTTP direta.

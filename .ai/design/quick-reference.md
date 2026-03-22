@@ -12,7 +12,7 @@ Ao gerar código Angular para este projeto:
 
 1. Consulte `.ai/design/tokens.md` para tokens ERP (--foreground, --card, etc.)
 2. Siga `.ai/design/ui-contracts.md` para estrutura de páginas e formulários
-3. Use classes .btn, .btn-primary, .btn-secondary, .btn-danger (ver components.md)
+3. Use classes .btn, .btn-primary, .btn-secondary, .btn-danger (ver components.md); padding de botões e campos: `var(--spacing-1) var(--spacing-2)`
 4. Páginas de detalhe: padrão feature-detail__* em ui-contracts.md
 5. Layout shell: docs/erp-layout-prompt.md
 6. Implemente acessibilidade conforme `.ai/design/accessibility.md`
@@ -45,12 +45,14 @@ border: 1px solid color-mix(in srgb, var(--error) 20%, transparent);
 
 ### Espaçamentos (base 8px)
 ```css
-var(--spacing-1)   /* 8px - gap pequeno */
-var(--spacing-2)   /* 16px - padding padrão */
+var(--spacing-1)   /* 8px - gap pequeno; padding vertical de .btn e inputs */
+var(--spacing-2)   /* 16px - padding horizontal de .btn e inputs; gap pequeno */
 var(--spacing-3)   /* 24px - gap médio */
-var(--spacing-4)   /* 32px - seções, gap grande */
+var(--spacing-4)   /* 32px - seções, gap grande, padding de cards */
 var(--spacing-6)   /* 48px */
 ```
+
+**Controles interactivos:** botões (`.btn`), inputs, selects, busca e botões de paginação usam **`padding: var(--spacing-1) var(--spacing-2)`** — ver `components.md`.
 
 ### Tipografia
 ```css

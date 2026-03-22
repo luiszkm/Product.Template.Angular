@@ -15,5 +15,5 @@ Cada feature segue a estrutura em `.ai/rules/02-features.md` e `.ai/prompts/crea
 
 ## Referências
 - **Página de detalhe:** `authorization/pages/role-detail.page.*` ou `users/pages/user-detail.page.*`
-- **Design:** `.ai/design/` — tokens ERP, classes .btn
+- **Design:** `.ai/design/` — tokens ERP, classes .btn; padding de controlos `var(--spacing-1) var(--spacing-2)` (botões e campos)
 - **Checklist:** `.ai/checklists/feature.md`

@@ -11,6 +11,10 @@ export interface ProductFilters {
   pageNumber: number;
   pageSize: number;
   search?: string;
+  /** Filtros opcionais — enviados como query se definidos; o backend pode ignorar campos não suportados. */
+  category?: string;
+  minPrice?: number;
+  maxPrice?: number;
 }
 
 export interface CreateProductRequest {

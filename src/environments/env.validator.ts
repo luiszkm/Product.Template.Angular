@@ -26,7 +26,7 @@ const envSchema = z.object({
 /**
  * Tipo inferido do schema (type-safe)
  */
-export type Environment = z.infer<typeof envSchema>;
+export type AppEnvironment = z.infer<typeof envSchema>;
 
 /**
  * Valida e retorna as variáveis de ambiente.
@@ -36,7 +36,7 @@ export type Environment = z.infer<typeof envSchema>;
  * @returns Objeto tipado e validado
  * @throws {Error} Se validação falhar
  */
-export function validateEnv(raw: Record<string, unknown>): Environment {
+export function validateEnv(raw: Record<string, unknown>): AppEnvironment {
   try {
     return envSchema.parse(raw);
   } catch (error) {
@@ -60,19 +60,4 @@ export function validateEnv(raw: Record<string, unknown>): Environment {
   }
 }
 
-/**
- * Lê variáveis de ambiente do objeto global (injetado pelo build).
- * Prefixo: NG_APP_*
- */
-export function loadEnvFromGlobal(isProduction: boolean): Environment {
-  // Type assertion para acessar variáveis injetadas pelo Angular builder
-  const globalEnv = globalThis as unknown as Record<string, string>;
-
-  return validateEnv({
-    production: isProduction,
-    apiUrl: globalEnv['NG_APP_API_URL'],
-    tenantSlug: globalEnv['NG_APP_TENANT_SLUG'],
-    oauthRedirectUri: globalEnv['NG_APP_OAUTH_REDIRECT_URI']
-  });
-}
 

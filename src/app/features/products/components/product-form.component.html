@@ -41,7 +41,13 @@
       }
     </div>
 
-    <button type="submit">Salvar produto</button>
+    <button type="submit">
+      @if (mode() === 'edit') {
+        Guardar alterações
+      } @else {
+        Salvar produto
+      }
+    </button>
 
   </fieldset>
 </form>

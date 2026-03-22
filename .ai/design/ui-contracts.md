@@ -248,7 +248,7 @@ Padrão usado em role-detail, user-detail, tenant-detail. Referência: `src/app/
 
 .feature-detail__form .field input {
   width: 100%;
-  padding: var(--spacing-2) var(--spacing-3);
+  padding: var(--spacing-1) var(--spacing-2);
   font-size: var(--font-size-base);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
@@ -401,7 +401,7 @@ Padrão usado em role-detail, user-detail, tenant-detail. Referência: `src/app/
 .form-input,
 .form-select,
 .form-textarea {
-  padding: var(--spacing-2) var(--spacing-3);
+  padding: var(--spacing-1) var(--spacing-2);
   border: var(--border-width-1) solid var(--color-border);
   border-radius: var(--radius-md);
   font-size: var(--font-size-base);

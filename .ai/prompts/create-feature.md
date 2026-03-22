@@ -81,7 +81,7 @@ Adicionar em `app.routes.ts` dentro do shell:
 
 ## Design (ver .ai/design/)
 - Tokens ERP em CSS de páginas e componentes.
-- Classes .btn para botões.
+- Classes .btn para botões; inputs/selects/busca/paginação com **`padding: var(--spacing-1) var(--spacing-2)`** (ver `components.md`).
 - Página de detalhe (se aplicável): padrão feature-detail__* em ui-contracts.md.
 
 ## Saída obrigatória

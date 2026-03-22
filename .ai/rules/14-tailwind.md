@@ -5,7 +5,8 @@ O projeto usa **design tokens** em `src/styles.css` para páginas e componentes.
 
 - **Páginas e detail pages**: CSS custom com `var(--foreground)`, `var(--card)`, `var(--border)`, etc. Suporta dark mode via classe `.dark`.
 - **Tailwind**: Disponível para utilitários; cores primárias em `tailwind.config.js`.
-- **Botões**: Usar classes `.btn`, `.btn-primary`, `.btn-secondary`, `.btn-danger` de `styles.css`.
+- **Botões**: Usar classes `.btn`, `.btn-primary`, `.btn-secondary`, `.btn-danger` de `styles.css` (padding `var(--spacing-1) var(--spacing-2)`).
+- **Inputs / selects / busca**: mesmo padding em CSS de página (`var(--spacing-1) var(--spacing-2)`), alinhado a `components.md`.
 - Proibido CSS inline (`style="..."`).
 
 ## Configuração
@@ -52,7 +53,7 @@ O Tailwind está configurado em `tailwind.config.js` com:
 ```css
 /* button.component.css */
 .btn-primary {
-  @apply px-4 py-2 bg-primary-600 text-white rounded-md;
+  @apply px-2 py-2 bg-primary-600 text-white rounded-md;
   @apply hover:bg-primary-700 focus:outline-none focus:ring-2;
   @apply focus:ring-primary-500 focus:ring-offset-2;
   @apply disabled:opacity-50 disabled:cursor-not-allowed;
@@ -60,7 +61,7 @@ O Tailwind está configurado em `tailwind.config.js` com:
 }
 
 .btn-secondary {
-  @apply px-4 py-2 bg-gray-200 text-gray-900 rounded-md;
+  @apply px-2 py-2 bg-gray-200 text-gray-900 rounded-md;
   @apply hover:bg-gray-300 focus:outline-none focus:ring-2;
   @apply focus:ring-gray-500 focus:ring-offset-2;
 }

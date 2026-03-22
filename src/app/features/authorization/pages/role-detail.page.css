@@ -67,7 +67,7 @@
 
 .role-detail__form .field input {
   width: 100%;
-  padding: var(--spacing-2) var(--spacing-3);
+  padding: var(--spacing-1) var(--spacing-2);
   font-size: var(--font-size-base);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
@@ -84,14 +84,6 @@
   display: flex;
   gap: var(--spacing-3);
   margin-bottom: var(--spacing-4);
-}
-
-.role-detail__actions .btn {
-  padding: var(--spacing-2) var(--spacing-4);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  border-radius: var(--radius-md);
-  cursor: pointer;
 }
 
 .role-detail__permissions {
@@ -148,7 +140,7 @@
 .role-detail__add select {
   width: 100%;
   max-width: 320px;
-  padding: var(--spacing-2) var(--spacing-3);
+  padding: var(--spacing-1) var(--spacing-2);
   font-size: var(--font-size-base);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);

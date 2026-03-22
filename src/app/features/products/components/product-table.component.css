@@ -1,8 +1,8 @@
 .table-wrapper {
-  border: 1px solid #cbd5e1;
-  border-radius: 0.75rem;
-  background: #ffffff;
-  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  padding: var(--spacing-3);
   overflow-x: auto;
 }
 
@@ -14,15 +14,13 @@ table {
 th,
 td {
   text-align: left;
-  padding: 0.65rem;
-  border-bottom: 1px solid #e2e8f0;
+  padding: var(--spacing-2) var(--spacing-2);
+  border-bottom: 1px solid var(--border);
 }
 
-button {
-  border: 1px solid #ef4444;
-  color: #ef4444;
-  background: #ffffff;
-  border-radius: 0.5rem;
-  padding: 0.35rem 0.75rem;
-  cursor: pointer;
+.product-table__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+  align-items: center;
 }

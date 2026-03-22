@@ -110,6 +110,8 @@ O projeto usa classes `.btn` em vez de componentes. Ver `components.md`.
 ✅ "Botão de perigo com texto 'Excluir'" → class="btn btn-danger"
 ```
 
+**Padding de controlos:** botões `.btn`, inputs, selects e campos de busca usam **`padding: var(--spacing-1) var(--spacing-2)`** (implementado em `src/styles.css` e páginas). Não aumentar para `spacing-2`/`spacing-3` ou `spacing-4` sem motivo.
+
 ### Badges
 
 **Variantes:**

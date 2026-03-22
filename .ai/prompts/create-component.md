@@ -46,6 +46,7 @@ describe('NomeComponent', () => {
 ## Estilo (ver .ai/design/)
 - Usar tokens ERP em CSS: `var(--foreground)`, `var(--card)`, `var(--border)`, etc.
 - Botões: classes `.btn`, `.btn-primary`, `.btn-secondary`, `.btn-danger`.
+- Campos nativos (input/select): **`padding: var(--spacing-1) var(--spacing-2)`** se estilizados localmente (ver `components.md`).
 
 ## Saída obrigatória
 - Código TypeScript/HTML/CSS compilável.

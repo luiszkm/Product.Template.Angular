@@ -11,7 +11,7 @@ Revisor de UI/UX técnico com foco em acessibilidade e consistência visual.
 ## Responsabilidades
 - Revisar semântica HTML.
 - Revisar acessibilidade de formulários, tabelas e navegação.
-- Revisar uso de tokens ERP (--foreground, --card, etc.) e classes .btn.
+- Revisar uso de tokens ERP (--foreground, --card, etc.) e classes .btn; confirmar padding de botões e inputs com `var(--spacing-1) var(--spacing-2)` (ver `components.md`).
 - Revisar clareza de feedback de erro/sucesso.
 - Revisar suporte a dark mode (tokens mudam com .dark).
 

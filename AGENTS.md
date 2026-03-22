@@ -23,7 +23,7 @@ Este projeto usa regras e padrões definidos em `.ai/` e `.cursor/rules/`.
 ## Regras rápidas
 
 - **Angular:** standalone, OnPush, inject(), signals, sem any
-- **Design:** tokens ERP (--foreground, --card), classes .btn
+- **Design:** tokens ERP (--foreground, --card), classes .btn; padding compacto de botões e campos: `var(--spacing-1) var(--spacing-2)` (ver `.ai/design/components.md`)
 - **Páginas de detalhe:** padrão feature-detail__* em ui-contracts.md
 - **API:** ApiClient, X-Tenant, validationErrors, correlationId
 

@@ -38,7 +38,7 @@
 .users-page__search {
   width: 100%;
   max-width: 20rem;
-  padding: var(--spacing-2) var(--spacing-3);
+  padding: var(--spacing-1) var(--spacing-2);
   font-size: var(--font-size-base);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
@@ -62,7 +62,7 @@
 }
 
 .users-page__pagination button {
-  padding: var(--spacing-2) var(--spacing-4);
+  padding: var(--spacing-1) var(--spacing-2);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   border: 1px solid var(--border);

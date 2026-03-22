@@ -1,0 +1,26 @@
+@if (open()) {
+  <div class="modal-backdrop" (click)="onBackdropClick()" role="presentation">
+    <div
+      class="modal"
+      (click)="$event.stopPropagation()"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-labelledby]="titleId()"
+    >
+      <div class="modal-header">
+        <h2 class="modal-title" [id]="titleId()">{{ title() }}</h2>
+        <button
+          type="button"
+          class="modal-close"
+          (click)="onCloseButtonClick()"
+          aria-label="Fechar"
+        >
+          ×
+        </button>
+      </div>
+      <div class="modal-body">
+        <ng-content />
+      </div>
+    </div>
+  </div>
+}

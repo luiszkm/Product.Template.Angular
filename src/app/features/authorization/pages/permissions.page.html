@@ -10,21 +10,30 @@
 
   @if (canManage) {
     <div class="permissions-page__toolbar">
-      @if (showCreateForm()) {
-        <form [formGroup]="form" (ngSubmit)="onCreate()" class="permissions-page__form">
+      <button type="button" class="btn btn-primary" (click)="createModalOpen.set(true)">
+        Nova permissão
+      </button>
+    </div>
+
+    <app-modal
+      [open]="createModalOpen()"
+      title="Nova permissão"
+      titleId="permission-create-modal-title"
+      (closed)="closeCreateModal()"
+    >
+      @if (createModalOpen()) {
+        <form [formGroup]="form" (ngSubmit)="onCreate()" class="permissions-page__modal-form">
           <input formControlName="name" placeholder="Nome (ex: module.resource.action)" />
           <input formControlName="description" placeholder="Descrição" />
-          <button type="submit" class="btn btn-primary">Criar</button>
-          <button type="button" class="btn btn-secondary" (click)="showCreateForm.set(false)">
-            Cancelar
-          </button>
+          <div class="permissions-page__modal-actions">
+            <button type="submit" class="btn btn-primary">Criar</button>
+            <button type="button" class="btn btn-secondary" (click)="closeCreateModal()">
+              Cancelar
+            </button>
+          </div>
         </form>
-      } @else {
-        <button type="button" class="btn btn-primary" (click)="showCreateForm.set(true)">
-          Nova permissão
-        </button>
       }
-    </div>
+    </app-modal>
   }
 
   <div class="permissions-page__content">

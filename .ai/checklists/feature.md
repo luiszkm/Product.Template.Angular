@@ -59,6 +59,7 @@
 ## Design (ver .ai/design/)
 - [ ] Tokens ERP usados em CSS (--foreground, --card, --border, etc.)
 - [ ] Botões com classes .btn, .btn-primary, .btn-secondary, .btn-danger
+- [ ] Inputs/selects/busca/paginação com padding `var(--spacing-1) var(--spacing-2)` (ver `components.md`)
 - [ ] Página de detalhe (se aplicável) segue padrão feature-detail__*
 
 ## Qualidade

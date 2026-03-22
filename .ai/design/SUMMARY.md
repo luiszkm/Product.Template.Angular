@@ -74,7 +74,7 @@ Estruturas padronizadas para páginas e componentes.
 Biblioteca de componentes reutilizáveis.
 
 **Conteúdo:**
-- 🔘 **Botões**: Classes .btn, .btn-primary, .btn-secondary, .btn-danger em `styles.css`
+- 🔘 **Botões**: Classes .btn, .btn-primary, .btn-secondary, .btn-danger em `styles.css` (padding `var(--spacing-1) var(--spacing-2)`; inputs/selects alinhados)
 - 🎯 **Botão de Ícone**: Icon buttons com tooltip
 - 🏷️ **Badge**: Status badges (success, error, warning, info)
 - 📥 **Input**: Input com label, erro, help text

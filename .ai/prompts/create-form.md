@@ -107,6 +107,7 @@ ngOnInit() {
 ## Estilo (ver .ai/design/)
 - Usar classes `.field` ou `.form-group`; tokens ERP em CSS: `var(--foreground)`, `var(--input-background)`, `var(--border)`.
 - Botões: `.btn`, `.btn-primary`, `.btn-secondary`.
+- Inputs, selects e textarea: **`padding: var(--spacing-1) var(--spacing-2)`** (igual a `.btn`); ver `components.md` e `ui-contracts.md`.
 - Erros: `color-mix(in srgb, var(--error) 10%, transparent)` para fundos.
 
 ## Restrições

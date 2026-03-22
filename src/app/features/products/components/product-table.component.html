@@ -21,8 +21,16 @@
             <td>{{ item.sku }}</td>
             <td>{{ item.price | number: '1.2-2' }}</td>
             <td>{{ item.stock }}</td>
-            <td>
-              <button type="button" (click)="onRemove(item.id)" aria-label="Remover produto {{ item.name }}">
+            <td class="product-table__actions">
+              <button type="button" class="btn btn-secondary" (click)="onEdit(item)">
+                Editar
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                (click)="onRemove(item.id)"
+                aria-label="Remover produto {{ item.name }}"
+              >
                 Remover
               </button>
             </td>

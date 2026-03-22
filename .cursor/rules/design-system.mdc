@@ -23,6 +23,8 @@ Classes em `styles.css`:
 <button type="button" class="btn btn-danger">Excluir</button>
 ```
 
+**Padding:** `.btn` usa `var(--spacing-1) var(--spacing-2)`. Inputs, selects e busca nas páginas devem usar o **mesmo par** (não `spacing-2`/`spacing-3` ou `spacing-4` salvo excepção documentada).
+
 ## Páginas
 - **Listagem:** `page-container`, `page-header`, `page-actions` (ver ui-contracts.md)
 - **Detalhe:** `feature-detail__header`, `__back`, `__title`, `__card`, `__info`, `__actions`

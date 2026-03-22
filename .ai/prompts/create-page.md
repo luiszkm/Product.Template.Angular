@@ -84,6 +84,7 @@ export class FeaturePage implements OnInit {
 
 ## Estilo (ver .ai/design/)
 - Usar classes `.btn`, `.btn-primary`, `.btn-secondary`, `.btn-danger` para botões.
+- Inputs, selects e busca: **`padding: var(--spacing-1) var(--spacing-2)`**; paginação alinhada (ver `components.md`).
 - Páginas de listagem: estrutura em `ui-contracts.md` (page-container, page-header).
 - Páginas de detalhe: padrão `feature-detail__*` em `ui-contracts.md`.
 - Tokens ERP em CSS: `var(--foreground)`, `var(--card)`, `var(--border)`, etc.

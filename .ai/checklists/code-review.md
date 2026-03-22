@@ -139,6 +139,7 @@ Use este checklist para revisar código antes de commit/merge.
 
 - [ ] Tokens ERP usados em CSS: `var(--foreground)`, `var(--card)`, `var(--border)`, etc.
 - [ ] Botões com classes `.btn`, `.btn-primary`, `.btn-secondary`, `.btn-danger`
+- [ ] Campos de formulário e paginação: padding `var(--spacing-1) var(--spacing-2)` (consistente com `components.md`)
 - [ ] Sem CSS inline (`style="..."`)
 - [ ] Sem cores hardcoded (usar tokens)
 - [ ] Página de detalhe: padrão `feature-detail__*` se aplicável

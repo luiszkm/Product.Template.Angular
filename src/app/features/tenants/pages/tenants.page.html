@@ -10,8 +10,21 @@
 
   @if (canManage) {
     <div class="tenants-page__toolbar">
-      @if (showCreateForm()) {
-        <form [formGroup]="form" (ngSubmit)="onCreate()" class="tenants-page__form">
+      <button type="button" class="btn btn-primary" (click)="createModalOpen.set(true)">
+        Novo tenant
+      </button>
+    </div>
+  }
+
+  @if (canManage) {
+    <app-modal
+      [open]="createModalOpen()"
+      title="Novo tenant"
+      titleId="tenant-create-modal-title"
+      (closed)="closeCreateModal()"
+    >
+      @if (createModalOpen()) {
+        <form [formGroup]="form" (ngSubmit)="onCreate()" class="tenants-page__modal-form">
           <input type="number" formControlName="tenantId" placeholder="ID (número)" />
           <input formControlName="tenantKey" placeholder="Chave (ex: acme)" />
           <input formControlName="displayName" placeholder="Nome de exibição" />
@@ -21,17 +34,13 @@
               <option [value]="mode">{{ mode }}</option>
             }
           </select>
-          <button type="submit" class="btn btn-primary">Criar</button>
-          <button type="button" class="btn btn-secondary" (click)="showCreateForm.set(false)">
-            Cancelar
-          </button>
+          <div class="tenants-page__modal-actions">
+            <button type="submit" class="btn btn-primary">Criar</button>
+            <button type="button" class="btn btn-secondary" (click)="closeCreateModal()">Cancelar</button>
+          </div>
         </form>
-      } @else {
-        <button type="button" class="btn btn-primary" (click)="showCreateForm.set(true)">
-          Novo tenant
-        </button>
       }
-    </div>
+    </app-modal>
   }
 
   <div class="tenants-page__content">

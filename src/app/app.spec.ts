@@ -3,6 +3,14 @@ import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { App } from './app';
 import { API_BASE_URL } from './core/api/api.config';
+import { APP_SETTINGS } from './core/config/app-settings.token';
+
+const testSettings = {
+  production: false,
+  apiUrl: 'http://localhost:8080/api',
+  tenantSlug: 'public',
+  oauthRedirectUri: 'http://localhost:4200/auth/callback'
+} as const;
 
 describe('App', () => {
   beforeEach(async () => {
@@ -11,7 +19,8 @@ describe('App', () => {
       providers: [
         provideRouter([]),
         provideHttpClient(),
-        { provide: API_BASE_URL, useValue: 'http://localhost' }
+        { provide: APP_SETTINGS, useValue: testSettings },
+        { provide: API_BASE_URL, useValue: testSettings.apiUrl }
       ]
     }).compileComponents();
   });
